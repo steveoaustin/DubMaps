@@ -14,7 +14,8 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	
 	private final Set<Edge<T>> edges;                   
 	private final String name;
-	private final boolean DEBUG = false;
+	private static int pathCount = 0;
+	private final boolean DEBUG = true;
 	
 	/**
 	 * Creates a new node object
@@ -29,6 +30,12 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 		edges = new TreeSet<Edge<T>>();
 		this.name = name;
 		checkRep();
+	}
+	
+	
+	public Node() {
+		this("Path " + Integer.toString(pathCount));
+		pathCount++;
 	}
 	
 	/**

@@ -10,7 +10,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	private final Node<T> parent;
 	private final Node<T> child;
 	private final T label;
-	private final boolean DEBUG = false;
+	private final boolean DEBUG = true;
 	
 	/**
 	 * Creates a new Edge object
