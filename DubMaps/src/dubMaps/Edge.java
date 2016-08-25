@@ -1,15 +1,15 @@
 package dubMaps;
 
-public class Edge<T extends Comparable<T>, E> implements Comparable<Edge<T, E>> {
+public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	/*
 	 * Abstraction function: an Edge represents a directed edge in a graph 
      * 
      * Representation Invariant: Edge has a non-null parent node, child node, and label
   	 */
 	
-	private final Node<T, E> parent;
-	private final Node<T, E> child;
-	private final E label;
+	private final Node<T> parent;
+	private final Node<T> child;
+	private final T label;
 	private final boolean DEBUG = false;
 	
 	/**
@@ -20,7 +20,7 @@ public class Edge<T extends Comparable<T>, E> implements Comparable<Edge<T, E>> 
 	 * @param child the child node
 	 * @param label the edge's label
 	 */
-	public Edge(Node<T, E> parent, Node<T, E> child, E label) {
+	public Edge(Node<T> parent, Node<T> child, T label) {
 		if (parent == null || child == null|| label == null) {
 			throw new IllegalArgumentException("cannot create edge with null values");
 		}
@@ -34,7 +34,7 @@ public class Edge<T extends Comparable<T>, E> implements Comparable<Edge<T, E>> 
 	 * returns the edge's parent
 	 * @return parent the edge's parent node
 	 */
-	public Node<T, E> getParent() {
+	public Node<T> getParent() {
 		return parent;
 	}
 	
@@ -42,7 +42,7 @@ public class Edge<T extends Comparable<T>, E> implements Comparable<Edge<T, E>> 
 	 * returns the edge's child
 	 * @return child the edge's child node
 	 */
-	public Node<T, E> getChild() {
+	public Node<T> getChild() {
 		return child;
 	}
 	
@@ -50,7 +50,7 @@ public class Edge<T extends Comparable<T>, E> implements Comparable<Edge<T, E>> 
 	 * returns the edge's label
 	 * @return label the edge's label
 	 */
-	public E getLabel() {
+	public T getLabel() {
 		return label;
 	}
 	
@@ -69,10 +69,10 @@ public class Edge<T extends Comparable<T>, E> implements Comparable<Edge<T, E>> 
 	 * @return boolean indicating equality
 	 */
 	public boolean equals(Object o) {
-		if (!(o instanceof Edge<?, ?>)) {
+		if (!(o instanceof Edge<?>)) {
 			return false;
 		}
-		Edge<?, ?> e = (Edge<?, ?>) o;
+		Edge<?> e = (Edge<?>) o;
 		if (!this.label.equals(e.label)) {
 			return false;
 		} else if (!this.parent.toString().equals(e.parent.toString())) {
@@ -108,7 +108,7 @@ public class Edge<T extends Comparable<T>, E> implements Comparable<Edge<T, E>> 
 	 * @param e The edge this is compared to
 	 * @return an int indicating the value of this - e
 	 */
-	public int compareTo(Edge<T, E> e) {
+	public int compareTo(Edge<T> e) {
 		if (this.child.toString().equals(e.child.toString())) {
 			return this.label.toString().compareTo(e.label.toString());
 		}

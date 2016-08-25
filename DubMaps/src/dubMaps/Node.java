@@ -5,29 +5,29 @@ import java.util.TreeSet;
 
 public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	/*
-	 * Abstraction function: Node is represented as a unique value 
+	 * Abstraction function: Node is represented as a name 
 	 * and has a set of all edges for which it is a parent 
      * 
-     * Representation Invariant: Node has a unique name and a non-null
+     * Representation Invariant: Node has a name and a non-null
      * set of edges for which it is the parent 
   	 */
 	
 	private final Set<Edge<T>> edges;                   
-	private final T value;
+	private final String name;
 	private final boolean DEBUG = false;
 	
 	/**
 	 * Creates a new node object
-	 * @throws IllegalArgumentException Indicates node with this value is null
-	 * @effects adds value to value and sets this.value to value
-	 * @param value the new node's value
+	 * @throws IllegalArgumentException Indicates node with this name is null
+	 * @effects adds name to name and sets this.name to name
+	 * @param name the new node's name
 	 */
-	public Node(T value) {
-		if (value == null) {
-			throw new IllegalArgumentException("All Nodes must hold a non-null value");
+	public Node(String name) {
+		if (name == null) {
+			throw new IllegalArgumentException("All Nodes must hold a non-null name");
 		}
 		edges = new TreeSet<Edge<T>>();
-		this.value = value;
+		this.name = name;
 		checkRep();
 	}
 	
@@ -40,7 +40,7 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	 * @param child the edge's child node
 	 * @param label the edge's label
 	 */
-	public void addEdge(Node<T> child, E label) {
+	public void addEdge(Node<T> child, T label) {
 		checkRep();
 		if (child == null || label == null) {
 			return;
@@ -64,11 +64,11 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	}
 	
 	/**
-	 * Returns node's value as a string
-	 * @return value the node's value
+	 * Returns node's name
+	 * @return name the node's name
 	 */
 	public String toString() {
-		return value.toString();
+		return name;
 	}
 	
 	@Override
@@ -78,11 +78,11 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	 * @return a boolean indicating if this is equal to o
 	 */
 	public boolean equals(Object o) {
-		if (!(o instanceof Node<?, ?>)) {
+		if (!(o instanceof Node<?>)) {
 			return false;
 		}
-		Node<?, ?> n = (Node<?, ?>) o;
-		if (this.value.equals(n.value)) {
+		Node<?> n = (Node<?>) o;
+		if (this.name.equals(n.name)) {
 			return true;
 		} else {
 			return false;
@@ -95,7 +95,7 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	 */
 	@Override
 	public int hashCode() {
-		return value.hashCode();
+		return name.hashCode();
 	}
 	
 	/**
@@ -103,7 +103,7 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	 */
 	public void checkRep() {
 		if (DEBUG) {
-			assert (this.value != null);
+			assert (this.name != null);
 			assert (this.edges != null);
 			for (Edge<T> edge: edges) {
 				assert(edge != null);
@@ -114,10 +114,10 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	/**
 	 * standard compare to function
 	 * @param other node to be compared to this
-	 * @return an int representing the value of this - other
+	 * @return an int representing the name of this - other
 	 */
 	public int compareTo(Node<T> other) {
-		return  this.value.compareTo(other.value);
+		return  this.name.compareTo(other.name);
 	}
 }
 

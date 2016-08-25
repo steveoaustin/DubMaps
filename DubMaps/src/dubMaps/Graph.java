@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Graph<T> {
+public class Graph<T extends Comparable<T>> {
 	/*
 	 * Abstraction function:graph is represented as a HashMap<Node, HashSet<Edge>>
  	 * the keys are nodes in the graph
@@ -37,8 +37,8 @@ public class Graph<T> {
 	}
 	
 	/**
-	 * Returns a node holding target as its value, null if not in graph
-	 * @param target the target node.toString() value
+	 * Returns a node holding target as its name, null if not in graph
+	 * @param target the target node.toString() name
 	 * @return node The node matching target
 	 */
 	public Node<T> getNode(String target) {
@@ -51,8 +51,8 @@ public class Graph<T> {
 	}
 	
 	/**
-	 * Returns the set of node values stored in this graph
-	 * @return nodeValues a TreeSet of all node values
+	 * Returns the set of node names stored in this graph
+	 * @return nodeValues a TreeSet of all node names
 	 */
 	public TreeSet<String> getNodes() {
 		TreeSet<String> nodeValues = new TreeSet<String>();
