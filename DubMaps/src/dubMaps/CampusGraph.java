@@ -35,29 +35,30 @@ public class CampusGraph {
 	}
 	
 	/**
-	 * Returns a node holding target as its name, null if not in graph
-	 * @param target the target node.toString() name
-	 * @return node The node matching target
+	 * Returns a node holding target as its LongName, null if not in graph
+	 * @param target the target node's location LongName
+	 * @return The node matching target
 	 */
 	public Node<CampusLocation> getNode(String target) {
 		for (Node<CampusLocation> node: nodes) {
-			if (node.toString().equals(target)) {
+			if (node.getLocation().equals(target))
 				return node;
-			}
 		}
 		return null;
 	}
 	
 	/**
-	 * Returns a set of node string representations stored in this graph
-	 * @return nodeValues a TreeSet of all node names
+	 * Returns a node with matching x y coordinates, null if not in graph
+	 * @param x: target x coordinate
+	 * @param y: target y coordinate
+	 * @return The node located at x, y
 	 */
-	public TreeSet<String> getNodeStrings() {
-		TreeSet<String> nodeValues = new TreeSet<String>();
+	public Node<CampusLocation> getNode(double x, double y) {
 		for (Node<CampusLocation> node: nodes) {
-			nodeValues.add(node.toString());
+			if (node.getLocation().getX() == x && node.getLocation().getY() == y)
+				return node;
 		}
-		return nodeValues;
+		return null;
 	}
 	
 	/**
@@ -76,6 +77,20 @@ public class CampusGraph {
 		checkRep();
 	}
 
+	/**
+	 * Standard toString method
+	 */
+	public String toString() {
+		String result = "";
+		for (Node<CampusLocation> n: nodes) {
+			result += n.toString() + "\n";
+			for (Edge<CampusLocation> e: n.getEdges())
+				result += e.toString() + "\n";
+			result += "\n";
+		}
+		return result;
+	}
+	
 	/**
 	 * Checks that the representation invariant holds
 	 */

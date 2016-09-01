@@ -3,27 +3,16 @@ package dubMaps;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 /**
- * Representation invariant: Campus parser holds the contents of destination building locations
- * and path locations. If input files are formatted correctly, destinations are saved as buildings
- * and coordinates, and paths are saved as coordinates. each coordinate has a corresponding node
+ * Representation invariant: Campus parser holds a properly formed CampusGraph constructed
+ * from formatted data files which contain information about campus buildings and the paths
+ * that connect them to each other 
  * 
- * Abstraction function: CampusParser is represented as a set of buildings, a map from coordinates
- * and name location, and a map from location to node. Coordinates, locations, and buildings are 
- * non-null, and each building maps to a location, and each location maps to a node
+ * Abstraction function: CampusParser is represented as a valid CampusGraph
  */
 public class CampusParser {
-	CampusGraph graph;
-	
-	Map<CampusLocation, Node<CampusLocation>> locations;
-	Set<String> buildings;
-	Map<String, CampusLocation> coordinates;
+	private final CampusGraph graph;
 	
 	/**
 	 * Parses input files into node and location data
@@ -33,9 +22,6 @@ public class CampusParser {
 	 * @modifies this
 	 */
 	public CampusParser (String buildingsFile, String pathsFile){
-		locations = new HashMap<CampusLocation, Node<CampusLocation>>();
-		buildings = new TreeSet<String>();
-		coordinates = new TreeMap<String, CampusLocation>();
 		graph = new CampusGraph();
 		try {
 			parseBuildings(buildingsFile);
@@ -45,7 +31,7 @@ public class CampusParser {
 	
 	/**
 	 * Returns graph
-	 * @return graph: the campusGraph constructed from building and path files
+	 * @return graph: the CampusGraph constructed from building and path files
 	 */
 	public CampusGraph getGraph() {
 		return graph;
@@ -56,7 +42,7 @@ public class CampusParser {
 	 * @param filename The file of path information to be parsed
 	 * @requires filename is formatted correctly
 	 */
-	public void parsePaths(String filename) {
+	private void parsePaths(String filename) {
 	    BufferedReader reader = null;
 	    try {
 	        reader = new BufferedReader(new FileReader(filename));
@@ -79,18 +65,12 @@ public class CampusParser {
 	            	y = Double.parseDouble(tokens[1]);
 	            	
 	            	// check if the parent node has already been found in the buildings file
-	            	if (locations.containsKey(coordinates.get(x + " " + y))) { 
-	            		parent = locations.get(coordinates.get(x + " " + y));
+	            	if (graph.getNode(x, y) != null) { 
+	            		parent = graph.getNode(x, y);
 	            	} else { 
 	            		// node is a not in the buildings file; represent as a path	            		
 	            		parent = new Node<CampusLocation>(x, y);
-	            		CampusLocation path = parent.getLocation();
 
-	            		// update parsed information
-	            		locations.put(path, parent);
-	            		coordinates.put(x + " " + y, path);
-	            		coordinates.put(parent.getLocation().getLongName(), path);
-	            		
 	            		// add new node to the graph
 	            		graph.add(parent);
 	            	}
@@ -106,17 +86,11 @@ public class CampusParser {
 	            	double label = Double.parseDouble(tokens[2]);
 	            	
 	            	// check if child node has already been found in the buildings file
-	            	if (locations.containsKey(coordinates.get(x + " " + y))) { 
-	            		child = locations.get(coordinates.get(x + " " + y));
+	            	if (graph.getNode(x, y) != null) { 
+	            		child = graph.getNode(x, y);
 	            	} else {
 	            		// node is a not in the buildings file; represent as a path	            		
 	            		child = new Node<CampusLocation>(x, y); 
-	            		CampusLocation path = child.getLocation();
-	            		
-	            		// update parsed information
-	            		locations.put(path, child);
-	            		coordinates.put(x + " " + y, path);
-	            		coordinates.put(child.getLocation().getLongName(), path);
 	            		
 	            		// add new node to the graph
 	            		graph.add(child);
@@ -146,7 +120,7 @@ public class CampusParser {
 	 * @param filename The file of building information to be parsed
 	 * @throws Exception Indicates filename is improperly formatted 
 	 */
-	public void parseBuildings(String filename) throws Exception {
+	private void parseBuildings(String filename) throws Exception {
 	    BufferedReader reader = null;
 	    try {
 	        reader = new BufferedReader(new FileReader(filename));
@@ -174,12 +148,6 @@ public class CampusParser {
 	            
 	            // add new building to the graph
 	            graph.add(building);
-	            
-	            // save parsed data
-	            buildings.add(shortName);
-	            coordinates.put(shortName, location);
-	            coordinates.put(x + " " + y, location);
-	            locations.put(location, building);
 	        }
 	    } catch (IOException e) {
 	        System.err.println(e.toString());

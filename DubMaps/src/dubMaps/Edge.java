@@ -59,7 +59,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	 * @return string representation
 	 */
 	public String toString() {
-		return parent.toString() + "\n(" + length + ")\n" + child.toString();
+		return parent.toString() + " (" + length + ") " + child.toString();
 	}
 	
 	@Override
