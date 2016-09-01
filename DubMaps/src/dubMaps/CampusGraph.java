@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-public class Graph<T extends Comparable<T>> {
+public class CampusGraph {
 	/*
 	 * Abstraction function:graph is represented as a HashMap<Node, HashSet<Edge>>
  	 * the keys are nodes in the graph
@@ -15,14 +15,14 @@ public class Graph<T extends Comparable<T>> {
  	 * and each node maps to a non-null set of edges for 
  	 * which it is the parent node.
   	 */
-	private final Set<Node<T>> nodes;
+	private final Set<Node<CampusLocation>> nodes;
 	private final boolean DEBUG = true;
 	
 	/**
 	 * Instantiates a new graph.
 	 */
-	public Graph() {
-		nodes = new HashSet<Node<T>>();
+	public CampusGraph() {
+		nodes = new HashSet<Node<CampusLocation>>();
 		checkRep();
 	}
 	
@@ -32,7 +32,7 @@ public class Graph<T extends Comparable<T>> {
 	 * @param node The node to be searched for
 	 * @return if the graph contains node
 	 */
-	public boolean contains(Node<T> node) {
+	public boolean contains(Node<CampusLocation> node) {
 		return nodes.contains(node);
 	}
 	
@@ -41,8 +41,8 @@ public class Graph<T extends Comparable<T>> {
 	 * @param target the target node.toString() name
 	 * @return node The node matching target
 	 */
-	public Node<T> getNode(String target) {
-		for (Node<T> node: nodes) {
+	public Node<CampusLocation> getNode(String target) {
+		for (Node<CampusLocation> node: nodes) {
 			if (node.toString().equals(target)) {
 				return node;
 			}
@@ -51,12 +51,12 @@ public class Graph<T extends Comparable<T>> {
 	}
 	
 	/**
-	 * Returns the set of node names stored in this graph
+	 * Returns a set of node string representations stored in this graph
 	 * @return nodeValues a TreeSet of all node names
 	 */
-	public TreeSet<String> getNodes() {
+	public TreeSet<String> getNodeStrings() {
 		TreeSet<String> nodeValues = new TreeSet<String>();
-		for (Node<T> node: nodes) {
+		for (Node<CampusLocation> node: nodes) {
 			nodeValues.add(node.toString());
 		}
 		return nodeValues;
@@ -69,7 +69,7 @@ public class Graph<T extends Comparable<T>> {
 	 * @effects adds node to nodes
 	 * @param node the node to be added
 	 */
-	public void add(Node<T> node) {
+	public void add(Node<CampusLocation> node) {
 		checkRep();
 		if (node == null || this.contains(node)) {
 			return;
@@ -84,9 +84,9 @@ public class Graph<T extends Comparable<T>> {
 	private void checkRep() {
 		if (DEBUG) {
 			assert (nodes != null);
-			for (Node<T> node: nodes) {
+			for (Node<CampusLocation> node: nodes) {
 				assert(node != null);
-				assert(((Node<T>) node).getEdges() != null);
+				assert(((Node<CampusLocation>) node).getEdges() != null);
 			}
 		}
 	}

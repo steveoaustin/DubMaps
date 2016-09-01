@@ -4,29 +4,29 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	/*
 	 * Abstraction function: an Edge represents a directed edge in a graph 
      * 
-     * Representation Invariant: Edge has a non-null parent node, child node, and label
+     * Representation Invariant: Edge has a non-null parent node, child node, and length
   	 */
 	
 	private final Node<T> parent;
 	private final Node<T> child;
-	private final T label;
+	private final double length;
 	private final boolean DEBUG = true;
 	
 	/**
 	 * Creates a new Edge object
-	 * @effects constructs a new Edge with parent, child, and label
-	 * @throws IllegalArgumentException Indicates parent,child,or label is null
+	 * @effects constructs a new Edge with parent, child, and length
+	 * @throws IllegalArgumentException Indicates parent,child,or length is null
 	 * @param parent the parent node
 	 * @param child the child node
-	 * @param label the edge's label
+	 * @param length the edge's length
 	 */
-	public Edge(Node<T> parent, Node<T> child, T label) {
-		if (parent == null || child == null|| label == null) {
+	public Edge(Node<T> parent, Node<T> child, double length) {
+		if (parent == null || child == null|| length == null) {
 			throw new IllegalArgumentException("cannot create edge with null values");
 		}
 		this.parent = parent;
 		this.child = child;
-		this.label = label;
+		this.length = length;
 		checkRep();
 	}
 	
@@ -47,11 +47,11 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	}
 	
 	/**
-	 * returns the edge's label
-	 * @return label the edge's label
+	 * returns the edge's length
+	 * @return length the edge's length
 	 */
-	public T getLabel() {
-		return label;
+	public double getLength() {
+		return length;
 	}
 	
 	/**
@@ -59,7 +59,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	 * @return string representation
 	 */
 	public String toString() {
-		return child + "(" + label + ")";
+		return child + "(" + length + ")";
 	}
 	
 	@Override
@@ -73,7 +73,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 			return false;
 		}
 		Edge<?> e = (Edge<?>) o;
-		if (!this.label.equals(e.label)) {
+		if (!this.length == e.length) {
 			return false;
 		} else if (!this.parent.toString().equals(e.parent.toString())) {
 			return false;
@@ -88,7 +88,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	 * @return an int that all objects equal to this will also
 	 */
 	public int hashCode() {
-		String code = label + parent.toString() + child.toString();
+		String code = length + parent.toString() + child.toString();
 		return code.hashCode();
 	}
 	
@@ -97,7 +97,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	 */
 	public void checkRep() {
 		if (DEBUG) {
-			assert (this.label != null);
+			assert (this.length != 0.0);
 			assert (this.parent != null);
 			assert (this.child != null);
 		}
@@ -110,7 +110,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	 */
 	public int compareTo(Edge<T> e) {
 		if (this.child.toString().equals(e.child.toString())) {
-			return this.label.toString().compareTo(e.label.toString());
+			return (int) ((1000 *this.length) - (1000 *e.length));
 		}
 		return this.child.toString().compareTo(e.child.toString());
 	}
