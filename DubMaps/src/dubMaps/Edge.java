@@ -91,17 +91,6 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 		String code = length + parent.toString() + child.toString();
 		return code.hashCode();
 	}
-	
-	/**
-	 * Checks that the representation invariant holds
-	 */
-	public void checkRep() {
-		if (DEBUG) {
-			assert (this.length != 0.0);
-			assert (this.parent != null);
-			assert (this.child != null);
-		}
-	}
 
 	/**
 	 * standard compareTo function
@@ -109,10 +98,18 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	 * @return an integer indicating the value of this.toString - e.toString
 	 */
 	public int compareTo(Edge<T> e) {
-		if (this.child.toString().equals(e.child.toString())) {
-			return (int) ((1000 *this.length) - (1000 *e.length));
+		return this.toString().compareTo(e.toString());
+	}
+	
+	/**
+	 * Checks that the representation invariant holds
+	 */
+	private void checkRep() {
+		if (DEBUG) {
+			assert (this.length != 0.0);
+			assert (this.parent != null);
+			assert (this.child != null);
 		}
-		return this.child.toString().compareTo(e.child.toString());
 	}
 }
 
