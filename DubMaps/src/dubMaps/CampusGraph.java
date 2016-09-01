@@ -6,13 +6,11 @@ import java.util.TreeSet;
 
 public class CampusGraph {
 	/*
-	 * Abstraction function:graph is represented as a HashMap<Node, HashSet<Edge>>
- 	 * the keys are nodes in the graph
- 	 * values are set of edges for which node is a parent
-     * an edge represents a directed edge in the graph
+	 * Abstraction function:graph is represented as a Set<Node<CampusLocation>>
+ 	 * Each element is a valid node
      * 
      * Representation Invariant: graph does not contain any null nodes
- 	 * and each node maps to a non-null set of edges for 
+ 	 * and each node contains non-null set of edges for 
  	 * which it is the parent node.
   	 */
 	private final Set<Node<CampusLocation>> nodes;

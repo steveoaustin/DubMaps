@@ -4,7 +4,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	/*
 	 * Abstraction function: an Edge represents a directed edge in a graph 
      * 
-     * Representation Invariant: Edge has a non-null parent node, child node, and length
+     * Representation Invariant: Edge has a non-null parent node, child node, and nonzero length
   	 */
 	
 	private final Node<T> parent;
@@ -15,13 +15,13 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	/**
 	 * Creates a new Edge object
 	 * @effects constructs a new Edge with parent, child, and length
-	 * @throws IllegalArgumentException Indicates parent,child,or length is null
+	 * @throws IllegalArgumentException Indicates parent or child is null, or length is zero
 	 * @param parent the parent node
 	 * @param child the child node
 	 * @param length the edge's length
 	 */
 	public Edge(Node<T> parent, Node<T> child, double length) {
-		if (parent == null || child == null|| length == null) {
+		if (parent == null || child == null|| length == 0.0) {
 			throw new IllegalArgumentException("cannot create edge with null values");
 		}
 		this.parent = parent;
@@ -59,7 +59,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	 * @return string representation
 	 */
 	public String toString() {
-		return child + "(" + length + ")";
+		return parent.toString() + "\n(" + length + ")\n" + child.toString();
 	}
 	
 	@Override
@@ -73,7 +73,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 			return false;
 		}
 		Edge<?> e = (Edge<?>) o;
-		if (!this.length == e.length) {
+		if (this.length != e.length) {
 			return false;
 		} else if (!this.parent.toString().equals(e.parent.toString())) {
 			return false;
@@ -106,7 +106,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	/**
 	 * standard compareTo function
 	 * @param e The edge this is compared to
-	 * @return an int indicating the value of this - e
+	 * @return an integer indicating the value of this.toString - e.toString
 	 */
 	public int compareTo(Edge<T> e) {
 		if (this.child.toString().equals(e.child.toString())) {

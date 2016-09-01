@@ -3,7 +3,7 @@ package dubMaps;
 /**
  * Representation invariant: shortName, longName, x, and y are not null 
  * 
- * Abstraction function: Campus location represents a location of the uw campus with location 
+ * Abstraction function: Campus location represents a location on campus with coordinates 
  * (x,y), full name longName, and abbreviated name shortName
  */
 public class CampusLocation implements Comparable<CampusLocation>{
@@ -15,7 +15,7 @@ public class CampusLocation implements Comparable<CampusLocation>{
 	/**
 	 * Instantiates a new CampusLocation object
 	 * @modifies this
-	 * @requires all params are not null
+	 * @requires all parameters are not null
 	 * @param shortName The locations abbreviated name
 	 * @param longName The locations full name
 	 * @param x The locations x position
@@ -65,7 +65,7 @@ public class CampusLocation implements Comparable<CampusLocation>{
 	 * Returns a string representation of the location data
 	 */
 	public String toString() {
-		return(shortName + " " + longName + " " + x + " " + y + "\n");
+		return(shortName + " " + longName + " " + x + " " + y);
 	}
 	
 	/**

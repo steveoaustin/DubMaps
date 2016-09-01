@@ -33,12 +33,22 @@ public class CampusParser {
 	 * @modifies this
 	 */
 	public CampusParser (String buildingsFile, String pathsFile){
-		
+		locations = new HashMap<CampusLocation, Node<CampusLocation>>();
+		buildings = new TreeSet<String>();
+		coordinates = new TreeMap<String, CampusLocation>();
 		graph = new CampusGraph();
 		try {
 			parseBuildings(buildingsFile);
 			parsePaths(pathsFile);
 		} catch (Exception e) { /*ignore*/ }
+	}
+	
+	/**
+	 * Returns graph
+	 * @return graph: the campusGraph constructed from building and path files
+	 */
+	public CampusGraph getGraph() {
+		return graph;
 	}
 	
 	/**
@@ -53,50 +63,65 @@ public class CampusParser {
 	        
 	        // Construct a map of campus path information and nodes
 	        String inputLine;
-	        Node<CampusLocation> parent = new Node<CampusLocation>(" "); //prevents error
-	        String path = "path1";
-	        while ((inputLine = reader.readLine()) != null) {
-	        	String[] tokens;
-	        	Node<CampusLocation> child;
-	        	double x;
-	        	double y;
-	        	//set new parent node
+	        Node<CampusLocation> parent = null;
+	        Node<CampusLocation> child = null;
+	        String[] tokens;        	
+        	double x;
+        	double y;
+        	
+	        while ((inputLine = reader.readLine()) != null) {	        	
+	        	// no tab indicates the node is a new parent node
 	            if (!inputLine.startsWith("\t")) {
+	            	
+	            	// split tokens and save them in x,y coordinates
 	            	tokens = inputLine.split(",");
 	            	x = Double.parseDouble(tokens[0]);
 	            	y = Double.parseDouble(tokens[1]);
 	            	
+	            	// check if the parent node has already been found in the buildings file
 	            	if (locations.containsKey(coordinates.get(x + " " + y))) { 
-	            		parent = locations.get(coordinates.get(x + " " + y)); //already found 
+	            		parent = locations.get(coordinates.get(x + " " + y));
 	            	} else { 
-	            		CampusLocation outdoorPath = new CampusLocation(path, " ", x, y);
-	            		parent =  new Node<CampusLocation>(path); 
-	            		locations.put(outdoorPath, parent);
-	            		coordinates.put(x + " " + y, outdoorPath);
-	            		coordinates.put(path, outdoorPath);
-	            		//increment path label 
-	            		path = "path" + (Integer.parseInt(path.substring(4,path.length()))+1);	        
+	            		// node is a not in the buildings file; represent as a path	            		
+	            		parent = new Node<CampusLocation>(x, y);
+	            		CampusLocation path = parent.getLocation();
+
+	            		// update parsed information
+	            		locations.put(path, parent);
+	            		coordinates.put(x + " " + y, path);
+	            		coordinates.put(parent.getLocation().getLongName(), path);
+	            		
+	            		// add new node to the graph
+	            		graph.add(parent);
 	            	}
 	            } else { //add edges to parent node
+	            	// parse data
 	            	inputLine = inputLine.trim();
-	            	tokens = inputLine.split("[, ]"); //split int x y and distance
-	            	
-	            	x = Double.parseDouble(tokens[0]);
+	            	tokens = inputLine.split("[, ]"); //split x, y, and distance
 	            	tokens[1] = tokens[1].substring(0, tokens[1].length() - 1); //remove colon
+	            	
+	            	// save x y coordinates and length
+	            	x = Double.parseDouble(tokens[0]);
 	            	y = Double.parseDouble(tokens[1]);
 	            	double label = Double.parseDouble(tokens[2]);
 	            	
+	            	// check if child node has already been found in the buildings file
 	            	if (locations.containsKey(coordinates.get(x + " " + y))) { 
-	            		child = locations.get(coordinates.get(x + " " + y)); //already found 
+	            		child = locations.get(coordinates.get(x + " " + y));
 	            	} else {
-	            		CampusLocation outdoorPath = new CampusLocation(path, " ", x, y);
-	            		child =  new Node<CampusLocation>(path); 
-	            		locations.put(outdoorPath, child);
-	            		coordinates.put(x + " " + y, outdoorPath);
-	            		coordinates.put(path, outdoorPath);
-	            		//increment path label 
-	            		path = "path" + (Integer.parseInt(path.substring(4,path.length()))+1);
+	            		// node is a not in the buildings file; represent as a path	            		
+	            		child = new Node<CampusLocation>(x, y); 
+	            		CampusLocation path = child.getLocation();
+	            		
+	            		// update parsed information
+	            		locations.put(path, child);
+	            		coordinates.put(x + " " + y, path);
+	            		coordinates.put(child.getLocation().getLongName(), path);
+	            		
+	            		// add new node to the graph
+	            		graph.add(child);
 	            	}
+	            	// add new edges
 	            	parent.addEdge(child, label);
             		child.addEdge(parent, label);
 	            }
@@ -129,29 +154,32 @@ public class CampusParser {
 	        // Construct a map of campus path information and nodes
 	        String inputLine;
 	        while ((inputLine = reader.readLine()) != null) {
-
+	        	
 	            // Parse the data, throwing an exception for malformed lines.
 	            inputLine = inputLine.replace("\"", "");
 	            String[] tokens = inputLine.split("\t");
 	            if (tokens.length != 4) {
-	                throw new Exception("Line should contain exactly 3 tabs: "
-	                                                 + inputLine);
+	                throw new Exception("Line should contain exactly 3 tabs: " + inputLine);
 	            }
+	            
+	            // save location information
 	            String shortName = tokens[0];
 	            String longName = tokens[1];
 	            double x = Double.parseDouble(tokens[2]);
 	            double y = Double.parseDouble(tokens[3]);
 
-	            // Create a location from the parsed data and map it to a matching node
+	            // Create a location from the parsed data
 	            CampusLocation location = new CampusLocation(shortName, longName, x, y);
+	            Node<CampusLocation> building = new Node<CampusLocation>(location);
 	            
+	            // add new building to the graph
+	            graph.add(building);
+	            
+	            // save parsed data
 	            buildings.add(shortName);
-	            coordinates.put(shortName, location); //allow the location to be accessed by name 
+	            coordinates.put(shortName, location);
 	            coordinates.put(x + " " + y, location);
-	            Node<CampusLocation> locNode = new Node<CampusLocation>(shortName);
-	            if (!locations.containsKey(location)) {
-	            	locations.put(location, locNode);
-	            }
+	            locations.put(location, building);
 	        }
 	    } catch (IOException e) {
 	        System.err.println(e.toString());

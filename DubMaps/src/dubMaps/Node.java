@@ -14,14 +14,14 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	
 	private final Set<Edge<T>> edges;                   
 	private final CampusLocation data;
-	private static int pathCount = 0;
+	private static int pathCount = 0;  // tracks number of path nodes for naming
 	private final boolean DEBUG = true;
 	
 	/**
 	 * Creates a new node object
 	 * @throws IllegalArgumentException Indicates data is null
 	 * @effects sets this.data to data
-	 * @param data the new node's CampusLocation object
+	 * @param data: the new node's CampusLocation object
 	 */
 	public Node(CampusLocation data) {
 		if (data == null) {
@@ -32,9 +32,14 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 		checkRep();
 	}
 	
-	
-	public Node() {
-		this("Path " + Integer.toString(pathCount));
+	/**
+	 * Creates a new node object that represents a point on a path
+	 * @param x: the path's x coordinate
+	 * @param y: the path's y coordinate
+	 */
+	public Node(double x, double y) {
+		this(new CampusLocation(Integer.toString(pathCount),
+				"Path #" + Integer.toString(pathCount), x, y));
 		pathCount++;
 	}
 	
@@ -44,18 +49,18 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	 * If child or label are null, does nothing 
 	 * @modifies this
 	 * @effects adds a new edge to edges 
-	 * @param child the edge's child node
-	 * @param label the edge's label
+	 * @param child: the edge's child node
+	 * @param label: the edge's label
 	 */
-	public void addEdge(Node<T> child, T label) {
+	public void addEdge(Node<T> child, double length) {
 		checkRep();
-		if (child == null || label == null) {
+		if (child == null || length == 0.0) {
 			return;
 		}
-		Edge<T> temp = new Edge<T>(this, child, label);
+		Edge<T> temp = new Edge<T>(this, child, length);
 		
 		if(edges.contains(temp)) {
-			return;
+			return;  // do not add temp if it is already an edge
 		}
 		
 		edges.add(temp); //add temp if it is a unique edge
@@ -64,10 +69,18 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	
 	/**
 	 * Return a set of the node's edges
-	 * @return edges set of all edges for which this is parent
+	 * @return edges: set of all edges for which this is parent
 	 */
 	public Set<Edge<T>> getEdges() {
 		return (TreeSet<Edge<T>>) edges;
+	}
+	
+	/**
+	 * Returns the node's location
+	 * @return data: the node's CampusLocation object
+	 */
+	public CampusLocation getLocation() {
+		return this.data;
 	}
 	
 	/**
@@ -81,7 +94,7 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	@Override
 	/**
 	 * standard equals function
-	 * @param o the object this is compared to
+	 * @param o: the object this is compared to
 	 * @return a boolean indicating if this is equal to o
 	 */
 	public boolean equals(Object o) {
