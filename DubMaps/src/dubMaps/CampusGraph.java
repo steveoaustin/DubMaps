@@ -115,10 +115,10 @@ public class CampusGraph {
 
 			if (finished.contains(node)) { continue; }  //skip already found node
 			if (node.equals(dest)) {
-				return current.getPath();  // found dest node! return path 
+				return current.getPath();  // found destination node! return path 
 			}
 			
-			// dest not found, avoid re-finding current 
+			// destination not found, avoid re-finding current 
 			finished.add(node);
 			
 			// continue paths to node's children if they have not been found
