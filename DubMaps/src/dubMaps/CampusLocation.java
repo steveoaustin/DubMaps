@@ -82,13 +82,13 @@ public class CampusLocation implements Comparable<CampusLocation>{
 	public int hashCode() {
 		String xString = String.valueOf(x);
 		String yString = String.valueOf(y);
-		//combines x and y via string concatenation for a more unique value
+		//combines x and y for a more unique value
 		String total = xString + yString; 
 		return total.hashCode();
 	}
 	
 	/**
-	 * Standard equals function: equality based on matching xy coordinates 
+	 * Standard equals function: equality based on matching x y coordinates 
 	 */
 	public boolean equals(Object o) {
 		if(!(o instanceof CampusLocation)) {
