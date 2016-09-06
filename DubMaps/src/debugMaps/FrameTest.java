@@ -1,6 +1,8 @@
 package debugMaps;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -10,7 +12,19 @@ import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
 public class FrameTest {
-	public static void main(String[] args) {
+	
+	public static void main(String[] args)
+    {
+        EventQueue.invokeLater(new Runnable()
+        {
+            public void run()
+            {
+                createAndShowGUI();
+            }
+        });
+    }
+	
+	public static void createAndShowGUI() {
 		
 		PanelTest map = new PanelTest();
 		JPanel contentPanel = new JPanel();
@@ -29,21 +43,28 @@ public class FrameTest {
 		b3.setText("this is a button");
 		b3.setVisible(true);
 		
-		// configure controlPanel
-		//controlPanel.setPreferredSize(new Dimension(800, 70));
+		// configure controlPanel		
 		controlPanel.setBackground(Color.BLACK);
+		FlowLayout f = new FlowLayout(FlowLayout.CENTER);
+		controlPanel.setLayout(f);
+		controlPanel.add(b);
+		controlPanel.add(b2);
+		controlPanel.add(b3);
 		controlPanel.setVisible(true);
-		//controlPanel.setMinimumSize(new Dimension(400, 70));
-		//controlPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
+		controlPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
+		
+		// configure box layout
+		BoxLayout box = new BoxLayout(contentPanel, BoxLayout.Y_AXIS);
 		
 		// configure contentPanel
-		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));
+		contentPanel.setLayout(box);
 		contentPanel.setDoubleBuffered(true);
 		contentPanel.setVisible(true);
 		
 		// configure frame
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setSize(new Dimension(500, 500));
+		frame.setMinimumSize(new Dimension(400, 400));
 		frame.setResizable(true);
 		frame.setVisible(true);
 		
@@ -54,15 +75,11 @@ public class FrameTest {
 		mapContainer.setVisible(true);
 		
 		// add components
-		controlPanel.add(b);
-		controlPanel.add(b2);
-		controlPanel.add(b3);
 		contentPanel.add(controlPanel);
 		contentPanel.add(mapContainer);
 		frame.add(contentPanel);
 		frame.pack();
-		
-	}
+	}	
 }
 
 

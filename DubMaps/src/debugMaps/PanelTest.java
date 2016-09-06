@@ -1,9 +1,9 @@
 package debugMaps;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class PanelTest extends JPanel {
 		} catch(IOException e) { /*  ignore  */ }
 		
 		//this.setSize(new Dimension(200, 200));
-		this.setPreferredSize(new Dimension(4330, 2964));
+		this.setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
 		this.setVisible(true);
@@ -37,6 +37,6 @@ public class PanelTest extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		//this.setSize(new Dimension(this.getParent().getWidth(), this.getParent().getHeight()));
 		super.paintComponent(g2d);
-		g2d.drawImage(map, 0, 0, 4330, 2964, null);
+		g2d.drawImage(map, 0, 0, this.getWidth(), this.getHeight(), null);
 	}
 }
