@@ -1,0 +1,27 @@
+frame specification
+	size: frame is no smaller than a square, .25 * screen width // subject to change
+		  frame is no larger than screen width by screen height
+		  frame is re-sizable within these dimensions
+	
+	behavior: frame exits on close
+			  frame is visible
+				  
+map specification:
+	image: ALWAYS displayed at native aspect ratio
+		   entire image is ALWAYS accessible via scrolling
+		   image is never stretched beyond its native resolution
+				display ratio never exceeds 1 screen pixel per 1 (native) image pixel
+				and 5 (native) image pixels per 1 screen pixel 
+				// revisit this (arbitrary) limit
+		   
+		   resizing: center is displayed by default if no path drawn
+		   			 	center of path displayed by default if path is drawn
+		   			 	prefer displaying entire path on-screen
+		   			 		if full path cannot be displayed without breeching image spec
+		   			 		at current screen-size, display the center of the path
+   
+   
+notes: make a screen size helper class with screen width and height getter methods
+	research enums?
+	
+	Path drawing: get max and min xy coordinates of each path to dictate resizing
