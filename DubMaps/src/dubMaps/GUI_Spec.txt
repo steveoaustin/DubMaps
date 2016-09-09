@@ -18,10 +18,108 @@ map specification:
 		   			 	center of path displayed by default if path is drawn
 		   			 	prefer displaying entire path on-screen
 		   			 		if full path cannot be displayed without breeching image spec
-		   			 		at current screen-size, display the center of the path
+		   			 		at current screen-size, display the center of the path and 
+		   			 		zoom out as much as possible
    
-   
+Class breakdown:
+	-Display: psudo-static used to get current screen dimensions
+		> get max scale ratio (1:1) screen to image
+		> get min scale ratios (5:1) screen to image // arbitrary ratio 
+			subject to change
+		> get screen width
+		> get screen height
+		> // figure out how to get the current screen dimensions 
+			(not just default screens)
+	
+	-MapManager: used to scale and return map image object
+		> // entire map is always displayed i.e., always accessible via scrolling
+		> // zoom out max when no path is displayed
+		> // zoom in max when a path is displayed
+		
+	-PathManager: used to convert lists of edges into lines to be drawn
+		> getPath(list<edge>) return list of lines to be drawn
+		> // use g2d setStroke methods for more refined lines
+		
+	-MapPanel: used to display the map 
+		> // updates size whenever map size changes (use map manager)
+		> paintComponent: draw the map image and paths 
+			(update components before painting)
+		> updateComponents method to call map/path managers  
+		> highlight closest building to the mouse pointer (within proximity limit)
+		> update scrollbar positions via 
+			getParent().getParent().getHV***ScrollBar.setValue
+		
+	-MapScrollPane: used to hold map panel and enable scrolling
+		> // sets prefered size/other scrollPane prefs
+		> // scrolling handeled by MapPanel
+		> resize event listener notifies mapPanel of its size for image updates
+	
+	-ControlPanel: used to hold control buttons and menus
+		> // uses flow layout for easy resize behavior
+		> updateSize method will need to accommodate the lowest component
+		
+	-ContentPanel: container for map scroll pane and control panel
+		> // uses boxlayout along the y axis 
+		   
+	-ContentFrame: GUI outer frame, holds all components
+		> // resize event listener notifies? should be handled fine by components
+		> // min an max size dictated by display class
+	
+	-DubMain: main class for DubMaps
+		> initializes contentFrame in createAndShowGUI
+		> create and show gui in main via eventQueue run method
+		    
 notes: make a screen size helper class with screen width and height getter methods
 	research enums?
 	
 	Path drawing: get max and min xy coordinates of each path to dictate resizing
+	
+	Path class: design a class that accepts a path and returns a list 
+		of lines to be drawn
+	
+	CampusGraph: add a get all edges method for use in future programs (MapMaker)
+	
+	frame: calls to validate()?
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+		

@@ -1,8 +1,5 @@
 package debugMaps;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.FlowLayout;
+import java.awt.*;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -34,6 +31,12 @@ public class FrameTest {
 		JButton b = new JButton();	
 		JButton b2 = new JButton();	
 		JButton b3 = new JButton();	
+	
+		
+		JScrollPane sp = (JScrollPane) map.getParent().getParent();
+		System.out.println(sp.getHorizontalScrollBar().getMaximum() + 
+				" " + sp.getHorizontalScrollBar().getMinimum());
+		
 		
 		// configure button
 		b.setText("this is a button");
@@ -67,13 +70,23 @@ public class FrameTest {
 		frame.setMinimumSize(new Dimension(400, 400));
 		frame.setResizable(true);
 		frame.setVisible(true);
+		frame.validate();
 		
 		// configure scrollPane
 		mapContainer.setDoubleBuffered(true);
-		mapContainer.setPreferredSize(new Dimension(500, 500));
+		//mapContainer.setPreferredSize(new Dimension(500, 500));
+		mapContainer.add(map);
 		mapContainer.setViewportView(map);
+		//mapContainer.getVerticalScrollBar().setValue(300);
+		//mapContainer.getHorizontalScrollBar().setValue(300);
 		mapContainer.setVisible(true);
 		
+		// simple lambda listener demo
+		b.addActionListener(e -> {
+			System.out.println(mapContainer.getSize());
+		});
+		
+		sp.getHorizontalScrollBar().setValue(500);
 		// add components
 		contentPanel.add(controlPanel);
 		contentPanel.add(mapContainer);

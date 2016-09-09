@@ -8,6 +8,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -31,8 +35,10 @@ public class PanelTest extends JPanel {
 		this.setDoubleBuffered(true);
 		this.setVisible(true);
 		repaint();
-	}
 	
+	}
+
+
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		//this.setSize(new Dimension(this.getParent().getWidth(), this.getParent().getHeight()));
