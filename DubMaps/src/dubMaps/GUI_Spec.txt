@@ -39,7 +39,7 @@ Class breakdown:
 	-PathManager: used to convert lists of edges into lines to be drawn
 		> getPath(list<edge>) return list of lines to be drawn
 		> // use g2d setStroke methods for more refined lines
-		
+			
 	-MapPanel: used to display the map 
 		> // updates size whenever map size changes (use map manager)
 		> paintComponent: draw the map image and paths 
