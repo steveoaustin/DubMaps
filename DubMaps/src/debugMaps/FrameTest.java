@@ -1,5 +1,10 @@
 package debugMaps;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.io.IOException;
+import java.net.URL;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -7,6 +12,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
+
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 
 public class FrameTest {
 	
@@ -16,12 +24,30 @@ public class FrameTest {
         {
             public void run()
             {
+            	//justFuckMyShitUpFam();
                 createAndShowGUI();
             }
         });
     }
 	
+	public void justFuckMyShitUpFam() {
+		String resourcePath = "/debugMaps/MainView.fxml";
+        URL location = FrameTest.getClass().getResource(resourcePath);
+        FXMLLoader fxmlLoader = new FXMLLoader(location);
+
+        try {
+			Scene scene = new Scene(fxmlLoader.load(), 500, 500);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public static void createAndShowGUI() {
+		
+		
+		
+		
 		
 		PanelTest map = new PanelTest();
 		JPanel contentPanel = new JPanel();
