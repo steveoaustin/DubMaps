@@ -1,5 +1,8 @@
 package dubMaps;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
@@ -13,6 +16,5 @@ public class ContentPanel extends JPanel {
 		add(control);
 		add(mapScroll);
 		setVisible(true);
-		setDoubleBuffered(true);
 	}
 }

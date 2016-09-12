@@ -1,8 +1,8 @@
 package dubMaps;
 
 import java.awt.Dimension;
+import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
 
@@ -29,26 +29,11 @@ public class ContentFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
 		
-		// add event listeners
-		addComponentListener(new ComponentListener() {
-			/**
-			 * Recalculates the frame's max and min size in case it was moved to a new window
-			 * in a multiple monitor display
-			 * @param e: Component event associated with resizing
-			 */
-			@Override
+		// recalculate size restrictions when frame is moved
+		addComponentListener(new ComponentAdapter() {			
 			public void componentMoved(ComponentEvent e) {
 				setSizeRestrictions();
-			}
-			
-			@Override
-			public void componentResized(ComponentEvent e) { /* ignore */ }	
-			
-			@Override
-			public void componentShown(ComponentEvent e) {	/* ignore */ }
-			
-			@Override
-			public void componentHidden(ComponentEvent e) {	/* ignore */ }			
+			}		
 		});
 	}
 	
@@ -61,6 +46,8 @@ public class ContentFrame extends JFrame {
 		maxSize = new Dimension(Display.getWidth(), Display.getHeight());
 		setMaximumSize(maxSize);
 		setMinimumSize(minSize);
+		setPreferredSize(maxSize);
+		validate();
 	}
 	
 }
