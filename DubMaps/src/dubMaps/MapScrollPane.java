@@ -9,7 +9,6 @@ public class MapScrollPane extends JScrollPane {
 		MapPanel map = new MapPanel();
 		setVisible(true);
 		setDoubleBuffered(true);
-		add(map);
 		setViewportView(map);
 	}
 }

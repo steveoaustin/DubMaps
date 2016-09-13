@@ -1,8 +1,5 @@
 package dubMaps;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
@@ -10,11 +7,11 @@ import javax.swing.JPanel;
 public class ContentPanel extends JPanel {
 
 	public ContentPanel() {
-		ControlPanel control = new ControlPanel();
-		MapScrollPane mapScroll = new MapScrollPane();
+		ControlScrollPane controls = new ControlScrollPane();
+		MapScrollPane map = new MapScrollPane();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(control);
-		add(mapScroll);
+		add(controls);
+		add(map);
 		setVisible(true);
 	}
 }

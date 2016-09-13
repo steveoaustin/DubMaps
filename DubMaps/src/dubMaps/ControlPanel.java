@@ -1,5 +1,6 @@
 package dubMaps;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -10,17 +11,30 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
+
+/*
+ * ControlPanel holds GUI control components 
+ */
 public class ControlPanel extends JPanel {
 	private Dimension minSize, maxSize;
 	
 	public ControlPanel() {
 		setVisible(true);
 		setDoubleBuffered(true);
-		FlowLayout layout = new FlowLayout(FlowLayout.CENTER);
+		FlowLayout layout = new FlowLayout(FlowLayout.LEFT);
 		setLayout(layout);
+		this.setBackground(Color.pink);
 		
-		//add temp button for resize testing
-		/*
+		/* TODO: to fix resizing issue, make controlPanel a fixed height of one row of controls
+		 * add it to a scrollpane with no visible bars, and enable wheel scrolling and click dragging
+		 * to move the controlbar
+		 * 
+		 * not perfect but consistent behavior is vital in a good application
+		 * 
+		 * failure to snap-resize AND go fullscreen is unacceptable
+		 * 
+		*/
+		
 		JButton b = new JButton("I'm Rick Harrison, and this is my pawn shop.");
 		b.setVisible(true);
 		add(b);
@@ -41,7 +55,7 @@ public class ControlPanel extends JPanel {
 		b5.setVisible(true);
 		add(b5);
 		setSize();
-		*/
+		
 		addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
 				setSize();
@@ -49,14 +63,17 @@ public class ControlPanel extends JPanel {
 		});
 	}
 	
+	/**
+	 * Sets the panel's size preferences to fit all of its components
+	 */
 	public void setSize() {
-		int maxHeight = 0;  // height coordinate of lowest component
+		int maxHeight = 0;  // height coordinate of tallest component
 		int minWidth = 0;  // width of the widest component
 		for (Component c : getComponents()) {
 			if (c.getWidth() > minWidth)
 				minWidth = c.getWidth();
-			if (c.getY() > maxHeight) 
-				maxHeight = c.getY() + c.getHeight();
+			if (c.getHeight() > maxHeight) 
+				maxHeight = c.getHeight() + c.getY();
 		}
 		minSize = new Dimension(minWidth, maxHeight);
 		maxSize = new Dimension(Display.getWidth(), maxHeight);
