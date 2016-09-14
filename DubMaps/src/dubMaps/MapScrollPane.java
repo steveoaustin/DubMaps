@@ -5,35 +5,70 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JViewport;
 
 @SuppressWarnings("serial")
 public class MapScrollPane extends JScrollPane {
-
+	private MapPanel map;
+	
 	public MapScrollPane() {
-		MapPanel map = new MapPanel();
+		map = new MapPanel();
 		setVisible(true);
 		setDoubleBuffered(true);
 		setViewportView(map);
 		setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
 		setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
 		
+		
+		// listen for resize events to center scroll bars and notify child components
 		addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
-				if (e.getComponent() instanceof JScrollPane) {
-					JScrollPane p = (JScrollPane) e.getComponent();
-					Rectangle bounds = p.getViewport().getViewRect();
-					Dimension size = p.getViewport().getViewSize();
-					
-					p.getViewport().setViewPosition(new Point(
-						((size.width - bounds.width) / 2), (size.height - bounds.height) / 2));
-				}
+				MapScrollPane p = (MapScrollPane) e.getComponent();					
+				p.getViewport().setViewPosition(p.getCenter());
 				map.handleResize(e.getComponent().getWidth(), e.getComponent().getHeight());
 			}
 		});
+		
+		MouseAdapter mouseAdapter = new MouseAdapter() {
+			int startX, startY;
+			
+			@Override
+			// Enables mouse-drag scrolling
+			public void mouseDragged(MouseEvent e) {
+				MapScrollPane p = (MapScrollPane) e.getComponent();		        
+				JScrollBar horizontal = p.getHorizontalScrollBar();
+				JScrollBar vertical = p.getVerticalScrollBar();
+				
+				// get change in xy values, then update them
+				int dX = startX - e.getX();
+				int dY = startY - e.getY();
+				startX = e.getX();
+				startY = e.getY();
+				
+				horizontal.setValue(horizontal.getValue() + dX);
+				vertical.setValue(vertical.getValue() + dY);
+			}
+			
+			public void mousePressed(MouseEvent e) {
+				startX = e.getX();
+				startY = e.getY();
+			}
+		};
+		addMouseListener(mouseAdapter);
+		addMouseMotionListener(mouseAdapter);
 	}
-
+	
+	public Point getCenter() {
+		Rectangle bounds = getViewport().getViewRect();
+		Dimension size = getViewport().getViewSize();
+		
+		return new Point(((size.width - bounds.width) / 2), (size.height - bounds.height) / 2);
+	}
 }
 
 
