@@ -10,8 +10,8 @@ import java.awt.GraphicsEnvironment;
  */
 public final class Display {
 
-	// scale ratios in the form of screen pixels to image pixels
-	private static final double MIN_SCALE_RATIO = 1.0, MAX_SCALE_RATIO = 5.0;
+	// scale ratios in the form of image pixels to screen pixels 
+	private static final double MIN_IM_PX_RATIO = 1.0, MAX_IM_PX_RATIO = 5.0;
 	private static GraphicsDevice screen = 
 			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	private static int screenWidth = screen.getDisplayMode().getWidth();
@@ -22,18 +22,18 @@ public final class Display {
 	
 	/**
 	 * returns the maximum scale ratio
-	 * @return MAX_SCALE_RATIO: the max ratio for screen pixels to image pixels
+	 * @return MAX_SCALE_RATIO: the max ratio for image pixels to screen pixels 
 	 */
-	public static double getMaxRatio() {
-		return MAX_SCALE_RATIO;
+	public static double maxRatio() {
+		return MAX_IM_PX_RATIO;
 	}
 	
 	/**
 	 * returns the minimum scale ratio
-	 * @return MIN_SCALE_RATIO: the min ratio for screen pixels to image pixels
+	 * @return MIN_SCALE_RATIO: the min ratio for image pixels to screen pixels 
 	 */
-	public static double getMinRatio() {
-		return MIN_SCALE_RATIO;
+	public static double minRatio() {
+		return MIN_IM_PX_RATIO;
 	}
 	
 	/**

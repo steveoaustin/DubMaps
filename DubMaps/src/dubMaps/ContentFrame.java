@@ -46,7 +46,7 @@ public class ContentFrame extends JFrame {
 		maxSize = new Dimension(Display.getWidth(), Display.getHeight());
 		setMaximumSize(maxSize);
 		setMinimumSize(minSize);
-		setPreferredSize(maxSize);
+		setPreferredSize(minSize);
 		validate();
 	}
 	

@@ -7,10 +7,10 @@ import javax.swing.JPanel;
 public class ContentPanel extends JPanel {
 
 	public ContentPanel() {
-		ControlScrollPane controls = new ControlScrollPane();
+		//ControlScrollPane controls = new ControlScrollPane();
 		MapScrollPane map = new MapScrollPane();
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(controls);
+		//add(controls);
 		add(map);
 		setVisible(true);
 	}

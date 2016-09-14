@@ -1,5 +1,7 @@
 package dubMaps;
 
+import java.awt.event.ComponentAdapter;
+
 import javax.swing.JScrollPane;
 
 @SuppressWarnings("serial")
