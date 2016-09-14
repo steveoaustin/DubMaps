@@ -1,11 +1,11 @@
 package dubMaps;
 
+/*
+ * Abstraction function: an Edge represents a directed edge in a graph 
+ * 
+ * Representation Invariant: Edge has a non-null parent node, child node, and nonzero length
+ */
 public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
-	/*
-	 * Abstraction function: an Edge represents a directed edge in a graph 
-     * 
-     * Representation Invariant: Edge has a non-null parent node, child node, and nonzero length
-  	 */
 	
 	private final Node<T> parent;
 	private final Node<T> child;

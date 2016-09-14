@@ -13,9 +13,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 
 @SuppressWarnings("serial")
+
+/*
+ * MapScrollPane is designed to work a map application to optimize the display,
+ * centering content automatically upon resizing, and enabling helpful UI features
+ */
 public class MapScrollPane extends JScrollPane {
 	private MapPanel map;
 	
+	/**
+	 * Constructs a new MapScrollPane that always has vertical and horizontal scroll bars,
+	 * resize listeners, and mouse listeners
+	 */
 	public MapScrollPane() {
 		map = new MapPanel();
 		setVisible(true);
@@ -34,6 +43,7 @@ public class MapScrollPane extends JScrollPane {
 			}
 		});
 		
+		//enable click-drag scrolling
 		MouseAdapter mouseAdapter = new MouseAdapter() {
 			int startX, startY;
 			
@@ -63,10 +73,13 @@ public class MapScrollPane extends JScrollPane {
 		addMouseMotionListener(mouseAdapter);
 	}
 	
+	/**
+	 * The center-point of the scrollpane's content
+	 * @return a new point object holding the x and y values of the pane's center-point
+	 */
 	public Point getCenter() {
 		Rectangle bounds = getViewport().getViewRect();
 		Dimension size = getViewport().getViewSize();
-		
 		return new Point(((size.width - bounds.width) / 2), (size.height - bounds.height) / 2);
 	}
 }

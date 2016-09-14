@@ -14,20 +14,24 @@ import javax.swing.JFrame;
  */
 public class ContentFrame extends JFrame {
 	
-	private static final double MIN_SCREEN_RATIO = 0.3;
+	private static final double MIN_SCREEN_RATIO = 0.2;
 	private Dimension minSize, maxSize;
 
+	/**
+	 * Constructs the outer window frame, and child components, for map applications
+	 */
 	public ContentFrame() {
 		// add GUI content
 		ContentPanel content = new ContentPanel();
 		add(content);
 		
 		// set frame properties
-		setSizeRestrictions();
 		setResizable(true);
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
+		// size frame after packing to trigger resize events
+		setSizeRestrictions();
 		
 		// recalculate size restrictions when frame is moved
 		addComponentListener(new ComponentAdapter() {			

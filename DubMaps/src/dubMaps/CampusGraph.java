@@ -7,15 +7,16 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
+/*
+ * Abstraction function:graph is represented as a Set<Node<CampusLocation>>
+ * Each element is a valid node
+ * 
+ * Representation Invariant: graph does not contain any null nodes
+ * and each node contains non-null set of edges for 
+ * which it is the parent node.
+ */
 public class CampusGraph {
-	/*
-	 * Abstraction function:graph is represented as a Set<Node<CampusLocation>>
- 	 * Each element is a valid node
-     * 
-     * Representation Invariant: graph does not contain any null nodes
- 	 * and each node contains non-null set of edges for 
- 	 * which it is the parent node.
-  	 */
+	
 	private final Set<Node<CampusLocation>> nodes;
 	private final boolean DEBUG = true;
 	
@@ -25,7 +26,6 @@ public class CampusGraph {
 	public CampusGraph() {
 		nodes = new HashSet<Node<CampusLocation>>();
 	}
-	
 	
 	/**
 	 * Returns whether or not the graph contains node

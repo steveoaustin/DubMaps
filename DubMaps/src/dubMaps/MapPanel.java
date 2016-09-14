@@ -8,18 +8,28 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
+
+/*
+ * Map panel is a JPanel designed to draw an image of a map, optimized for 
+ * the current display. MapPanel should be re-optimized for display each time
+ * its parent container is resized, via the handleResize method   
+ */
 public class MapPanel extends JPanel {
 	private boolean defaultOutput;
 	private MapManager map;
 	
+	/**
+	 * Constructs a new MapPanel to display a map
+	 */
 	public MapPanel() {
 		defaultOutput = true;
-		map = new MapManager();
+		map = new MapManager(getWidth(), getHeight());
 		setVisible(true);
 		this.setBackground(Color.blue);
 		repaint();
 	}
 	
+	// update the map
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g2d);

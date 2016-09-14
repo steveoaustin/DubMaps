@@ -3,14 +3,14 @@ package dubMaps;
 import java.util.Set;
 import java.util.TreeSet;
 
+/*
+ * Abstraction function: Node is represented as a CampusLocation 
+ * and has a set of all edges for which it is a parent 
+ * 
+ * Representation Invariant: Node holds a CampusLocation and a non-null
+ * set of edges for which it is the parent 
+ */
 public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
-	/*
-	 * Abstraction function: Node is represented as a CampusLocation 
-	 * and has a set of all edges for which it is a parent 
-     * 
-     * Representation Invariant: Node holds a CampusLocation and a non-null
-     * set of edges for which it is the parent 
-  	 */
 	
 	private final Set<Edge<T>> edges;                   
 	private final CampusLocation data;
