@@ -24,6 +24,7 @@ public class MapManager {
 	public MapManager(int width, int height) {
 		try {
 			map = ImageIO.read(new File(mapFilepath));
+			map.setAccelerationPriority(1);
 		} catch (IOException e) {
 			System.out.println("Invalid filepath");
 			System.exit(0);
@@ -60,12 +61,11 @@ public class MapManager {
 	}
 	
 	/**
-	 * Recalculates imageArgs to be optimized for the current display,
-	 * "zooming out" as much as possible
+	 * Recalculates imageArgs to be optimized for the given display size
 	 * @param width: The display's width
 	 * @param height: The display's height
 	 */
-	public void zoomOut(int width, int height) {
+	public void optimizeImage(int width, int height) {
 		//calculate the ratio of image pixels to screen pixels
 		double hRat = ((1.0 * map.getHeight()) / (1.0 * height));
 		double wRat = ((1.0 * map.getWidth()) / ( 1.0 * width));
@@ -131,23 +131,6 @@ public class MapManager {
 		return (int) (((1.0 * map.getHeight()) / (1.0 * map.getWidth())) * width);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

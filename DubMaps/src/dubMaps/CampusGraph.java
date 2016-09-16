@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
+import java.util.TreeSet;
 
 /*
  * Abstraction function:graph is represented as a Set<Node<CampusLocation>>
@@ -18,6 +19,7 @@ import java.util.Set;
 public class CampusGraph {
 	
 	private final Set<Node<CampusLocation>> nodes;
+	private final Set<Node<CampusLocation>> destinationNodes;
 	private final boolean DEBUG = true;
 	
 	/**
@@ -25,6 +27,7 @@ public class CampusGraph {
 	 */
 	public CampusGraph() {
 		nodes = new HashSet<Node<CampusLocation>>();
+		destinationNodes = new TreeSet<Node<CampusLocation>>();
 	}
 	
 	/**
@@ -64,6 +67,18 @@ public class CampusGraph {
 	}
 	
 	/**
+	 * Returns a list of campusLocations belonging to destinations in the graph
+	 * @return temporary list of locations
+	 */
+	public List<CampusLocation> getDestinations() {
+		List<CampusLocation> temp = new ArrayList<CampusLocation>();
+		for(Node<CampusLocation> n: destinationNodes)
+			temp.add(n.getLocation());
+		
+		return temp;
+	}
+	
+	/**
 	 * Adds node and its edge list to nodes. 
 	 * Does nothing is node is null or is already in the graph
 	 * @modifies this
@@ -72,10 +87,13 @@ public class CampusGraph {
 	 */
 	public void add(Node<CampusLocation> node) {
 		checkRep();
-		if (node == null || this.contains(node)) {
+		if (node == null || this.contains(node))
 			return;
-		}
+		
 		nodes.add(node);
+		// check if the node is named as a building/destination
+		if (!node.getLocation().getLongName().substring(0, 4).equals("Path"))
+			destinationNodes.add(node);
 		checkRep();
 	}
 

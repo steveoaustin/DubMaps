@@ -22,7 +22,6 @@ public class ContentPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		//add(controls);
 		add(map);
-		this.setBackground(Color.white);
 		setVisible(true);
 	}
 }

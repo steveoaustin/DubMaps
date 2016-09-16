@@ -20,6 +20,8 @@ import javax.swing.JViewport;
  */
 public class MapScrollPane extends JScrollPane {
 	private MapPanel map;
+	private Point contentCenter;
+	private boolean customCenter; // true indicates center-point set by client
 	
 	/**
 	 * Constructs a new MapScrollPane that always has vertical and horizontal scroll bars,
@@ -32,7 +34,8 @@ public class MapScrollPane extends JScrollPane {
 		setViewportView(map);
 		setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
 		setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_ALWAYS);
-		
+		customCenter = false;
+		getViewport().setViewPosition(getCenter());
 		
 		// listen for resize events to center scroll bars and notify child components
 		addComponentListener(new ComponentAdapter() {
@@ -77,10 +80,29 @@ public class MapScrollPane extends JScrollPane {
 	 * The center-point of the scrollpane's content
 	 * @return a new point object holding the x and y values of the pane's center-point
 	 */
-	public Point getCenter() {
+	private Point getCenter() {
+		if (customCenter)
+			return contentCenter;
 		Rectangle bounds = getViewport().getViewRect();
 		Dimension size = getViewport().getViewSize();
 		return new Point(((size.width - bounds.width) / 2), (size.height - bounds.height) / 2);
+	}
+	
+	/**
+	 * Set the scrollpane's content center-point to x,y
+	 * @param x: Content's x coordinate
+	 * @param y: Content's y coordinate
+	 */
+	public void setCenter(int x, int y) {
+		contentCenter = new Point(x, y);
+		customCenter = true;
+	}
+	
+	/**
+	 * Resets the center-point of the scroll-pane's content to the true center
+	 */
+	public void resetCenter() {
+		customCenter = false;
 	}
 }
 
