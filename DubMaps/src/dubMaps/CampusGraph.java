@@ -18,6 +18,7 @@ import java.util.TreeSet;
  */
 public class CampusGraph {
 	
+	private final Set<CampusLocation> labels;
 	private final Set<Node<CampusLocation>> nodes;
 	private final Set<Node<CampusLocation>> destinationNodes;
 	private final boolean DEBUG = true;
@@ -26,6 +27,7 @@ public class CampusGraph {
 	 * Instantiates a new graph.
 	 */
 	public CampusGraph() {
+		labels = new TreeSet<CampusLocation>();
 		nodes = new HashSet<Node<CampusLocation>>();
 		destinationNodes = new TreeSet<Node<CampusLocation>>();
 	}
@@ -67,15 +69,62 @@ public class CampusGraph {
 	}
 	
 	/**
+	 * Returns the closest node to x,y within a limited distance, or null of none are close enough
+	 * @param x: The x coordinate to be searched for
+	 * @param y: The y coordinate to be searched for
+	 * @param maxDistance: The maximum acceptable distance from the node
+	 * @return The closest node to x,y within maxDistance, null if none found
+	 */
+	public Node<CampusLocation> getClosestBuilding(int x, int y, int maxDistance) {
+		Node<CampusLocation> closest = null;
+		
+		// apply the distance formula on each building node to find the closest one
+		for (Node<CampusLocation> n: destinationNodes) {
+			int distance = (int) Math.sqrt(Math.pow(x - n.getLocation().getX(), 2.0) + 
+					                       Math.pow(y - n.getLocation().getY(), 2.0));
+			if (distance < maxDistance) {
+				closest = n;
+				maxDistance = distance;
+			}
+		}
+		return closest;
+	}
+	
+	/**
 	 * Returns a list of campusLocations belonging to destinations in the graph
 	 * @return temporary list of locations
 	 */
 	public List<CampusLocation> getDestinations() {
-		List<CampusLocation> temp = new ArrayList<CampusLocation>();
+		List<CampusLocation> result = new ArrayList<CampusLocation>();
 		for(Node<CampusLocation> n: destinationNodes)
-			temp.add(n.getLocation());
+			result.add(n.getLocation());
 		
-		return temp;
+		return result;
+	}
+	
+	/**
+	 * Returns the location label associated with this building, or null if none found
+	 * @param building: The building to search for
+	 * @return the building's label, or null if not found
+	 */
+	public CampusLocation getLabel(Node<CampusLocation> building) {
+		for(CampusLocation c: labels) 
+			if (c.getName().equals(building.getLocation().getName().substring(0, 3)))
+				return c;
+		
+		return null;
+	}
+	
+	/**
+	 * Returns a list of locations for building labels
+	 * @return a list of campusLocations used as labels
+	 */
+	public List<CampusLocation> getLabels() {
+		List<CampusLocation> result = new ArrayList<CampusLocation>();
+		for(CampusLocation c: labels)
+			result.add(c);
+		
+		return result;
 	}
 	
 	/**
@@ -95,6 +144,17 @@ public class CampusGraph {
 		if (!node.getLocation().getLongName().substring(0, 4).equals("Path"))
 			destinationNodes.add(node);
 		checkRep();
+	}
+	
+	/**
+	 * Adds label to the list of labels if it is non-null and not already in the graph
+	 * @param label the location label to be added
+	 */
+	public void addLabel(CampusLocation label) {
+		if (label == null || this.labels.contains(label))
+			return;
+		
+		labels.add(label);
 	}
 
 	/**

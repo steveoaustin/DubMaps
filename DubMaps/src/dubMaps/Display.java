@@ -11,7 +11,7 @@ import java.awt.GraphicsEnvironment;
 public final class Display {
 
 	// scale ratios in the form of image pixels to screen pixels 
-	private static final double MIN_IM_PX_RATIO = 1.0, MAX_IM_PX_RATIO = 5.0;
+	private static final double MIN_IM_PX_RATIO = 1.0, MAX_IM_PX_RATIO = 4.0;
 	private static GraphicsDevice screen = 
 			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	private static int screenWidth = screen.getDisplayMode().getWidth();

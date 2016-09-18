@@ -1,5 +1,6 @@
 package dubMaps;
 
+import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -60,12 +61,36 @@ public class MapManager {
 		return imageArgs;
 	}
 	
+	public void zoomIn(int width, int height, Dimension focusArea) {
+		//calculate the ratio of image pixels to screen pixels
+		double hRat = ((1.0 * map.getHeight()) / (1.0 * focusArea.height));
+		double wRat = ((1.0 * map.getWidth()) / ( 1.0 * focusArea.width));
+		
+		// expand focusArea to scale limit
+		if (focusArea.width > focusArea.height) {
+			// scale down image width if necessary
+			if (wRat > Display.maxRatio())
+				focusArea.width = getValidSize(focusArea.width, wRat, false);
+			// update display arguments
+			imageArgs[2] = focusArea.width;
+			imageArgs[3] = scaleHeight(focusArea.width);	
+		} else {
+			// scale down image width if necessary
+			if (hRat > Display.maxRatio())
+				focusArea.height = getValidSize(focusArea.height, hRat, false);
+			
+			// update display arguments
+			imageArgs[2] = scaleWidth(focusArea.height);
+			imageArgs[3] = focusArea.height;	
+		}
+	}
+	
 	/**
-	 * Recalculates imageArgs to be optimized for the given display size
+	 * Recalculates imageArgs to be "zoom out" for the current display size
 	 * @param width: The display's width
 	 * @param height: The display's height
 	 */
-	public void optimizeImage(int width, int height) {
+	public void zoomOut(int width, int height) {
 		//calculate the ratio of image pixels to screen pixels
 		double hRat = ((1.0 * map.getHeight()) / (1.0 * height));
 		double wRat = ((1.0 * map.getWidth()) / ( 1.0 * width));

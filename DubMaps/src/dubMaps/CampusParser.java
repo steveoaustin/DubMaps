@@ -21,11 +21,12 @@ public class CampusParser {
 	 * @param pathsFile File containing path information 
 	 * @modifies this
 	 */
-	public CampusParser (String buildingsFile, String pathsFile){
+	public CampusParser (String buildingsFile, String pathsFile, String buildingLabelsFile){
 		graph = new CampusGraph();
 		try {
 			parseBuildings(buildingsFile);
 			parsePaths(pathsFile);
+			parseLabels(buildingLabelsFile);
 		} catch (Exception e) { /*ignore*/ }
 	}
 	
@@ -35,6 +36,49 @@ public class CampusParser {
 	 */
 	public CampusGraph getGraph() {
 		return graph;
+	}
+	
+	
+	private void parseLabels(String filename) throws Exception {
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(filename));
+			
+	        String inputLine;
+	        while ((inputLine = reader.readLine()) != null) {
+	        	
+	            // Parse the data, throwing an exception for malformed lines.
+	            inputLine = inputLine.replace("\"", "");
+	            String[] tokens = inputLine.split("\t");
+	            if (tokens.length != 4) {
+	                throw new Exception("Line should contain exactly 3 tabs: " + inputLine);
+	            }
+	            
+	            // save location information
+	            String shortName = tokens[0];
+	            String longName = tokens[1];
+	            double x = Double.parseDouble(tokens[2]);
+	            double y = Double.parseDouble(tokens[3]);
+
+	            // Create a location from the parsed data
+	            CampusLocation location = new CampusLocation(shortName, longName, x, y);
+	            
+	            // add new label to the graph
+	            graph.addLabel(location);
+	        }
+		} catch (IOException e) { 
+			System.err.println(e.toString());
+			e.printStackTrace(System.err);	
+        } finally {
+			if (reader != null) {
+	            try {
+	                reader.close();
+	            } catch (IOException e) {
+	                System.err.println(e.toString());
+	                e.printStackTrace(System.err);
+	            }
+	        }
+		}
 	}
 	
 	/**

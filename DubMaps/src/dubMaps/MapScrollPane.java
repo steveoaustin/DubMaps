@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
+import javax.swing.SwingUtilities;
 
 @SuppressWarnings("serial")
 
@@ -21,6 +22,7 @@ import javax.swing.JViewport;
 public class MapScrollPane extends JScrollPane {
 	private MapPanel map;
 	private Point contentCenter;
+	private double xCenterOffset, yCenterOffset;
 	private boolean customCenter; // true indicates center-point set by client
 	
 	/**
@@ -28,7 +30,9 @@ public class MapScrollPane extends JScrollPane {
 	 * resize listeners, and mouse listeners
 	 */
 	public MapScrollPane() {
-		map = new MapPanel();
+		map = new MapPanel(this);
+		xCenterOffset = 0.0;
+	    yCenterOffset = 0.0;
 		setVisible(true);
 		setDoubleBuffered(true);
 		setViewportView(map);
@@ -40,7 +44,7 @@ public class MapScrollPane extends JScrollPane {
 		// listen for resize events to center scroll bars and notify child components
 		addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
-				MapScrollPane p = (MapScrollPane) e.getComponent();					
+				MapScrollPane p = (MapScrollPane) e.getComponent();
 				p.getViewport().setViewPosition(p.getCenter());
 				map.handleResize(e.getComponent().getWidth(), e.getComponent().getHeight());
 			}
@@ -68,12 +72,31 @@ public class MapScrollPane extends JScrollPane {
 			}
 			
 			public void mousePressed(MouseEvent e) {
+				MapScrollPane p = (MapScrollPane) e.getComponent();
+				JScrollBar xOffset = p.getHorizontalScrollBar();
+				JScrollBar yOffset = p.getVerticalScrollBar();
+				
+				if (SwingUtilities.isLeftMouseButton(e))
+					p.map.handlePath(e.getX() + xOffset.getValue(), e.getY() + yOffset.getValue());
+				if (SwingUtilities.isRightMouseButton(e)) 
+					p.map.clearPath();
 				startX = e.getX();
 				startY = e.getY();
+				
+				p.map.repaint();
+				
+				// scroll bars to trigger image drawing
+				yOffset.setValue(yOffset.getValue() + 1);
+				yOffset.setValue(yOffset.getValue() - 1);
+				p.scrollToCenter();
 			}
 		};
 		addMouseListener(mouseAdapter);
 		addMouseMotionListener(mouseAdapter);
+	}
+	
+	public void scrollToCenter() {
+		getViewport().setViewPosition(getCenter());
 	}
 	
 	/**
@@ -81,20 +104,27 @@ public class MapScrollPane extends JScrollPane {
 	 * @return a new point object holding the x and y values of the pane's center-point
 	 */
 	private Point getCenter() {
-		if (customCenter)
-			return contentCenter;
 		Rectangle bounds = getViewport().getViewRect();
 		Dimension size = getViewport().getViewSize();
-		return new Point(((size.width - bounds.width) / 2), (size.height - bounds.height) / 2);
+		Point center = new Point(((size.width - bounds.width) / 2),
+								 (size.height - bounds.height) / 2);
+		if (customCenter) {
+			center.x *= (2 * xCenterOffset);
+			center.y *= (2 * yCenterOffset);
+		}
+		return center;
 	}
 	
 	/**
-	 * Set the scrollpane's content center-point to x,y
-	 * @param x: Content's x coordinate
-	 * @param y: Content's y coordinate
+	 * Set the scrollpane's content center-point to the the given percentages, with .5
+	 * representing the true center
+	 * @param x: Content's x percentage
+	 * @param y: Content's y percentage
 	 */
-	public void setCenter(int x, int y) {
-		contentCenter = new Point(x, y);
+	public void setCenter(double xPercent, double yPercent) {
+		xCenterOffset = xPercent;
+		yCenterOffset = yPercent;
+		System.out.println(xPercent + " " + yPercent);
 		customCenter = true;
 	}
 	
