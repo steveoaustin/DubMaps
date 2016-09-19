@@ -63,7 +63,6 @@ public class MapManager {
 	
 	
 	/**
-	 * TODO: Make this actually work for large paths
 	 * Recalculates imageArgs to "zoom in" for the current display size, attempting to
 	 * fit focusArea on screen
 	 * @param width: The display's width
@@ -71,7 +70,6 @@ public class MapManager {
 	 * @param focusArea: The dimensions of the area being zoomed in on, in native pixels
 	 */
 	public void zoomIn(int width, int height, Dimension focusArea) {
-		System.out.println("Zoom in");
 		//calculate the ratio of image pixels to screen pixels
 		double hRat = ((1.0 * map.getHeight()) / (1.0 * focusArea.height));
 		double wRat = ((1.0 * map.getWidth()) / ( 1.0 * focusArea.width));
@@ -82,7 +80,7 @@ public class MapManager {
 			if (wRat > Display.maxRatio() || wRat < Display.minRatio())
 				focusArea.width = getValidSize(focusArea.width, wRat, false);
 			
-			// scale up focus area if it is smaller than width
+			// scale up focus area if width would be too small to fill the window
 			if (focusArea.width < width)
 				focusArea.width = width;
 			
@@ -90,11 +88,11 @@ public class MapManager {
 			imageArgs[2] = focusArea.width;
 			imageArgs[3] = scaleHeight(focusArea.width);	
 		} else {
-			// scale down image width if necessary
+			// scale image height if necessary
 			if (hRat > Display.maxRatio() || hRat < Display.minRatio())
 				focusArea.height = getValidSize(focusArea.height, hRat, false);
 			
-			// scale up focus area if it is smaller than height
+			// scale up focus area if height would be too small to fill the window
 			if (focusArea.height < height)
 				focusArea.height = height;
 			
@@ -110,7 +108,6 @@ public class MapManager {
 	 * @param height: The display's height
 	 */
 	public void zoomOut(int width, int height) {
-		System.out.println("Zoom out");
 		//calculate the ratio of image pixels to screen pixels
 		double hRat = ((1.0 * map.getHeight()) / (1.0 * height));
 		double wRat = ((1.0 * map.getWidth()) / ( 1.0 * width));

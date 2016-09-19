@@ -134,9 +134,12 @@ public class MapPanel extends JPanel {
 	public void setScrollCenter() {
 		// exit if a path is not drawn
 		if (pathStart == null || pathDest == null) { return; } 
-		Rectangle bounds = ui.getPathBounds(model.getPath(pathStart, pathDest));		
-		double x = ((bounds.x + (1.0 * bounds.width / 2)) / map.getWidth());
-		double y = ((bounds.y + (1.0 * bounds.height / 2)) / map.getHeight());
+		Rectangle bounds = ui.getPathBounds(model.getPath(pathStart, pathDest));
+		
+		// calculate the "percentage" that scrollBars should be set to, scaling 
+		// with respect to native image pixels
+		double x = ((bounds.x + (1.0 * bounds.width / 2)) / map.getMap().getWidth());
+		double y = ((bounds.y + (1.0 * bounds.height / 2)) / map.getMap().getHeight());
 		parent.setCenter(x, y);
 	}
 	
