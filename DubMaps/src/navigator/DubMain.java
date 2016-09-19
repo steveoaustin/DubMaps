@@ -1,4 +1,4 @@
-package dubMaps;
+package navigator;
 
 import java.awt.EventQueue;
 

@@ -1,4 +1,4 @@
-package dubMaps;
+package controller;
 
 import java.awt.Color;
 import java.awt.Component;

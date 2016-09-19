@@ -1,6 +1,8 @@
-package dubMaps;
+package navigator;
 
 import javax.swing.JScrollPane;
+
+import controller.ControlPanel;
 
 @SuppressWarnings("serial")
 

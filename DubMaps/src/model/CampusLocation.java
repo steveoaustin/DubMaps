@@ -1,4 +1,4 @@
-package dubMaps;
+package model;
 
 /**
  * Representation invariant: shortName, longName, x, and y are not null 

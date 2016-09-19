@@ -1,10 +1,12 @@
-package dubMaps;
+package navigator;
 
 import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 import javax.swing.JFrame;
+
+import controller.Display;
 
 @SuppressWarnings("serial")
 

@@ -1,4 +1,4 @@
-package dubMaps;
+package navigator;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -98,6 +98,15 @@ public class MapScrollPane extends JScrollPane {
 				    p.setSize(p.getWidth() + 1, p.getHeight() + 1);
 					p.setSize(p.getWidth() - 1, p.getHeight() - 1);
 				}
+			}
+			
+			// Highlight the closest building entrance to the mouse
+			public void mouseMoved(MouseEvent e) {
+				MapScrollPane p = (MapScrollPane) e.getComponent();		        
+				JScrollBar horizontal = p.getHorizontalScrollBar();
+				JScrollBar vertical = p.getVerticalScrollBar();
+				p.map.highlightClosestBuilding(e.getX() + horizontal.getValue(),
+						e.getY() + vertical.getValue());
 			}
 		};
 		addMouseListener(mouseAdapter);

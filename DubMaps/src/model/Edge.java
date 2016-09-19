@@ -1,4 +1,4 @@
-package dubMaps;
+package model;
 
 /*
  * Abstraction function: an Edge represents a directed edge in a graph 

@@ -1,4 +1,4 @@
-package dubMaps;
+package model;
 
 import java.util.ArrayList;
 import java.util.HashSet;

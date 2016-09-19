@@ -1,4 +1,4 @@
-package dubMaps;
+package controller;
 
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -7,6 +7,9 @@ import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
+
+import model.CampusLocation;
+import model.Edge;
 
 /*
  * UI manager works with map manager to scale and return graphics arguments to
@@ -71,12 +74,27 @@ public class UIManager {
 	}
 	
 	/**
+	 * Returns a list of scaled x y coordinates that represent building entrances
+	 * @param entrances: The list of entrances
+	 * @return A list of 2 element integer arrays; each is the x y position of an entrance
+	 */
+	public List<int[]> getBuildingEntrances(List<CampusLocation> entrances) {
+		List<int[]> result = new ArrayList<int[]>();
+		// add x y coordinates for each entrance
+		for(CampusLocation c: entrances)
+			result.add(new int[]{ (int) (c.getX() / scaleWidth()),
+					(int) (c.getY() / scaleHeight()) });
+		
+		return result;
+	}
+	
+	/**
 	 * Returns a list of graphics draw String method arguments containing locations
 	 * abbreviations and their display x y coordinates
 	 * @param buildings: A list of CampusLocations that represent destinations
 	 * @return The building's abbreviated names and drawString arguments
 	 */
-	public List<String[]> getBuildings(List<CampusLocation> buildings) {
+	public List<String[]> getBuildingLabels(List<CampusLocation> buildings) {
 		List<String[]> result = new ArrayList<String[]>();
 		for(CampusLocation c: buildings)		
 			result.add(centerText(c.getName(), 
@@ -92,7 +110,8 @@ public class UIManager {
 	 * @param location: A CampusLocation that represents the building
 	 * @return The building's drawString arguments
 	 */
-	public String[] getBuilding(CampusLocation location) {
+	public String[] getBuildingLabel(CampusLocation location) {
+		if (location == null) { return null; }
 		return centerText(location.getName(), 
 				   (int) (location.getX() / scaleWidth()),
 				   (int) (location.getY() / scaleHeight()));

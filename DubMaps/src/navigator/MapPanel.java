@@ -1,4 +1,4 @@
-package dubMaps;
+package navigator;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -7,8 +7,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JPanel;
+
+import controller.MapManager;
+import controller.UIManager;
+import model.CampusGraph;
+import model.CampusLocation;
+import model.CampusParser;
+import model.Node;
 
 @SuppressWarnings("serial")
 
@@ -19,8 +28,9 @@ import javax.swing.JPanel;
  */
 public class MapPanel extends JPanel {
 	private final int OFFSET = 2; // outlined text border width
-	private final int MAX_DISTANCE = 200; // max acceptable click distance from target
+	private final int MAX_DISTANCE = 100; // max acceptable click distance from target
 	private Node<CampusLocation> pathStart, pathDest;
+	private int[] closestEntrance;
 	private MapScrollPane parent;
 	private boolean path;
 	private MapManager map;
@@ -41,6 +51,7 @@ public class MapPanel extends JPanel {
 		path = false;
 		pathStart = null;
 		pathDest = null;
+		closestEntrance = new int[2];
 		repaint();
 		setVisible(true);
 	}
@@ -54,7 +65,6 @@ public class MapPanel extends JPanel {
 		super.paintComponent(g2d);
 		
 		// set graphics preferences
-		g2d.setStroke(new BasicStroke(7));
 		g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
 				RenderingHints.VALUE_TEXT_ANTIALIAS_LCD_HRGB);
 		g2d.setFont(ui.getFont());
@@ -68,6 +78,7 @@ public class MapPanel extends JPanel {
 				args[4], args[5], args[6], args[7], null);
 		
 		// draw the path if it has been selected
+		g2d.setStroke(new BasicStroke(7, BasicStroke.JOIN_ROUND, BasicStroke.CAP_ROUND));
 		if (pathStart != null && pathDest != null) {
 			g2d.setColor(Color.blue);
 			for (int[] i: ui.getPath(model.getPath(pathStart, pathDest)))
@@ -75,7 +86,7 @@ public class MapPanel extends JPanel {
 		}
 		
 		// Print building labels
-		for(String[] s: ui.getBuildings(model.getLabels())) {
+		for(String[] s: ui.getBuildingLabels(model.getLabels())) {
 			int x = Integer.parseInt(s[1]);
 			int y = Integer.parseInt(s[2]);
 		    // outline text in black
@@ -89,9 +100,24 @@ public class MapPanel extends JPanel {
 			g2d.drawString(s[0], x, y);
 		}
 		
+		// Print small markers at each building entrance and highlight the closest
+		// one to the mouse pointer
+		g2d.setStroke(new BasicStroke(1, BasicStroke.JOIN_ROUND, BasicStroke.CAP_ROUND));
+		int offset = 5, size = 2 * offset;		
+		for(int[] i: ui.getBuildingEntrances(model.getDestinations())) {
+			g2d.setColor(Color.green);
+			// label the closest building with a different color			
+			if (closestEntrance[0] == i[0] && closestEntrance[1] == i[1])
+				g2d.setColor(Color.orange);
+				
+			g2d.fillOval(i[0] - offset, i[1] - offset, size, size);
+			g2d.setColor(Color.black);
+			g2d.drawOval(i[0] - offset - 1, i[1] - offset - 1, size + 2, size + 2);
+		}
+		
 		// highlight the start building in green
 		if (pathStart != null) {
-			String[] s = ui.getBuilding(model.getLabel(pathStart));
+			String[] s = ui.getBuildingLabel(model.getLabel(pathStart));
 			int x = Integer.parseInt(s[1]);
 			int y = Integer.parseInt(s[2]);
 			g2d.setColor(Color.green);
@@ -100,7 +126,7 @@ public class MapPanel extends JPanel {
 		
 		// highlight the destination building in red
 		if (pathDest != null) {
-			String[] s = ui.getBuilding(model.getLabel(pathDest));
+			String[] s = ui.getBuildingLabel(model.getLabel(pathDest));
 			int x = Integer.parseInt(s[1]);
 			int y = Integer.parseInt(s[2]);
 			g2d.setColor(Color.red);
@@ -141,6 +167,29 @@ public class MapPanel extends JPanel {
 		double x = ((bounds.x + (1.0 * bounds.width / 2)) / map.getMap().getWidth());
 		double y = ((bounds.y + (1.0 * bounds.height / 2)) / map.getMap().getHeight());
 		parent.setCenter(x, y);
+	}
+	
+	
+	public void highlightClosestBuilding(int x, int y) {
+		if (path) { return; } // don't highlight entrances if a path is already drawn
+		x *= ui.scaleWidth();
+		y *= ui.scaleHeight();
+		Node<CampusLocation> n = model.getClosestBuilding(x, y, MAX_DISTANCE);
+		// quit if a the mouse if too far from a building, reset closestEntrance
+		if (n == null) { 
+			closestEntrance[0] = -1;
+			closestEntrance[1] = -1;
+			repaint();
+			return; 
+		}  
+		
+		// scale the coordinates of n to fit on screen
+		List<CampusLocation> temp = new ArrayList<CampusLocation>();
+		temp.add(n.getLocation());
+		int[] loc = ui.getBuildingEntrances(temp).get(0);
+		closestEntrance[0] = loc[0];
+		closestEntrance[1] = loc[1];
+		repaint();
 	}
 	
 	/**

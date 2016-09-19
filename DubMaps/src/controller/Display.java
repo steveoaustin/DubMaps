@@ -1,4 +1,4 @@
-package dubMaps;
+package controller;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
