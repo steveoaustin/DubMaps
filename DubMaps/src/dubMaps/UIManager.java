@@ -1,6 +1,5 @@
 package dubMaps;
 
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
@@ -9,6 +8,10 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * UI manager works with map manager to scale and return graphics arguments to
+ * draw a user interface on-screen
+ */
 public class UIManager {
 	private List<int[]> path;
 	private final MapManager map;
@@ -39,6 +42,11 @@ public class UIManager {
 		return path;
 	}
 	
+	/**
+	 * Returns a rectangle representing the on-screen boundaries of the current path
+	 * @param unscaledPath: A list of path segments
+	 * @return a rectangle enclosing the entire path, in native image pixels
+	 */
 	public Rectangle getPathBounds(List<Edge<CampusLocation>> unscaledPath) {
 		List<int[]> segs = getPath(unscaledPath);
 		int maxX = 0, minX = map.getMap().getWidth();
@@ -53,6 +61,12 @@ public class UIManager {
 			if (i[1] < minY || i[3] < minY)
 				minY = Math.min(i[1], i[3]);
 		}
+		// scale back up to pixel dimensions
+		minY *= scaleHeight();
+		maxY *= scaleHeight();
+		minX *= scaleWidth();
+		maxX *= scaleWidth();
+		
 		return new Rectangle(minX, minY, (maxX - minX), (maxY - minY));
 	}
 	
@@ -106,6 +120,7 @@ public class UIManager {
 		context = g;
 	}
 	
+	// calculates drawString arguments to display text centered exactly at x, y
 	private String[] centerText(String text, int x, int y) {
 		String[] result = new String[3];
 		result[0] = text;
@@ -119,10 +134,12 @@ public class UIManager {
 		return result;
 	}
 	
+	// returns the ratio of display width to image width
 	public double scaleWidth() {
 		return (1.0 * map.getMap().getWidth()) / (1.0 * map.getWidth());
 	}
 	
+	// returns the ratio of display height to image height
 	public double scaleHeight() {
 		return (1.0 * map.getMap().getHeight()) / (1.0 * map.getHeight());
 	}

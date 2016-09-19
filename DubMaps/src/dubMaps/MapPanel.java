@@ -18,13 +18,15 @@ import javax.swing.JPanel;
  * its parent container is resized, via the handleResize method   
  */
 public class MapPanel extends JPanel {
-	private final int OFFSET = 2, MAX_DISTANCE = 200;
+	private final int OFFSET = 2; // outlined text border width
+	private final int MAX_DISTANCE = 200; // max acceptable click distance from target
 	private Node<CampusLocation> pathStart, pathDest;
 	private MapScrollPane parent;
 	private boolean path;
 	private MapManager map;
 	private UIManager ui;
 	private CampusGraph model;
+	
 	/**
 	 * Constructs a new MapPanel to display a map
 	 */
@@ -41,10 +43,12 @@ public class MapPanel extends JPanel {
 		pathDest = null;
 		repaint();
 		setVisible(true);
-		
 	}
 	
-	// update the map
+	/**
+	 * Handles painting for mapPanel, displaying the map and ui components relevant to the
+	 * current state
+	 */
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
 		super.paintComponent(g2d);
@@ -63,12 +67,12 @@ public class MapPanel extends JPanel {
 		g2d.drawImage(map.getMap(), args[0], args[1], args[2], args[3],
 				args[4], args[5], args[6], args[7], null);
 		
-		g2d.setColor(Color.blue);
+		// draw the path if it has been selected
 		if (pathStart != null && pathDest != null) {
+			g2d.setColor(Color.blue);
 			for (int[] i: ui.getPath(model.getPath(pathStart, pathDest)))
 				g2d.drawLine(i[0], i[1], i[2], i[3]);
 		}
-		
 		
 		// Print building labels
 		for(String[] s: ui.getBuildings(model.getLabels())) {
@@ -85,6 +89,7 @@ public class MapPanel extends JPanel {
 			g2d.drawString(s[0], x, y);
 		}
 		
+		// highlight the start building in green
 		if (pathStart != null) {
 			String[] s = ui.getBuilding(model.getLabel(pathStart));
 			int x = Integer.parseInt(s[1]);
@@ -93,15 +98,14 @@ public class MapPanel extends JPanel {
 			g2d.drawString(s[0], x, y);
 		}
 		
+		// highlight the destination building in red
 		if (pathDest != null) {
 			String[] s = ui.getBuilding(model.getLabel(pathDest));
 			int x = Integer.parseInt(s[1]);
 			int y = Integer.parseInt(s[2]);
 			g2d.setColor(Color.red);
 			g2d.drawString(s[0], x, y);
-		}
-		
-		
+		}	
 	}
 	
 	/**
@@ -109,56 +113,75 @@ public class MapPanel extends JPanel {
 	 * @param width: Width of the window
 	 * @param height: Height of the window
 	 */
-	public void handleResize(int width, int height) {
+	public void updateDisplay(int width, int height) {
 		if (path) {
 			Rectangle bounds = ui.getPathBounds(model.getPath(pathStart, pathDest));
-			map.zoomIn(width, height, new Dimension(bounds.width, bounds.height));
-			
-			// scale center with map
+			map.zoomIn(parent.getWidth(), parent.getHeight(),
+					new Dimension(bounds.width, bounds.height));
 			setScrollCenter();
 		} else {
 			map.zoomOut(width, height);
 		}
-		
-		this.setPreferredSize(new Dimension(map.getWidth(), map.getHeight()));
+		setPreferredSize(new Dimension(map.getWidth(), map.getHeight()));
 		repaint();
+		parent.scrollToCenter();
 	}
 	
+	/**
+	 * sets the parent scroll pane's scroll center-point to the center of
+	 * the drawn path
+	 */
 	public void setScrollCenter() {
+		// exit if a path is not drawn
+		if (pathStart == null || pathDest == null) { return; } 
 		Rectangle bounds = ui.getPathBounds(model.getPath(pathStart, pathDest));		
-		// scale center with map
-		System.out.println((bounds.x + (1.0 * bounds.width / 2)));
-		
-		
-		parent.setCenter(((bounds.x + (1.0 * bounds.width / 2)) / map.getWidth()),
-						 ((bounds.y + (1.0 * bounds.height / 2)) / map.getHeight()));
+		double x = ((bounds.x + (1.0 * bounds.width / 2)) / map.getWidth());
+		double y = ((bounds.y + (1.0 * bounds.height / 2)) / map.getHeight());
+		parent.setCenter(x, y);
 	}
 	
-	public void handlePath(int x, int y) {
-		if (path) { return; } // exit if path is already drawn
+	/**
+	 * Handles the path drawing behavior of mapPanel, and returns a value indicating 
+	 * whether a path was drawn
+	 * @param x: The click's x coordinate
+	 * @param y: The clicks's y coordinate
+	 * @return true if a path was drawn, false otherwise
+	 */
+	public boolean handlePath(int x, int y) {
+		if (path) { return false; } // exit if path is already drawn
 		// Convert click locations to image pixels
 		x *= ui.scaleWidth();
 		y *= ui.scaleHeight();
 		Node<CampusLocation> n = model.getClosestBuilding(x, y, MAX_DISTANCE);
-		if (n == null) { return; }  // quit if a valid node is not found
+		if (n == null) { return false; }  // quit if a valid node is not found
 		
 		if (pathStart == null) {
 			pathStart = n;
 		} else if (pathStart != null && pathStart != n) {
 			pathDest = n;
 			path = true;
-			handleResize(parent.getWidth(), parent.getHeight());
+			updateDisplay(parent.getWidth(), parent.getHeight());
 			parent.scrollToCenter();
+			return true;
 		}
+		return false;
 	}
 	
-	public void clearPath() {
-		if (!path) { return; } // exit if path is already cleared
+	/**
+	 * Resets path data in mapPanel; returns true if a drawn path is cleared
+	 * @return
+	 */
+	public boolean clearPath() {
+		// clear path 
 		pathStart = null;
 		pathDest = null;
-		path = false;
-		parent.resetCenter();
-		handleResize(parent.getWidth(), parent.getHeight());
-		parent.scrollToCenter();
+		parent.resetCenter();		
+		// only re-scroll to center if a path was drawn
+		if (path) {
+			path = false;
+			updateDisplay(parent.getWidth(), parent.getHeight());
+			return true;
+		}
+		return false;
 	}
 }
