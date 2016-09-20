@@ -22,9 +22,9 @@ public class ContentFrame extends JFrame {
 	/**
 	 * Constructs the outer window frame, and child components, for map applications
 	 */
-	public ContentFrame() {
+	public ContentFrame(boolean navigate) {
 		// add GUI content
-		ContentPanel content = new ContentPanel();
+		ContentPanel content = new ContentPanel(navigate);
 		add(content);
 		
 		// set frame properties

@@ -11,8 +11,8 @@ import java.io.IOException;
  * 
  * Abstraction function: CampusParser is represented as a valid CampusGraph
  */
-public class CampusParser {
-	private final CampusGraph graph;
+public class FileParser {
+	private final MapGraph graph;
 	
 	/**
 	 * Parses input files into node and location data
@@ -21,8 +21,8 @@ public class CampusParser {
 	 * @param pathsFile File containing path information 
 	 * @modifies this
 	 */
-	public CampusParser (String buildingsFile, String pathsFile, String buildingLabelsFile){
-		graph = new CampusGraph();
+	public FileParser (String buildingsFile, String pathsFile, String buildingLabelsFile){
+		graph = new MapGraph();
 		try {
 			parseBuildings(buildingsFile);
 			parsePaths(pathsFile);
@@ -34,7 +34,7 @@ public class CampusParser {
 	 * Returns graph
 	 * @return graph: the CampusGraph constructed from building and path files
 	 */
-	public CampusGraph getGraph() {
+	public MapGraph getGraph() {
 		return graph;
 	}
 	
@@ -61,7 +61,7 @@ public class CampusParser {
 	            double y = Double.parseDouble(tokens[3]);
 
 	            // Create a location from the parsed data
-	            CampusLocation location = new CampusLocation(shortName, longName, x, y);
+	            Location location = new Location(shortName, longName, x, y);
 	            
 	            // add new label to the graph
 	            graph.addLabel(location);
@@ -93,8 +93,8 @@ public class CampusParser {
 	        
 	        // Construct a map of campus path information and nodes
 	        String inputLine;
-	        Node<CampusLocation> parent = null;
-	        Node<CampusLocation> child = null;
+	        Node<Location> parent = null;
+	        Node<Location> child = null;
 	        String[] tokens;        	
         	double x;
         	double y;
@@ -113,7 +113,7 @@ public class CampusParser {
 	            		parent = graph.getNode(x, y);
 	            	} else { 
 	            		// node is a not in the buildings file; represent as a path	            		
-	            		parent = new Node<CampusLocation>(x, y);
+	            		parent = new Node<Location>(x, y);
 
 	            		// add new node to the graph
 	            		graph.add(parent);
@@ -134,7 +134,7 @@ public class CampusParser {
 	            		child = graph.getNode(x, y);
 	            	} else {
 	            		// node is a not in the buildings file; represent as a path	            		
-	            		child = new Node<CampusLocation>(x, y); 
+	            		child = new Node<Location>(x, y); 
 	            		
 	            		// add new node to the graph
 	            		graph.add(child);
@@ -187,8 +187,8 @@ public class CampusParser {
 	            double y = Double.parseDouble(tokens[3]);
 
 	            // Create a location from the parsed data
-	            CampusLocation location = new CampusLocation(shortName, longName, x, y);
-	            Node<CampusLocation> building = new Node<CampusLocation>(location);
+	            Location location = new Location(shortName, longName, x, y);
+	            Node<Location> building = new Node<Location>(location);
 	            
 	            // add new building to the graph
 	            graph.add(building);

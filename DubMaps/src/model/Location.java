@@ -6,7 +6,7 @@ package model;
  * Abstraction function: Campus location represents a location on campus with coordinates 
  * (x,y), full name longName, and abbreviated name shortName
  */
-public class CampusLocation implements Comparable<CampusLocation>{
+public class Location implements Comparable<Location>{
 	private final String shortName;
 	private final String longName;
 	private final double x;
@@ -21,7 +21,7 @@ public class CampusLocation implements Comparable<CampusLocation>{
 	 * @param x The locations x position
 	 * @param y The location y position
 	 */
-	public CampusLocation(String shortName, String longName, double x, double y) {
+	public Location(String shortName, String longName, double x, double y) {
 		this.shortName = shortName;
 		this.longName = longName;
 		this.x = x;
@@ -71,7 +71,7 @@ public class CampusLocation implements Comparable<CampusLocation>{
 	/**
 	 * Returns an integer representing the location's shortName's lexicographical value
 	 */
-	public int compareTo(CampusLocation other) {
+	public int compareTo(Location other) {
 		return this.getName().compareTo(other.getName());
 	}
 	
@@ -91,10 +91,10 @@ public class CampusLocation implements Comparable<CampusLocation>{
 	 * Standard equals function: equality based on matching x y coordinates 
 	 */
 	public boolean equals(Object o) {
-		if(!(o instanceof CampusLocation)) {
+		if(!(o instanceof Location)) {
 			return false;
 		}
-		CampusLocation other = (CampusLocation) o;
+		Location other = (Location) o;
 		return (this.x == other.x && this.y == other.y);
 	}
 	

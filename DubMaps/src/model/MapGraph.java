@@ -16,20 +16,20 @@ import java.util.TreeSet;
  * and each node contains non-null set of edges for 
  * which it is the parent node.
  */
-public class CampusGraph {
+public class MapGraph {
 	
-	private final Set<CampusLocation> labels;
-	private final Set<Node<CampusLocation>> nodes;
-	private final Set<Node<CampusLocation>> destinationNodes;
+	private final Set<Location> labels;
+	private final Set<Node<Location>> nodes;
+	private final Set<Node<Location>> destinationNodes;
 	private final boolean DEBUG = true;
 	
 	/**
 	 * Instantiates a new graph.
 	 */
-	public CampusGraph() {
-		labels = new TreeSet<CampusLocation>();
-		nodes = new HashSet<Node<CampusLocation>>();
-		destinationNodes = new TreeSet<Node<CampusLocation>>();
+	public MapGraph() {
+		labels = new TreeSet<Location>();
+		nodes = new HashSet<Node<Location>>();
+		destinationNodes = new TreeSet<Node<Location>>();
 	}
 	
 	/**
@@ -37,7 +37,7 @@ public class CampusGraph {
 	 * @param node The node to be searched for
 	 * @return if the graph contains node
 	 */
-	public boolean contains(Node<CampusLocation> node) {
+	public boolean contains(Node<Location> node) {
 		return nodes.contains(node);
 	}
 	
@@ -46,8 +46,8 @@ public class CampusGraph {
 	 * @param name: the target node's location shortName
 	 * @return The node with shortName name
 	 */
-	public Node<CampusLocation> getNode(String name) {
-		for (Node<CampusLocation> node: nodes) {
+	public Node<Location> getNode(String name) {
+		for (Node<Location> node: nodes) {
 			if (node.getLocation().getName().equals(name))
 				return node;
 		}
@@ -60,8 +60,8 @@ public class CampusGraph {
 	 * @param y: target y coordinate
 	 * @return The node located at x, y
 	 */
-	public Node<CampusLocation> getNode(double x, double y) {
-		for (Node<CampusLocation> node: nodes) {
+	public Node<Location> getNode(double x, double y) {
+		for (Node<Location> node: nodes) {
 			if (node.getLocation().getX() == x && node.getLocation().getY() == y)
 				return node;
 		}
@@ -75,11 +75,11 @@ public class CampusGraph {
 	 * @param maxDistance: The maximum acceptable distance from the node
 	 * @return The closest node to x,y within maxDistance, null if none found
 	 */
-	public Node<CampusLocation> getClosestBuilding(int x, int y, int maxDistance) {
-		Node<CampusLocation> closest = null;
+	public Node<Location> getClosestBuilding(int x, int y, int maxDistance) {
+		Node<Location> closest = null;
 		
 		// apply the distance formula on each building node to find the closest one
-		for (Node<CampusLocation> n: destinationNodes) {
+		for (Node<Location> n: destinationNodes) {
 			int distance = (int) Math.sqrt(Math.pow(x - n.getLocation().getX(), 2.0) + 
 					                       Math.pow(y - n.getLocation().getY(), 2.0));
 			if (distance < maxDistance) {
@@ -94,9 +94,9 @@ public class CampusGraph {
 	 * Returns a list of campusLocations belonging to destinations in the graph
 	 * @return temporary list of locations
 	 */
-	public List<CampusLocation> getDestinations() {
-		List<CampusLocation> result = new ArrayList<CampusLocation>();
-		for(Node<CampusLocation> n: destinationNodes)
+	public List<Location> getDestinations() {
+		List<Location> result = new ArrayList<Location>();
+		for(Node<Location> n: destinationNodes)
 			result.add(n.getLocation());
 		
 		return result;
@@ -107,8 +107,8 @@ public class CampusGraph {
 	 * @param building: The building to search for
 	 * @return the building's label, or null if not found
 	 */
-	public CampusLocation getLabel(Node<CampusLocation> building) {
-		for(CampusLocation c: labels) 
+	public Location getLabel(Node<Location> building) {
+		for(Location c: labels) 
 			if (c.getName().equals(building.getLocation().getName().substring(0, 3)))
 				return c;
 		
@@ -119,9 +119,9 @@ public class CampusGraph {
 	 * Returns a list of locations for building labels
 	 * @return a list of campusLocations used as labels
 	 */
-	public List<CampusLocation> getLabels() {
-		List<CampusLocation> result = new ArrayList<CampusLocation>();
-		for(CampusLocation c: labels)
+	public List<Location> getLabels() {
+		List<Location> result = new ArrayList<Location>();
+		for(Location c: labels)
 			result.add(c);
 		
 		return result;
@@ -134,7 +134,7 @@ public class CampusGraph {
 	 * @effects adds node to nodes
 	 * @param node the node to be added
 	 */
-	public void add(Node<CampusLocation> node) {
+	public void add(Node<Location> node) {
 		checkRep();
 		if (node == null || this.contains(node))
 			return;
@@ -150,7 +150,7 @@ public class CampusGraph {
 	 * Adds label to the list of labels if it is non-null and not already in the graph
 	 * @param label the location label to be added
 	 */
-	public void addLabel(CampusLocation label) {
+	public void addLabel(Location label) {
 		if (label == null || this.labels.contains(label))
 			return;
 		
@@ -162,12 +162,27 @@ public class CampusGraph {
 	 */
 	public String toString() {
 		String result = "";
-		for (Node<CampusLocation> n: nodes) {
+		for (Node<Location> n: nodes) {
 			result += n.toString() + "\n";
-			for (Edge<CampusLocation> e: n.getEdges())
+			for (Edge<Location> e: n.getEdges())
 				result += e.toString() + "\n";
 			result += "\n";
 		}
+		return result;
+	}
+	
+	/**
+	 * Returns every edge contained in this graph
+	 * @return a list of edges
+	 */
+	public List<Edge<Location>> getAllPaths() {
+		List<Edge<Location>> result = new ArrayList<Edge<Location>>();
+		
+		// add every edge in the graph to result
+		for(Node<Location> n: nodes)
+			for(Edge<Location> e: n.getEdges())
+				result.add(e);
+		
 		return result;
 	}
 	
@@ -178,18 +193,18 @@ public class CampusGraph {
 	 * @return a list of edges leading from start to dest, null if none
 	 * @throws IllegalArgumentException Indicates null parameter
 	 */
-	public List<Edge<CampusLocation>> getPath(Node<CampusLocation> start, Node<CampusLocation> dest) {	
+	public List<Edge<Location>> getPath(Node<Location> start, Node<Location> dest) {	
 		if (start == null || dest == null) {
 			throw new IllegalArgumentException("Null input");
 		}
-		Set<Node<CampusLocation>> finished = new HashSet<Node<CampusLocation>>();
+		Set<Node<Location>> finished = new HashSet<Node<Location>>();
 		Queue<DijkPath> active = new PriorityQueue<DijkPath>();
 		active.add(new DijkPath(start));
 		
 		// find paths branching off the end node until the queue is empty
 		while (!active.isEmpty()) {
 			DijkPath current = active.remove();
-			Node<CampusLocation> node = current.getDest();
+			Node<Location> node = current.getDest();
 
 			if (finished.contains(node)) { continue; }  //skip already found node
 			if (node.equals(dest)) {
@@ -200,12 +215,12 @@ public class CampusGraph {
 			finished.add(node);
 			
 			// continue paths to node's children if they have not been found
-			for (Edge<CampusLocation> e: node.getEdges()) {
+			for (Edge<Location> e: node.getEdges()) {
 				if (finished.contains(e.getChild())) { continue; }  // skip found nodes
 				
 				// build next DijkPath and add it to the queue
 				Double newCost = current.getCost() + e.getLength();
-				List<Edge<CampusLocation>> newPath = new ArrayList<Edge<CampusLocation>>();
+				List<Edge<Location>> newPath = new ArrayList<Edge<Location>>();
 				newPath.addAll(current.getPath());
 				newPath.add(e);
 				DijkPath next = new DijkPath(newCost, e.getChild(), newPath);
@@ -221,9 +236,9 @@ public class CampusGraph {
 	private void checkRep() {
 		if (DEBUG) {
 			assert (nodes != null);
-			for (Node<CampusLocation> node: nodes) {
+			for (Node<Location> node: nodes) {
 				assert(node != null);
-				assert(((Node<CampusLocation>) node).getEdges() != null);
+				assert(((Node<Location>) node).getEdges() != null);
 			}
 		}
 	}

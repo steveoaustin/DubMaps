@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.CampusLocation;
+import model.Location;
 import model.Edge;
 
 /*
@@ -32,10 +32,10 @@ public class UIManager {
 	 * @param unscaledPath: The list of path segments
 	 * @return path: The path segments scaled to be drawn on-screen
 	 */
-	public List<int[]> getPath(List<Edge<CampusLocation>> unscaledPath) {
+	public List<int[]> getPath(List<Edge<Location>> unscaledPath) {
 		path = new ArrayList<int[]>();		
 		// scale each path segment to fit the current display size
-		for(Edge<CampusLocation> e: unscaledPath)
+		for(Edge<Location> e: unscaledPath)
 			path.add(new int[] { 
 			    (int) (e.getParent().getLocation().getX() / scaleWidth()),
 			    (int) (e.getParent().getLocation().getY() / scaleHeight()),
@@ -50,7 +50,7 @@ public class UIManager {
 	 * @param unscaledPath: A list of path segments
 	 * @return a rectangle enclosing the entire path, in native image pixels
 	 */
-	public Rectangle getPathBounds(List<Edge<CampusLocation>> unscaledPath) {
+	public Rectangle getPathBounds(List<Edge<Location>> unscaledPath) {
 		List<int[]> segs = getPath(unscaledPath);
 		int maxX = 0, minX = map.getMap().getWidth();
 		int maxY = 0, minY = map.getMap().getHeight();
@@ -78,10 +78,10 @@ public class UIManager {
 	 * @param entrances: The list of entrances
 	 * @return A list of 2 element integer arrays; each is the x y position of an entrance
 	 */
-	public List<int[]> getBuildingEntrances(List<CampusLocation> entrances) {
+	public List<int[]> getBuildingEntrances(List<Location> entrances) {
 		List<int[]> result = new ArrayList<int[]>();
 		// add x y coordinates for each entrance
-		for(CampusLocation c: entrances)
+		for(Location c: entrances)
 			result.add(new int[]{ (int) (c.getX() / scaleWidth()),
 					(int) (c.getY() / scaleHeight()) });
 		
@@ -94,9 +94,9 @@ public class UIManager {
 	 * @param buildings: A list of CampusLocations that represent destinations
 	 * @return The building's abbreviated names and drawString arguments
 	 */
-	public List<String[]> getBuildingLabels(List<CampusLocation> buildings) {
+	public List<String[]> getBuildingLabels(List<Location> buildings) {
 		List<String[]> result = new ArrayList<String[]>();
-		for(CampusLocation c: buildings)		
+		for(Location c: buildings)		
 			result.add(centerText(c.getName(), 
 		        (int) (c.getX() / scaleWidth()),
 				(int) (c.getY() / scaleHeight())));
@@ -110,7 +110,7 @@ public class UIManager {
 	 * @param location: A CampusLocation that represents the building
 	 * @return The building's drawString arguments
 	 */
-	public String[] getBuildingLabel(CampusLocation location) {
+	public String[] getBuildingLabel(Location location) {
 		if (location == null) { return null; }
 		return centerText(location.getName(), 
 				   (int) (location.getX() / scaleWidth()),

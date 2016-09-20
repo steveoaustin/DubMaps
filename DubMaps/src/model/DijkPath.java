@@ -15,8 +15,8 @@ public class DijkPath implements Comparable<DijkPath> {
 	 * which leads to dest from some node. cost represents the sum of all edge labels in path
 	 */
 	private final Double cost;
-	private final Node<CampusLocation> dest;
-	private final List<Edge<CampusLocation>> path;
+	private final Node<Location> dest;
+	private final List<Edge<Location>> path;
 	
 	/**
 	 * Instantiates a new DijkPath 
@@ -27,7 +27,7 @@ public class DijkPath implements Comparable<DijkPath> {
 	 * @requires cost, node, and path are not null. dest represents the last node in  path
 	 * and cost represents the sum of edge labels in path
 	 */
-	public DijkPath (Double cost, Node<CampusLocation> dest, List<Edge<CampusLocation>> path) {
+	public DijkPath (Double cost, Node<Location> dest, List<Edge<Location>> path) {
 		this.path = path;
 		this.cost = cost;
 		this.dest = dest;
@@ -39,8 +39,8 @@ public class DijkPath implements Comparable<DijkPath> {
 	 * @param dest The node to be stored
 	 * @requires dest is not null
 	 */
-	public DijkPath (Node<CampusLocation> dest) {
-		this(0.0, dest, new ArrayList<Edge<CampusLocation>>());
+	public DijkPath (Node<Location> dest) {
+		this(0.0, dest, new ArrayList<Edge<Location>>());
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class DijkPath implements Comparable<DijkPath> {
 	 * Returns the dest node
 	 * @return dest The last node represented in path
 	 */
-	public Node<CampusLocation> getDest() {
+	public Node<Location> getDest() {
 		return dest;
 	}
 	
@@ -64,7 +64,7 @@ public class DijkPath implements Comparable<DijkPath> {
 	 * Returns the path of edges
 	 * @return path A list of edges leading to dest
 	 */
-	public List<Edge<CampusLocation>> getPath() {
+	public List<Edge<Location>> getPath() {
 		return path;
 	}
 	

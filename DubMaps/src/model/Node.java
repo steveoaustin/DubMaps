@@ -13,7 +13,7 @@ import java.util.TreeSet;
 public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	
 	private final Set<Edge<T>> edges;                   
-	private final CampusLocation data;
+	private final Location data;
 	private static int pathCount = 0;  // tracks number of path nodes for naming
 	private final boolean DEBUG = true;
 	
@@ -23,7 +23,7 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	 * @effects sets this.data to data
 	 * @param data: the new node's CampusLocation object
 	 */
-	public Node(CampusLocation data) {
+	public Node(Location data) {
 		if (data == null) {
 			throw new IllegalArgumentException("All Nodes must hold a non-null CampusLocation");
 		}
@@ -38,7 +38,7 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	 * @param y: the path's y coordinate
 	 */
 	public Node(double x, double y) {
-		this(new CampusLocation(Integer.toString(pathCount),
+		this(new Location(Integer.toString(pathCount),
 				"Path #" + Integer.toString(pathCount), x, y));
 		pathCount++;
 	}
@@ -79,7 +79,7 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 	 * Returns the node's location
 	 * @return data: the node's CampusLocation object
 	 */
-	public CampusLocation getLocation() {
+	public Location getLocation() {
 		return this.data;
 	}
 	

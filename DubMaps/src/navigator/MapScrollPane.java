@@ -27,8 +27,8 @@ public class MapScrollPane extends JScrollPane {
 	 * Constructs a new MapScrollPane that always has vertical and horizontal scroll bars,
 	 * resize listeners, and mouse listeners
 	 */
-	public MapScrollPane() {
-		map = new MapPanel(this);
+	public MapScrollPane(MapPanel map) {
+		this.map = map;
 		xCenterOffset = 0.0;
 	    yCenterOffset = 0.0;
 	    customCenter = false;
@@ -80,16 +80,15 @@ public class MapScrollPane extends JScrollPane {
 				boolean pathDrawn = false, pathCleared = false;
 				
 				if (SwingUtilities.isLeftMouseButton(e))
-					pathDrawn = p.map.handlePath(e.getX() + xOffset.getValue(),
+					pathDrawn = p.map.leftClick(e.getX() + xOffset.getValue(),
 							e.getY() + yOffset.getValue());
 				if (SwingUtilities.isRightMouseButton(e)) 
-					pathCleared = p.map.clearPath();
+					pathCleared = p.map.rightClick(e.getX() + xOffset.getValue(),
+							e.getY() + yOffset.getValue());;
 				
 				// save click location for click-drag scrolling
 				startX = e.getX();
 				startY = e.getY();
-				
-				p.map.repaint();
 				
 				// trigger resize events if the map image was updated
 				if (pathDrawn || pathCleared) {
@@ -97,6 +96,7 @@ public class MapScrollPane extends JScrollPane {
 					yOffset.setValue(yOffset.getValue() - 1);
 				    p.setSize(p.getWidth() + 1, p.getHeight() + 1);
 					p.setSize(p.getWidth() - 1, p.getHeight() - 1);
+					p.map.updateDisplay(p.getWidth(), p.getHeight());
 				}
 			}
 			
@@ -105,8 +105,7 @@ public class MapScrollPane extends JScrollPane {
 				MapScrollPane p = (MapScrollPane) e.getComponent();		        
 				JScrollBar horizontal = p.getHorizontalScrollBar();
 				JScrollBar vertical = p.getVerticalScrollBar();
-				p.map.highlightClosestBuilding(e.getX() + horizontal.getValue(),
-						e.getY() + vertical.getValue());
+				p.map.mouseMoved(e.getX() + horizontal.getValue(), e.getY() + vertical.getValue());
 			}
 		};
 		addMouseListener(mouseAdapter);

@@ -1,0 +1,8 @@
+Notes/ general changes:
+	> overload contentFrame, contentPanel, and MapScrollPan, e constructors
+	  to accept a jPanel(either mapMaker or navigator) as an argument
+	> mapScrollPane changes
+		- instead of specific method calls
+			- updateDisplay for resize event
+			- rightClick for right click
+			- leftClick for left click

@@ -2,7 +2,7 @@ package navigator;
 
 import java.awt.EventQueue;
 
-public class DubMain {
+public class MapMain {
 	public static void main(String[] args)
     {
         EventQueue.invokeLater(new Runnable()
@@ -10,7 +10,7 @@ public class DubMain {
             public void run()
             {
                 @SuppressWarnings("unused")
-				ContentFrame GUI = new ContentFrame();
+				ContentFrame GUI = new ContentFrame(true);
             }
         });
     }

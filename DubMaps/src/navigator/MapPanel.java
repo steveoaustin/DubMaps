@@ -14,9 +14,9 @@ import javax.swing.JPanel;
 
 import controller.MapManager;
 import controller.UIManager;
-import model.CampusGraph;
-import model.CampusLocation;
-import model.CampusParser;
+import model.MapGraph;
+import model.Location;
+import model.FileParser;
 import model.Node;
 
 @SuppressWarnings("serial")
@@ -29,23 +29,23 @@ import model.Node;
 public class MapPanel extends JPanel {
 	private final int OFFSET = 2; // outlined text border width
 	private final int MAX_DISTANCE = 100; // max acceptable click distance from target
-	private Node<CampusLocation> pathStart, pathDest;
+	private Node<Location> pathStart, pathDest;
 	private int[] closestEntrance;
-	private MapScrollPane parent;
 	private boolean path;
-	private MapManager map;
-	private UIManager ui;
-	private CampusGraph model;
+	protected MapScrollPane parent;
+	protected MapManager map;
+	protected UIManager ui;
+	protected MapGraph model;
 	
 	/**
 	 * Constructs a new MapPanel to display a map
 	 */
-	public MapPanel(MapScrollPane parent) {
-		CampusParser parser = new CampusParser("src/data/campus_buildings.dat",
+	public MapPanel() {
+		FileParser parser = new FileParser("src/data/campus_buildings.dat",
 											   "src/data/campus_paths.dat",
 											   "src/data/campus_labels.dat");
 		model = parser.getGraph();
-		this.parent = parent;
+		parent = null;
 		map = new MapManager(getWidth(), getHeight());
 		ui = new UIManager(map);
 		path = false;
@@ -134,6 +134,19 @@ public class MapPanel extends JPanel {
 		}	
 	}
 	
+	
+	public boolean leftClick(int x, int y) {
+		return handlePath(x, y);
+	}
+	
+	public boolean rightClick(int x, int y) {
+		return clearPath();
+	}
+	
+	public void mouseMoved(int x, int y) {
+		highlightClosestBuilding(x, y);
+	}
+	
 	/**
 	 * Update display to accommodate current window bounds
 	 * @param width: Width of the window
@@ -174,7 +187,7 @@ public class MapPanel extends JPanel {
 		if (path) { return; } // don't highlight entrances if a path is already drawn
 		x *= ui.scaleWidth();
 		y *= ui.scaleHeight();
-		Node<CampusLocation> n = model.getClosestBuilding(x, y, MAX_DISTANCE);
+		Node<Location> n = model.getClosestBuilding(x, y, MAX_DISTANCE);
 		// quit if a the mouse if too far from a building, reset closestEntrance
 		if (n == null) { 
 			closestEntrance[0] = -1;
@@ -184,7 +197,7 @@ public class MapPanel extends JPanel {
 		}  
 		
 		// scale the coordinates of n to fit on screen
-		List<CampusLocation> temp = new ArrayList<CampusLocation>();
+		List<Location> temp = new ArrayList<Location>();
 		temp.add(n.getLocation());
 		int[] loc = ui.getBuildingEntrances(temp).get(0);
 		closestEntrance[0] = loc[0];
@@ -194,7 +207,7 @@ public class MapPanel extends JPanel {
 	
 	/**
 	 * Handles the path drawing behavior of mapPanel, and returns a value indicating 
-	 * whether a path was drawn
+	 * whether the path was updated
 	 * @param x: The click's x coordinate
 	 * @param y: The clicks's y coordinate
 	 * @return true if a path was drawn, false otherwise
@@ -204,7 +217,7 @@ public class MapPanel extends JPanel {
 		// Convert click locations to image pixels
 		x *= ui.scaleWidth();
 		y *= ui.scaleHeight();
-		Node<CampusLocation> n = model.getClosestBuilding(x, y, MAX_DISTANCE);
+		Node<Location> n = model.getClosestBuilding(x, y, MAX_DISTANCE);
 		if (n == null) { return false; }  // quit if a valid node is not found
 		
 		if (pathStart == null) {
@@ -214,9 +227,8 @@ public class MapPanel extends JPanel {
 			path = true;
 			updateDisplay(parent.getWidth(), parent.getHeight());
 			parent.scrollToCenter();
-			return true;
 		}
-		return false;
+		return true;
 	}
 	
 	/**
@@ -235,5 +247,14 @@ public class MapPanel extends JPanel {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Sets parent to the mapScrollPane holding this map. parent must be set to enable
+	 * scrolling features
+	 * @param parent: The parent mapScrollPane
+	 */
+	public void setParent(MapScrollPane parent) {
+		this.parent = parent;
 	}
 }
