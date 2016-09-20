@@ -1,9 +1,10 @@
-package navigator;
+package view;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import mapMaker.MapMakerPanel;
+import navigator.MapPanel;
 
 @SuppressWarnings("serial")
 

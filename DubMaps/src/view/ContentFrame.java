@@ -1,4 +1,4 @@
-package navigator;
+package view;
 
 import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;

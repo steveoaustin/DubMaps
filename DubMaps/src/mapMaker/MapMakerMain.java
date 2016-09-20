@@ -2,7 +2,7 @@ package mapMaker;
 
 import java.awt.EventQueue;
 
-import navigator.ContentFrame;
+import view.ContentFrame;
 
 public class MapMakerMain {
 	public static void main(String[] args)

@@ -1,4 +1,4 @@
-package navigator;
+package view;
 
 import javax.swing.JScrollPane;
 

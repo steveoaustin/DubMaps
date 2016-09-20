@@ -1,4 +1,4 @@
-package navigator;
+package view;
 
 import java.awt.Dimension;
 import java.awt.Point;
@@ -11,6 +11,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+
+import navigator.MapPanel;
 
 @SuppressWarnings("serial")
 

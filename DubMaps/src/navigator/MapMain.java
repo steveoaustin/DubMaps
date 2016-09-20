@@ -2,6 +2,8 @@ package navigator;
 
 import java.awt.EventQueue;
 
+import view.ContentFrame;
+
 public class MapMain {
 	public static void main(String[] args)
     {

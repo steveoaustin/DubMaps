@@ -18,6 +18,7 @@ import model.MapGraph;
 import model.Location;
 import model.FileParser;
 import model.Node;
+import view.MapScrollPane;
 
 @SuppressWarnings("serial")
 
