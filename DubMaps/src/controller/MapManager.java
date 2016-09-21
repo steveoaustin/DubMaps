@@ -76,9 +76,8 @@ public class MapManager {
 		
 		// expand focusArea to scale limit
 		if (focusArea.width > focusArea.height) {
-			// scale image width if necessary
-			if (wRat > Display.maxRatio() || wRat < Display.minRatio())
-				focusArea.width = getValidSize(focusArea.width, wRat, false);
+			// scale image width
+			focusArea.width = getValidSize(focusArea.width, wRat, false);
 			
 			// scale up focus area if width would be too small to fill the window
 			if (focusArea.width < width)
@@ -88,9 +87,8 @@ public class MapManager {
 			imageArgs[2] = focusArea.width;
 			imageArgs[3] = scaleHeight(focusArea.width);	
 		} else {
-			// scale image height if necessary
-			if (hRat > Display.maxRatio() || hRat < Display.minRatio())
-				focusArea.height = getValidSize(focusArea.height, hRat, false);
+			// scale image height
+			focusArea.height = getValidSize(focusArea.height, hRat, false);
 			
 			// scale up focus area if height would be too small to fill the window
 			if (focusArea.height < height)

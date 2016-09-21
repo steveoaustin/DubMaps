@@ -62,7 +62,8 @@ public class MapGraph {
 	 */
 	public Node<Location> getNode(double x, double y) {
 		for (Node<Location> node: nodes) {
-			if (node.getLocation().getX() == x && node.getLocation().getY() == y)
+			if ((int) node.getLocation().getX() == (int) x &&
+				(int) node.getLocation().getY() == (int) y)
 				return node;
 		}
 		return null;
@@ -74,6 +75,28 @@ public class MapGraph {
 	 * @param y: The y coordinate to be searched for
 	 * @param maxDistance: The maximum acceptable distance from the node
 	 * @return The closest node to x,y within maxDistance, null if none found
+	 */
+	public Node<Location> getClosestNode(int x, int y, int maxDistance) {
+		Node<Location> closest = null;
+		
+		// apply the distance formula on each building node to find the closest one
+		for (Node<Location> n: nodes) {
+			int distance = (int) Math.sqrt(Math.pow(x - n.getLocation().getX(), 2.0) + 
+					                       Math.pow(y - n.getLocation().getY(), 2.0));
+			if (distance < maxDistance) {
+				closest = n;
+				maxDistance = distance;
+			}
+		}
+		return closest;
+	}
+	
+	/**
+	 * Returns the closest building to x,y within a limited distance, null of none are close enough
+	 * @param x: The x coordinate to be searched for
+	 * @param y: The y coordinate to be searched for
+	 * @param maxDistance: The maximum acceptable distance from the node
+	 * @return The closest building to x,y within maxDistance, null if none found
 	 */
 	public Node<Location> getClosestBuilding(int x, int y, int maxDistance) {
 		Node<Location> closest = null;
@@ -94,7 +117,7 @@ public class MapGraph {
 	 * Returns a list of campusLocations belonging to destinations in the graph
 	 * @return temporary list of locations
 	 */
-	public List<Location> getDestinations() {
+	public List<Location> getBuildings() {
 		List<Location> result = new ArrayList<Location>();
 		for(Node<Location> n: destinationNodes)
 			result.add(n.getLocation());
@@ -141,8 +164,13 @@ public class MapGraph {
 		
 		nodes.add(node);
 		// check if the node is named as a building/destination
-		if (!node.getLocation().getLongName().substring(0, 4).equals("Path"))
+		if (node.getLocation().getLongName().length() > 3 && 
+			node.getLocation().getLongName().substring(0, 4).equals("Path")) {
+			// ignore path nodes 
+		} else {
 			destinationNodes.add(node);
+		}
+			
 		checkRep();
 	}
 	
@@ -168,6 +196,19 @@ public class MapGraph {
 				result += e.toString() + "\n";
 			result += "\n";
 		}
+		return result;
+	}
+	
+	/**
+	 * Returns every location contained in the graph
+	 * @return a list of locations
+	 */
+	public List<Location> getAllLocations() {
+		List<Location> result = new ArrayList<Location>();
+		
+		// add all locations to result
+		for(Node<Location> n: nodes)
+			result.add(n.getLocation());
 		return result;
 	}
 	

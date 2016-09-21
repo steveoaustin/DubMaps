@@ -6,3 +6,25 @@ Notes/ general changes:
 			- updateDisplay for resize event
 			- rightClick for right click
 			- leftClick for left click
+	
+File management
+	> FileParser
+		- continue using to parse files
+	> FileWriter
+		- write out the contents of a graph to files
+		
+MapMakerPanel behavior
+	Observe mode
+		- zoom out map
+		- no adding nodes 
+	add nodes
+		-zoom in map
+		- add nodes by clicking on an existing path
+	add buildings
+	 	- zoom in map
+	 	- add buildings by clicking on existing node
+	 	- popup menu appears for building name and abreviation
+	 		- accept a name and abreviation seperately
+	 add labels
+	 	- zoom in map
+	 	- add label by clicking on map

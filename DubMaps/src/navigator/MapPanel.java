@@ -105,7 +105,7 @@ public class MapPanel extends JPanel {
 		// one to the mouse pointer
 		g2d.setStroke(new BasicStroke(1, BasicStroke.JOIN_ROUND, BasicStroke.CAP_ROUND));
 		int offset = 5, size = 2 * offset;		
-		for(int[] i: ui.getBuildingEntrances(model.getDestinations())) {
+		for(int[] i: ui.getBuildingEntrances(model.getBuildings())) {
 			g2d.setColor(Color.green);
 			// label the closest building with a different color			
 			if (closestEntrance[0] == i[0] && closestEntrance[1] == i[1])
