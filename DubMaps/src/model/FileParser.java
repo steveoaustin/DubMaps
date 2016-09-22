@@ -13,21 +13,26 @@ import java.io.IOException;
  */
 public class FileParser {
 	private final MapGraph graph;
+	private final String PATH = "src/data/",
+						 LABELS = "_labels.dat",
+						 PATHS = "_paths.dat",
+						 BUILDINGS = "_buildings.dat";
 	
 	/**
 	 * Parses input files into node and location data
 	 * @requires input files are properly formatted and without duplicates
-	 * @param buildingsFile File containing building information
-	 * @param pathsFile File containing path information 
+	 * @param filename: the name of the map files to be parsed
 	 * @modifies this
 	 */
-	public FileParser (String buildingsFile, String pathsFile, String buildingLabelsFile){
+	public FileParser (String filename){
 		graph = new MapGraph();
 		try {
-			parseBuildings(buildingsFile);
-			parsePaths(pathsFile);
-			parseLabels(buildingLabelsFile);
-		} catch (Exception e) { /*ignore*/ }
+			parseBuildings(PATH + filename + BUILDINGS);
+			parsePaths(PATH + filename + PATHS);
+			parseLabels(PATH + filename + LABELS);
+		} catch (Exception e) { 
+			System.out.println("Invalid filename");
+		}
 	}
 	
 	/**

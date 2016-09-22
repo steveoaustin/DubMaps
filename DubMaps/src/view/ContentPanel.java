@@ -18,18 +18,23 @@ public class ContentPanel extends JPanel {
 	 * Constructs a new ContentPanel and its child components
 	 */
 	public ContentPanel(boolean navigate) {
-		//ControlScrollPane controls = new ControlScrollPane();
+		ControlScrollPane controls = null; 
 		MapPanel map;
+		
 		if (navigate)
 			map = new MapPanel();
-		else
+		else {
 			map = new MapMakerPanel();
+			controls = new ControlScrollPane((MapMakerPanel) map);
+		}
 		
 		MapScrollPane mapScroll = new MapScrollPane(map);
 		map.setParent(mapScroll);
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		//add(controls);
+		if (!navigate)
+			add(controls);
+		
 		add(mapScroll);
 		setVisible(true);
 	}

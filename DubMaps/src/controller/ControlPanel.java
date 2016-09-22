@@ -10,6 +10,10 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import mapMaker.MapMakerPanel;
+import mapMaker.MapMakerPanel.Mode;
+import view.ControlScrollPane;
+
 @SuppressWarnings("serial")
 
 /*
@@ -17,13 +21,18 @@ import javax.swing.JPanel;
  */
 public class ControlPanel extends JPanel {
 	private Dimension minSize, maxSize;
+	private ControlScrollPane parent;
+	private MapMakerPanel map;
+	private int WIDTH_PADDING = 30, HEIGHT_PADDING = 20;
 	
-	public ControlPanel() {
+	public ControlPanel(ControlScrollPane parent, MapMakerPanel map) {
+		this.parent = parent;
+		this.map = map;
 		setVisible(true);
 		setDoubleBuffered(true);
 		FlowLayout layout = new FlowLayout(FlowLayout.LEFT);
 		setLayout(layout);
-		this.setBackground(Color.pink);
+		this.setBackground(Color.BLUE);
 		
 		/* TODO: to fix resizing issue, make controlPanel a fixed height of one row of controls
 		 * add it to a scrollpane with no visible bars, and enable wheel scrolling and click dragging
@@ -35,23 +44,30 @@ public class ControlPanel extends JPanel {
 		 * 
 		*/
 		
-		JButton b = new JButton("I'm Rick Harrison, and this is my pawn shop.");
+
+		
+		JButton b = new JButton("View Mode");
+		b.addActionListener(e -> map.setMode(Mode.OBSERVE));
 		b.setVisible(true);
 		add(b);
 		
-		JButton b2 = new JButton("I work here with my old man and my son, Big Hoss.");
+		JButton b2 = new JButton("Add Paths");
+		b2.addActionListener(e -> map.setMode(Mode.ADD_PATHS));
 		b2.setVisible(true);
 		add(b2);
 		
-		JButton b3 = new JButton("Everything in here has a story and a price. ");
+		JButton b3 = new JButton("Add Buildings");
+		b3.addActionListener(e -> map.setMode(Mode.ADD_BUILDINGS));
 		b3.setVisible(true);
 		add(b3);
 		
-		JButton b4 = new JButton("One thing I've learned after 21 years");
+		JButton b4 = new JButton("Label Buildings");
+		b4.addActionListener(e -> map.setMode(Mode.ADD_LABELS));
 		b4.setVisible(true);
 		add(b4);
 		
-		JButton b5 = new JButton("you never know WHAT is gonna come through that door.");
+		JButton b5 = new JButton("Save Map");
+		b5.addActionListener(e -> map.saveMap());
 		b5.setVisible(true);
 		add(b5);
 		setSize();
@@ -61,6 +77,7 @@ public class ControlPanel extends JPanel {
 				setSize();
 			}
 		});
+		repaint();
 	}
 	
 	/**
@@ -68,17 +85,18 @@ public class ControlPanel extends JPanel {
 	 */
 	public void setSize() {
 		int maxHeight = 0;  // height coordinate of tallest component
-		int minWidth = 0;  // width of the widest component
+		int minWidth = 0;  // width of all the components
 		for (Component c : getComponents()) {
-			if (c.getWidth() > minWidth)
-				minWidth = c.getWidth();
+			minWidth += c.getWidth();
 			if (c.getHeight() > maxHeight) 
-				maxHeight = c.getHeight() + c.getY();
+				maxHeight = c.getHeight() + HEIGHT_PADDING;
 		}
-		minSize = new Dimension(minWidth, maxHeight);
+		
+		minSize = new Dimension(minWidth + WIDTH_PADDING, maxHeight);
 		maxSize = new Dimension(Display.getWidth(), maxHeight);
+		
 		setMinimumSize(minSize);
 		setMaximumSize(maxSize);
-		setPreferredSize(maxSize);
+		setPreferredSize(minSize);
 	}
 }

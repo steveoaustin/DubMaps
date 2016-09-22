@@ -42,9 +42,7 @@ public class MapPanel extends JPanel {
 	 * Constructs a new MapPanel to display a map
 	 */
 	public MapPanel() {
-		FileParser parser = new FileParser("src/data/campus_buildings.dat",
-											   "src/data/campus_paths.dat",
-											   "src/data/campus_labels.dat");
+		FileParser parser = new FileParser("campus");
 		model = parser.getGraph();
 		parent = null;
 		map = new MapManager(getWidth(), getHeight());

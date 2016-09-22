@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import model.FileWriter;
 import model.Location;
 import model.Node;
 import navigator.MapPanel;
@@ -32,9 +33,8 @@ public class MapMakerPanel extends MapPanel{
 		closestNode = new int[2];
 		selectedNode = new int[2];
 		mouseXY = new int[2];
-		
-		mode = Mode.ADD_BUILDINGS;
 		nodeSelected = false;
+		mode = Mode.OBSERVE;
 	}
 
 	protected void paintComponent(Graphics g) {
@@ -189,11 +189,13 @@ public class MapMakerPanel extends MapPanel{
 		}
 		setPreferredSize(new Dimension(map.getWidth(), map.getHeight()));
 		repaint();
-		parent.scrollToCenter();
+		//parent.scrollToCenter();
 	}
 	
 	public void setMode(Mode m) {
 		mode = m;
+		updateDisplay(parent.getWidth(), parent.getHeight());
+		repaint();
 	}
 	
 	
@@ -290,4 +292,7 @@ public class MapMakerPanel extends MapPanel{
 		repaint();
 	}
 	
+	public void saveMap() {
+		FileWriter f = new FileWriter(model);
+	}
 }
