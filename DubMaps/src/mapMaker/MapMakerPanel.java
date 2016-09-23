@@ -20,6 +20,11 @@ import model.Node;
 import navigator.MapPanel;
 
 @SuppressWarnings("serial")
+
+/*
+ * MapMakerPanel displays a map and all paths, nodes, destinations, and labels contained
+ * in that map. Allows the user to add to the map, and save changes
+ */
 public class MapMakerPanel extends MapPanel{
 	private final int OFFSET = 2; // outlined text border width
 	private final int MAX_DISTANCE = 8; // max acceptable click distance from target
@@ -28,6 +33,9 @@ public class MapMakerPanel extends MapPanel{
 	private Mode mode;
 	public enum Mode { OBSERVE, ADD_PATHS, ADD_BUILDINGS, ADD_LABELS }
 	
+	/**
+	 * Constructs a new MapMakerPanel set to observe mode
+	 */
 	public MapMakerPanel() {
 		super();
 		closestNode = new int[2];
@@ -36,7 +44,114 @@ public class MapMakerPanel extends MapPanel{
 		nodeSelected = false;
 		mode = Mode.OBSERVE;
 	}
-
+	
+	/**
+	 * Handles left click events from the parent container
+	 * @param x: The click's x location
+	 * @param y: The Click's y location
+	 */
+	public boolean leftClick(int x, int y) {
+		// ignore clicks if user is observing. Adding labels is done via right click
+		if (mode == Mode.OBSERVE || mode == Mode.ADD_LABELS) { return false; }
+		
+		x *= ui.scaleWidth();
+		y *= ui.scaleHeight();
+		Node<Location> n = model.getClosestNode(x, y, MAX_DISTANCE);
+		
+		if (nodeSelected) {
+			if (mode == Mode.ADD_BUILDINGS) {
+				// allow buildings to be added "on top" of nodes
+				addBuilding(x, y);
+				nodeSelected = false;
+			}
+			else if (mode == Mode.ADD_PATHS) {
+				// add 2 way edge between n and selectedNode 
+				if (n != null) {
+					addEdge(n);
+					nodeSelected = false;
+				}	
+				// add n as a new node
+				else {
+					addNode(x, y);
+					addEdge(model.getNode(x, y));
+					selectNode(model.getNode(x, y)); // keep drawing path from new node
+				}
+			}
+		} else if (nodeSelected == false && n != null) {
+			selectNode(n);
+		}
+		repaint();
+		return false; // avoid re-centering display
+	}
+	
+	/**
+	 * Handles right click events from the parent container
+	 * @param x: The click's x location
+	 * @param y: The click's y location
+	 */
+	public boolean rightClick(int x, int y) {
+		x *= ui.scaleWidth();
+		y *= ui.scaleHeight();
+		
+		// right clicking while adding a new path will cancel it
+		if (mode == Mode.ADD_PATHS || mode == Mode.ADD_BUILDINGS) {
+			nodeSelected = false;
+			repaint();
+		}
+		if (mode == Mode.ADD_LABELS) {
+			addLabel(x, y);
+		}
+		return false;
+	}
+	
+	/**
+	 * Handles mouse movement events from the parent container
+	 * @param x: the mouse's x location
+	 * @param y: the mouse's y location
+	 */
+	public void mouseMoved(int x, int y) {
+		highlightClosestNode(x, y);
+		mouseXY = new int[]{ x, y };
+	}
+	
+	/**
+	 * Update display to accommodate current window bounds
+	 * @param width: Width of the window
+	 * @param height: Height of the window
+	 */
+	public void updateDisplay(int width, int height) {
+		// display the map at its native resolution 
+		if (mode != Mode.OBSERVE) {
+			map.zoomIn(width, height, 
+					new Dimension(map.getMap().getWidth(), map.getMap().getHeight()));
+		} else {
+			map.zoomOut(width, height);
+		}
+		setPreferredSize(new Dimension(map.getWidth(), map.getHeight()));
+		repaint();
+		parent.scrollToCenter();
+	}
+	
+	/**
+	 * Sets the mode to m
+	 * @param m: The new mode
+	 */
+	public void setMode(Mode m) {
+		mode = m;
+		updateDisplay(parent.getWidth(), parent.getHeight());
+		repaint();
+	}
+	
+	/**
+	 * Prompts the user for a filename and writes out the current map to data files
+	 */
+	public void saveMap() {
+		new FileWriter(model);
+	}
+		
+	/**
+	 * Handles all graphical output for mapMaker
+	 */
 	protected void paintComponent(Graphics g) {
 		// set appropriate component sizes for the current mode
 		int pathWidth, markerWidth;
@@ -117,92 +232,13 @@ public class MapMakerPanel extends MapPanel{
 			g2d.drawOval(i[0] - offset - 1, i[1] - offset - 1, size + 2, size + 2);
 		}
 	}
-	
-	public boolean leftClick(int x, int y) {
-		// ignore clicks if user is observing. Adding labels is done via right click
-		if (mode == Mode.OBSERVE || mode == Mode.ADD_LABELS) { return false; }
-		
-		x *= ui.scaleWidth();
-		y *= ui.scaleHeight();
-		Node<Location> n = model.getClosestNode(x, y, MAX_DISTANCE);
-		
-		if (nodeSelected) {
-			if (mode == Mode.ADD_BUILDINGS) {
-				// allow buildings to be added "on top" of nodes
-				addBuilding(x, y);
-				nodeSelected = false;
-			}
-			else if (mode == Mode.ADD_PATHS) {
-				// add 2 way edge between n and selectedNode 
-				if (n != null) {
-					addEdge(n);
-					nodeSelected = false;
-				}	
-				// add n as a new node
-				else {
-					addNode(x, y);
-					addEdge(model.getNode(x, y));
-					selectNode(model.getNode(x, y)); // keep drawing path from new node
-				}
-			}
-		} else if (nodeSelected == false && n != null) {
-			selectNode(n);
-		}
-		repaint();
-		return false; // avoid re-centering display
-	}
-	
+
+	// sets nodeSelected to true and saves the node's x y coordinates
 	private void selectNode(Node<Location> n) {
 		nodeSelected = true;
 		selectedNode = new int[]{ (int) (n.getLocation().getX() / ui.scaleWidth()),
 							 (int) (n.getLocation().getY() / ui.scaleHeight()) };
 	}
-	
-	public boolean rightClick(int x, int y) {
-		x *= ui.scaleWidth();
-		y *= ui.scaleHeight();
-		
-		// right clicking while adding a new path will cancel it
-		if (mode == Mode.ADD_PATHS || mode == Mode.ADD_BUILDINGS) {
-			nodeSelected = false;
-			repaint();
-		}
-		
-		if (mode == Mode.ADD_LABELS) {
-			addLabel(x, y);
-		}
-		return false;
-	}
-	
-	public void mouseMoved(int x, int y) {
-		highlightClosestNode(x, y);
-		mouseXY = new int[]{ x, y };
-	}
-	
-	/**
-	 * Update display to accommodate current window bounds
-	 * @param width: Width of the window
-	 * @param height: Height of the window
-	 */
-	public void updateDisplay(int width, int height) {
-		// display the map at its native resolution 
-		if (mode != Mode.OBSERVE) {
-			map.zoomIn(width, height, 
-					new Dimension(map.getMap().getWidth(), map.getMap().getHeight()));
-		} else {
-			map.zoomOut(width, height);
-		}
-		setPreferredSize(new Dimension(map.getWidth(), map.getHeight()));
-		repaint();
-		parent.scrollToCenter();
-	}
-	
-	public void setMode(Mode m) {
-		mode = m;
-		updateDisplay(parent.getWidth(), parent.getHeight());
-		repaint();
-	}
-	
 	
 	// prompts the user for a name, then adds the building at location x, y
 	private void addBuilding(int x, int y) {
@@ -214,7 +250,7 @@ public class MapMakerPanel extends MapPanel{
 			addEdge(model.getNode(x, y));
 		}
 	}
-	
+		
 	// prompts the user for a building name, then adds it at location x, y
 	private void addLabel(int x, int y) {
 		String[] name = promptInput("New Label", "Enter a name for this location",
@@ -223,6 +259,7 @@ public class MapMakerPanel extends MapPanel{
 			model.addLabel(new Location(name[0], name[1], x, y));
 	}
 	 
+	// prompts the user for full name and abbreviation as text input
 	private String[] promptInput(String frameLabel, String inputLabel, String abrevLabel) {
 		String[] result = new String[2];
 		
@@ -251,8 +288,7 @@ public class MapMakerPanel extends MapPanel{
 		    } 
 		} else {
 			return null;  // exit immediately if the user does not choose ok_option
-		}
-			
+		}	
 		return result;
 	}
 	
@@ -274,10 +310,10 @@ public class MapMakerPanel extends MapPanel{
 		
 		node.addEdge(selected, distance);
 		selected.addEdge(node, distance);
-		
 	}
 	
-	public void highlightClosestNode(int x, int y) {
+	// Highlights the closest node to the mouse pointer
+	private void highlightClosestNode(int x, int y) {
 		x *= ui.scaleWidth();
 		y *= ui.scaleHeight();
 		Node<Location> n = model.getClosestNode(x, y, MAX_DISTANCE);
@@ -295,9 +331,5 @@ public class MapMakerPanel extends MapPanel{
 			closestNode[1] = loc[1];
 		}
 		repaint();
-	}
-	
-	public void saveMap() {
-		new FileWriter(model);
 	}
 }

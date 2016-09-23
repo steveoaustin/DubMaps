@@ -7,10 +7,17 @@ import javax.swing.JOptionPane;
 import controller.Display;
 import view.ContentFrame;
 
+/*
+ * Main class for MapMaker. Loads the map image and data files set as constants
+ * and displays directions upon startup
+ */
 public class MapMakerMain {
 	private static final String MAP_DATA = "updatedCampus";
 	private static final String MAP_IMAGE = "src/data/campus_map.jpg";
 	
+	/*
+	 * Run MapMaker
+	 */
 	public static void main(String[] args) {
 		Display.setMapFile(MAP_DATA);
 		Display.setMapImage(MAP_IMAGE);
@@ -20,7 +27,7 @@ public class MapMakerMain {
         {
             public void run()
             {
-				ContentFrame GUI = new ContentFrame(false);
+				new ContentFrame(false);
             }
         });
     }
