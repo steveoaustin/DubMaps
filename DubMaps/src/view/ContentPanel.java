@@ -16,11 +16,12 @@ public class ContentPanel extends JPanel {
 
 	/**
 	 * Constructs a new ContentPanel and its child components
+	 * @param navigate: Flag indicating whether to run navigator or mapMaker
 	 */
 	public ContentPanel(boolean navigate) {
 		ControlScrollPane controls = null; 
 		MapPanel map;
-		
+		 
 		if (navigate)
 			map = new MapPanel();
 		else {
@@ -32,6 +33,8 @@ public class ContentPanel extends JPanel {
 		map.setParent(mapScroll);
 		
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
+		// only add controls for mapMaker
 		if (!navigate)
 			add(controls);
 		

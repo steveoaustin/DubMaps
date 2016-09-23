@@ -15,12 +15,13 @@ import controller.Display;
  * child components, and restricts resizing to reasonable boundaries
  */
 public class ContentFrame extends JFrame {
-	
-	private static final double MIN_SCREEN_RATIO = 0.2;
+	// smallest proportion of the screen frame will shrink to
+	private static final double MIN_SCREEN_RATIO = 0.2; 
 	private Dimension minSize, maxSize;
 
 	/**
 	 * Constructs the outer window frame, and child components, for map applications
+	 * @param navigate: flag indicating whether to launch navigator or mapMaker
 	 */
 	public ContentFrame(boolean navigate) {
 		// add GUI content
@@ -32,6 +33,7 @@ public class ContentFrame extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		pack();
+		
 		// size frame after packing to trigger resize events
 		setSizeRestrictions();
 		
@@ -55,26 +57,4 @@ public class ContentFrame extends JFrame {
 		setPreferredSize(minSize);
 		validate();
 	}
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

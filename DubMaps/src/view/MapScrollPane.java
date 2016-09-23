@@ -28,6 +28,7 @@ public class MapScrollPane extends JScrollPane {
 	/**
 	 * Constructs a new MapScrollPane that always has vertical and horizontal scroll bars,
 	 * resize listeners, and mouse listeners
+	 * @param map: The mapPanel held by this
 	 */
 	public MapScrollPane(MapPanel map) {
 		this.map = map;
@@ -122,22 +123,6 @@ public class MapScrollPane extends JScrollPane {
 	}
 	
 	/**
-	 * The center-point of the scrollpane's content
-	 * @return a new point object holding the x and y values of the pane's center-point
-	 */
-	private Point getCenter() {
-		Rectangle bounds = getViewport().getViewRect();
-		Dimension size = getViewport().getViewSize();
-		Point center = new Point(((size.width - bounds.width) / 2),
-								 (size.height - bounds.height) / 2);
-		if (customCenter) {
-			center.x *= (2 * xCenterOffset);
-			center.y *= (2 * yCenterOffset);
-		}
-		return center;
-	}
-	
-	/**
 	 * Set the scrollpane's content center-point to the the given percentages, with .5
 	 * representing the true center
 	 * @param x: Content's x percentage
@@ -155,28 +140,20 @@ public class MapScrollPane extends JScrollPane {
 	public void resetCenter() {
 		customCenter = false;
 	}
+	
+	/**
+	 * The center-point of the scrollpane's content
+	 * @return a new point object holding the x and y values of the pane's center-point
+	 */
+	private Point getCenter() {
+		Rectangle bounds = getViewport().getViewRect();
+		Dimension size = getViewport().getViewSize();
+		Point center = new Point(((size.width - bounds.width) / 2),
+								 (size.height - bounds.height) / 2);
+		if (customCenter) {
+			center.x *= (2 * xCenterOffset);
+			center.y *= (2 * yCenterOffset);
+		}
+		return center;
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

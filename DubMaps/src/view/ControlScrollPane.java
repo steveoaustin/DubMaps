@@ -19,6 +19,7 @@ public class ControlScrollPane extends JScrollPane {
 	ControlPanel controls;
 	/**
 	 * Constructs a new ControlScrollPane and its child components
+	 * @param map: The mapMakerPanel to be controlled by ControlPanel
 	 */
 	public ControlScrollPane(MapMakerPanel map) {
 		controls = new ControlPanel(map);
@@ -27,6 +28,7 @@ public class ControlScrollPane extends JScrollPane {
 		this.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
 		this.setVerticalScrollBarPolicy(VERTICAL_SCROLLBAR_NEVER);
 		
+		// Recalculate size restrictions when resized or moved
 		addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
 				ControlScrollPane p = (ControlScrollPane) e.getComponent();
@@ -43,5 +45,4 @@ public class ControlScrollPane extends JScrollPane {
 			}
 		});
 	}
-
 }
