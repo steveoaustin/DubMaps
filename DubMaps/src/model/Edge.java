@@ -85,7 +85,7 @@ public class Edge<T extends Comparable<T>> implements Comparable<Edge<T>> {
 	
 	/**
 	 * Standard hashCode function
-	 * @return an int that all objects equal to this will also
+	 * @return an integer that all objects equal to this will also
 	 */
 	public int hashCode() {
 		String code = length + parent.toString() + child.toString();

@@ -4,16 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /*
- * DijkPath represents a path to a given node in a graph, and the cost to travel that path 
+ * Abstraction function: DijkPath is represented as a list of edges which leads to 
+ * the dest node and the cost to travel that path
+ * 
+ * Representation invariant: dest is the last node in path. path is a unique list of edges 
+ * which leads to dest from some node. cost represents the sum of all edge labels in path
  */
 public class DijkPath implements Comparable<DijkPath> {
-	/*
-	 * Abstraction function: DijkPath is represented as a list of edges which leads to 
-	 * the dest node and the cost to travel that path
-	 * 
-	 * Representation invariant: dest is the last node in path. path is a unique list of edges 
-	 * which leads to dest from some node. cost represents the sum of all edge labels in path
-	 */
+	
 	private final Double cost;
 	private final Node<Location> dest;
 	private final List<Edge<Location>> path;

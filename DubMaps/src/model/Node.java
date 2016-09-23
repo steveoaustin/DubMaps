@@ -62,7 +62,6 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 		if(edges.contains(temp)) {
 			return;  // do not add temp if it is already an edge
 		}
-		
 		edges.add(temp); //add temp if it is a unique edge
 		checkRep();
 	}
@@ -140,15 +139,3 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
 		return  this.data.compareTo(other.data);
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -43,7 +43,7 @@ public class FileParser {
 		return graph;
 	}
 	
-	
+	// Parse label file into the graph
 	private void parseLabels(String filename) throws Exception {
 		BufferedReader reader = null;
 		try {
@@ -213,25 +213,3 @@ public class FileParser {
 	    }    
 	} 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

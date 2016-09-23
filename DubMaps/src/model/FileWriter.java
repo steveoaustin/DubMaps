@@ -14,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+/*
+ * FileWriter writes out a MapGraph to 3 data files: one for labels, buildings, and paths.
+ */
 public class FileWriter {
 	private final MapGraph data;
 	// suffixes for data files
@@ -22,6 +25,11 @@ public class FileWriter {
 						 PATHS = "_paths.dat",
 						 BUILDINGS = "_buildings.dat";
 	
+	/**
+	 * Prompts the user for a filename and writes out data files with that name
+	 * as a prefix if entered. Does nothing otherwise
+	 * @param data: The MapGraph to be written to file
+	 */
 	public FileWriter(MapGraph data) {
 		this.data = data;
 		String filename = getFilename();
@@ -92,11 +100,11 @@ public class FileWriter {
 		String result;
 		JTextField input = new JTextField();
 		
+		// prompt filename
 		int inputResult = JOptionPane.showConfirmDialog(null,
-						new JComponent[] { input, new JLabel("Enter a name for this map") },
-						"Name your map!", 
-						JOptionPane.OK_CANCEL_OPTION, 
-						JOptionPane.QUESTION_MESSAGE);
+				new JComponent[] { input, new JLabel("Enter a name for this map") },
+				"Name your map!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+		
 		if (inputResult == JOptionPane.OK_OPTION) {
 			result = input.getText().trim().replace("/", "");
 			// check if the file already exists
@@ -114,10 +122,8 @@ public class FileWriter {
 	// a new filename if not
 	private String promptOverwriteFile(String existingName) {
 		int inputResult = JOptionPane.showConfirmDialog(null,
-						new JLabel("This file already exists, would you like to overwrite it?"),
-						"Overwrite files?", 
-						JOptionPane.YES_NO_OPTION, 
-						JOptionPane.QUESTION_MESSAGE);
+				new JLabel("This file already exists, would you like to overwrite it?"),
+				"Overwrite files?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		
 		if (inputResult == JOptionPane.YES_OPTION) {
 			return existingName;

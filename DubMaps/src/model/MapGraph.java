@@ -170,7 +170,6 @@ public class MapGraph {
 		} else {
 			destinationNodes.add(node);
 		}
-			
 		checkRep();
 	}
 	
@@ -181,7 +180,6 @@ public class MapGraph {
 	public void addLabel(Location label) {
 		if (label == null || this.labels.contains(label))
 			return;
-		
 		labels.add(label);
 	}
 
@@ -298,24 +296,3 @@ public class MapGraph {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
