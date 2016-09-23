@@ -16,9 +16,27 @@ public final class Display {
 			GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 	private static int screenWidth = screen.getDisplayMode().getWidth();
 	private static int screenHeight = screen.getDisplayMode().getHeight();
+	private static String mapImage;
+	private static String mapFile;
 	
 	// private constructor mimics static class behavior
 	private Display() {}
+	
+	public static void setMap(String mapImage) {
+		Display.mapImage = mapImage;
+	}
+	
+	public static String getMapImage() {
+		return mapImage;
+	}
+	
+	public static void setFile(String mapFile) {
+		Display.mapFile = mapFile;
+	}
+	
+	public static String getMapFile() {
+		return mapFile;
+	}
 	
 	/**
 	 * returns the maximum scale ratio

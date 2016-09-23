@@ -10,8 +10,10 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import controller.Display;
 import controller.MapManager;
 import controller.UIManager;
 import model.MapGraph;
@@ -42,7 +44,7 @@ public class MapPanel extends JPanel {
 	 * Constructs a new MapPanel to display a map
 	 */
 	public MapPanel() {
-		FileParser parser = new FileParser("campus");
+		FileParser parser = new FileParser(Display.getMapFile());
 		model = parser.getGraph();
 		parent = null;
 		map = new MapManager(getWidth(), getHeight());
@@ -221,6 +223,8 @@ public class MapPanel extends JPanel {
 		
 		if (pathStart == null) {
 			pathStart = n;
+			repaint();
+			return false;
 		} else if (pathStart != null && pathStart != n) {
 			pathDest = n;
 			path = true;
@@ -245,6 +249,7 @@ public class MapPanel extends JPanel {
 			updateDisplay(parent.getWidth(), parent.getHeight());
 			return true;
 		}
+		repaint();
 		return false;
 	}
 	

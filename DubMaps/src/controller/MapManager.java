@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
  */
 public class MapManager {
 	
-	private final String mapFilepath = "src/data/campus_map.jpg";
+	private final String mapFilepath = Display.getMapImage();
 	private BufferedImage map ;
 	private final int[] imageArgs = new int[8]; // array of arguments for client's drawImage method call
 	

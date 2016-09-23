@@ -194,7 +194,7 @@ public class MapMakerPanel extends MapPanel{
 		}
 		setPreferredSize(new Dimension(map.getWidth(), map.getHeight()));
 		repaint();
-		//parent.scrollToCenter();
+		parent.scrollToCenter();
 	}
 	
 	public void setMode(Mode m) {
@@ -298,6 +298,6 @@ public class MapMakerPanel extends MapPanel{
 	}
 	
 	public void saveMap() {
-		FileWriter f = new FileWriter(model);
+		new FileWriter(model);
 	}
 }
