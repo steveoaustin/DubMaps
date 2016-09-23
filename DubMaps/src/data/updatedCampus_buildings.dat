@@ -1,3 +1,4 @@
+ART	Art	2173.0	932.0
 BAG (NE)	Bagley Hall (Northeast Entrance)	1878.3786	1661.4083
 BAG	Bagley Hall (East Entrance)	1914.5103	1709.8816
 BGR	By George	1671.5499	1258.4333
@@ -8,14 +9,22 @@ CHL	Chemistry Library (West Entrance)	1707.6629	1671.5098
 CMU	Communications Building	2344.8512	1114.6251
 CSE	Paul G. Allen Center for Computer Science & Engineering	2259.7112	1715.5273
 DEN	Denny Hall	1890.0	892.57144
+EDP	Edmundson Pavilion	2716.0	1936.0
 EEB (S)	Electrical Engineering Building (South Entrance)	2135.2099	1741.5387
 EEB	Electrical Engineering Building (North Entrance)	2159.9587	1694.8192
 FSH	Fishery Sciences Building	1061.8213	1779.6903
+GLD	Gould Hall	1379.0	1449.0
+GLD	Gould Hall	1443.0	1447.0
+GRB	Gerberding	1793.0	1385.0
+GRB	Gerberding	1830.0	1434.0
+GUG	Gugenheim Hall	2139.0	1608.0
 GWN	Gowen Hall	2022.3254	1210.9561
 HUB (Food, S)	Student Union Building (South Food Entrance)	2309.3025	1450.4487
 HUB (Food, W)	Student Union Building (West Food Entrance)	2270.8682	1388.1961
 HUB	Student Union Building (Main Entrance)	2269.7856	1364.3777
 IMA	Intramural Activities Building	2722.3352	1710.2859
+JOH	Johnson Hall	1851.0	1487.0
+JON	Johnson Hall	1903.0	1584.0
 KNE (E)	Kane Hall (East Entrance)	1874.338	1212.4713
 KNE (S)	Kane Hall (South Entrance)	1812.7187	1230.149
 KNE (SE)	Kane Hall (Southeast Entrance)	1835.1946	1241.0081
@@ -46,6 +55,7 @@ RAI (E)	Raitt Hall (East Entrance)	2094.2987	956.90276
 RAI	Raitt Hall (West Entrance)	2024.5103	993.01223
 ROB	Roberts Hall	2309.4107	1979.0003
 SAV	Savery Hall	1951.8672	1094.7886
+SCH	Schmitz Hall	1407.0	1219.0
 SIG	Sieg Hall	2106.0	1507.0
 SIG	Sieg Hall	2164.0	1469.0
 SUZ	Suzzallo Library	1895.8038	1325.861
@@ -54,3 +64,4 @@ UBS (Secret)	University Bookstore (Secret Entrance)	1440.1364	520.85309
 UBS	University Bookstore	1373.6078	556.55779
 WHG	William H. Gates	1563.0	693.0
 WHG	William H. Gates	1605.0	753.0
+WHG	William H. Gates	1707.0	716.0
