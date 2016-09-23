@@ -69,10 +69,12 @@ public class Location implements Comparable<Location>{
 	}
 	
 	/**
-	 * Returns an integer representing the location's shortName's lexicographical value
+	 * Returns an integer representing the location's data
 	 */
 	public int compareTo(Location other) {
-		return this.getName().compareTo(other.getName());
+		String thisData = this.shortName + this.longName + this.x + this.y;
+		String otherData = other.shortName + other.longName + other.x + other.y;
+		return thisData.compareTo(otherData);
 	}
 	
 	@Override

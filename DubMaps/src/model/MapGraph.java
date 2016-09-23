@@ -228,6 +228,20 @@ public class MapGraph {
 	}
 	
 	/**
+	 * Returns a list of every node contained in this graph
+	 * @return a list of nodes
+	 */
+	public List<Node<Location>> getAllNodes() {
+		List<Node<Location>> result = new ArrayList<Node<Location>>();
+		
+		//add every node in the graph to result
+		for (Node<Location> n: nodes)
+			result.add(n);
+		
+		return result;
+	}
+	
+	/**
 	 * returns the shortest path from start to dest, null if no path exists
 	 * @param start The start node
 	 * @param dest The destination node

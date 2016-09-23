@@ -43,6 +43,17 @@ public class FileWriter {
 		Path file = Paths.get(pathsFile);
 		List<String> content = new ArrayList<String>();
 		
+		for(Node<Location> n: data.getAllNodes()) {
+			// add node location
+			String nodeData = n.getLocation().getX() + "," + n.getLocation().getY();
+			
+			// add all edge data
+			for(Edge<Location> e: n.getEdges()) {
+				nodeData += "\n\t" + e.getChild().getLocation().getX() + "," + 
+						    e.getChild().getLocation().getY() + ": " + e.getLength();
+			}
+			content.add(nodeData);
+		}
 		
 		Files.write(file, content, Charset.forName("UTF-8"));
 		
@@ -53,6 +64,11 @@ public class FileWriter {
 		Path file = Paths.get(buildingsFile);
 		List<String> content = new ArrayList<String>();
 		
+		for(Location l: data.getBuildings()) {
+			String line = l.getName() + "\t" + l.getLongName() 
+						  + "\t" + l.getX() + "\t" + l.getY();
+			content.add(line);
+		}
 		
 		Files.write(file, content, Charset.forName("UTF-8"));
 	}
@@ -62,7 +78,7 @@ public class FileWriter {
 		 Path file = Paths.get(labelsFile);
 		List<String> content = new ArrayList<String>();
 		
-		for (Location l: data.getLabels()) {
+		for(Location l: data.getLabels()) {
 			String line = l.getName() + "\t" + l.getLongName() 
 						  + "\t" + l.getX() + "\t" + l.getY();
 			content.add(line);

@@ -128,29 +128,34 @@ public class MapMakerPanel extends MapPanel{
 		
 		if (nodeSelected) {
 			if (mode == Mode.ADD_BUILDINGS) {
-				// do not allow buildings to be added "on top" of nodes
-				if (n == null)
-					addBuilding(x, y);
+				// allow buildings to be added "on top" of nodes
+				addBuilding(x, y);
+				nodeSelected = false;
 			}
 			else if (mode == Mode.ADD_PATHS) {
 				// add 2 way edge between n and selectedNode 
-				if (n != null)
+				if (n != null) {
 					addEdge(n);
+					nodeSelected = false;
+				}	
 				// add n as a new node
 				else {
 					addNode(x, y);
 					addEdge(model.getNode(x, y));
+					selectNode(model.getNode(x, y)); // keep drawing path from new node
 				}
 			}
-			nodeSelected = false;
-		}
-		else if (nodeSelected == false && n != null) {
-			nodeSelected = true;
-			selectedNode = new int[]{ (int) (n.getLocation().getX() / ui.scaleWidth()),
-								 (int) (n.getLocation().getY() / ui.scaleHeight()) };
+		} else if (nodeSelected == false && n != null) {
+			selectNode(n);
 		}
 		repaint();
 		return false; // avoid re-centering display
+	}
+	
+	private void selectNode(Node<Location> n) {
+		nodeSelected = true;
+		selectedNode = new int[]{ (int) (n.getLocation().getX() / ui.scaleWidth()),
+							 (int) (n.getLocation().getY() / ui.scaleHeight()) };
 	}
 	
 	public boolean rightClick(int x, int y) {
