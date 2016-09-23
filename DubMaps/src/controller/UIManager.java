@@ -8,8 +8,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Location;
 import model.Edge;
+import model.Location;
 
 /*
  * UI manager works with map manager to scale and return graphics arguments to
@@ -20,6 +20,10 @@ public class UIManager {
 	private final MapManager map;
 	private Graphics2D context;
 	
+	/**
+	 * Constructs a new UIManager
+	 * @param map: The MapManager which the UI will reference for drawing
+	 */
 	public UIManager(MapManager map) {
 		path = new ArrayList<int[]>();
 		this.map = map;
@@ -135,8 +139,28 @@ public class UIManager {
 		return new Font("Ariel", Font.BOLD, size);
 	}
 	
+	/**
+	 * Sets the graphics context to be used for proper font rendering
+	 * @param g: The component's graphics object
+	 */
 	public void setGraphics(Graphics2D g) {
 		context = g;
+	}
+	
+	/**
+	 * returns the ratio of display width to image width
+	 * @return displayWidth / imageWidth 
+	 */
+	public double scaleWidth() {
+		return (1.0 * map.getMap().getWidth()) / (1.0 * map.getWidth());
+	}
+	
+	/**
+	 * returns the ratio of display height to image height
+	 * @return displayHeight / imageHeight
+	 */
+	public double scaleHeight() {
+		return (1.0 * map.getMap().getHeight()) / (1.0 * map.getHeight());
 	}
 	
 	// calculates drawString arguments to display text centered exactly at x, y
@@ -151,15 +175,5 @@ public class UIManager {
 		result[2] = Integer.toString((int) (y + (bounds.getHeight() / 2)));
 		
 		return result;
-	}
-	
-	// returns the ratio of display width to image width
-	public double scaleWidth() {
-		return (1.0 * map.getMap().getWidth()) / (1.0 * map.getWidth());
-	}
-	
-	// returns the ratio of display height to image height
-	public double scaleHeight() {
-		return (1.0 * map.getMap().getHeight()) / (1.0 * map.getHeight());
 	}
 }

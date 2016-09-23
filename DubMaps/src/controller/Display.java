@@ -22,18 +22,34 @@ public final class Display {
 	// private constructor mimics static class behavior
 	private Display() {}
 	
-	public static void setMap(String mapImage) {
+	/**
+	 * Sets the map image file path to mapImage
+	 * @param mapImage: file path of the map's image
+	 */
+	public static void setMapImage(String mapImage) {
 		Display.mapImage = mapImage;
 	}
 	
+	/**
+	 * Returns the map image's file path as a string
+	 * @return the image's file path
+	 */
 	public static String getMapImage() {
 		return mapImage;
 	}
 	
-	public static void setFile(String mapFile) {
+	/**
+	 * Sets the map data files prefix to mapFile
+	 * @param mapFile: the file prefix as a string
+	 */
+	public static void setMapFile(String mapFile) {
 		Display.mapFile = mapFile;
 	}
 	
+	/**
+	 * Returns the map data files prefix as a string
+	 * @return the map data files prefix
+	 */
 	public static String getMapFile() {
 		return mapFile;
 	}
@@ -57,7 +73,6 @@ public final class Display {
 	/**
 	 * updates and returns the current screen's width
 	 * @return screen width as an integer
-	 * TODO: get width of the current screen, not default
 	 */
 	public static int getWidth() {	
 		screenWidth = screen.getDisplayMode().getWidth();
@@ -67,11 +82,9 @@ public final class Display {
 	/**
 	 * updates and returns the current screen's height
 	 * @return screen height as an integer
-	 * TODO: get height of the current screen, not default
 	 */
 	public static int getHeight() {
 		screenHeight = screen.getDisplayMode().getHeight();
 		return (int) screenHeight;
 	}
-	
 }

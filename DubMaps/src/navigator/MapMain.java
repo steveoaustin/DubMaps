@@ -15,8 +15,8 @@ public class MapMain {
 	 
 	public static void main(String[] args) {
 		// set map data and image files
-		Display.setFile(MAP_DATA);
-		Display.setMap(MAP_IMAGE);
+		Display.setMapFile(MAP_DATA);
+		Display.setMapImage(MAP_IMAGE);
 		// show directions on startup
 		startupMessage();
 		

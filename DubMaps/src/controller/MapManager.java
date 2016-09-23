@@ -61,7 +61,6 @@ public class MapManager {
 		return imageArgs;
 	}
 	
-	
 	/**
 	 * Recalculates imageArgs to "zoom in" for the current display size, attempting to
 	 * fit focusArea on screen

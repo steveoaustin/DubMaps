@@ -17,61 +17,56 @@ import view.ControlScrollPane;
 @SuppressWarnings("serial")
 
 /*
- * ControlPanel holds GUI control components 
+ * ControlPanel holds GUI control components that work with MapMakerPanel
  */
 public class ControlPanel extends JPanel {
 	private Dimension minSize, maxSize;
-	private ControlScrollPane parent;
 	private MapMakerPanel map;
 	private int WIDTH_PADDING = 30, HEIGHT_PADDING = 20;
 	
-	public ControlPanel(ControlScrollPane parent, MapMakerPanel map) {
-		this.parent = parent;
+	/**
+	 * Construct a new ControlPanel with buttons that control the state of MapMakerPanel
+	 * @param map: The map controlled by ControlPanel's controls
+	 */
+	public ControlPanel(MapMakerPanel map) {
 		this.map = map;
+		
+		// Set default properties
 		setVisible(true);
 		setDoubleBuffered(true);
 		FlowLayout layout = new FlowLayout(FlowLayout.LEFT);
 		setLayout(layout);
 		this.setBackground(Color.BLUE);
 		
-		/* TODO: to fix resizing issue, make controlPanel a fixed height of one row of controls
-		 * add it to a scrollpane with no visible bars, and enable wheel scrolling and click dragging
-		 * to move the controlbar
-		 * 
-		 * not perfect but consistent behavior is vital in a good application
-		 * 
-		 * failure to snap-resize AND go fullscreen is unacceptable
-		 * 
-		*/
+		// Add Buttons to change the mode of map, and save it 
+		JButton view = new JButton("View Mode");
+		view.addActionListener(e -> map.setMode(Mode.OBSERVE));
+		view.setVisible(true);
+		add(view);
 		
-
+		JButton path = new JButton("Add Paths");
+		path.addActionListener(e -> map.setMode(Mode.ADD_PATHS));
+		path.setVisible(true);
+		add(path);
 		
-		JButton b = new JButton("View Mode");
-		b.addActionListener(e -> map.setMode(Mode.OBSERVE));
-		b.setVisible(true);
-		add(b);
+		JButton building = new JButton("Add Buildings");
+		building.addActionListener(e -> map.setMode(Mode.ADD_BUILDINGS));
+		building.setVisible(true);
+		add(building);
 		
-		JButton b2 = new JButton("Add Paths");
-		b2.addActionListener(e -> map.setMode(Mode.ADD_PATHS));
-		b2.setVisible(true);
-		add(b2);
+		JButton label = new JButton("Label Buildings");
+		label.addActionListener(e -> map.setMode(Mode.ADD_LABELS));
+		label.setVisible(true);
+		add(label);
 		
-		JButton b3 = new JButton("Add Buildings");
-		b3.addActionListener(e -> map.setMode(Mode.ADD_BUILDINGS));
-		b3.setVisible(true);
-		add(b3);
+		JButton save = new JButton("Save Map");
+		save.addActionListener(e -> map.saveMap());
+		save.setVisible(true);
+		add(save);
 		
-		JButton b4 = new JButton("Label Buildings");
-		b4.addActionListener(e -> map.setMode(Mode.ADD_LABELS));
-		b4.setVisible(true);
-		add(b4);
-		
-		JButton b5 = new JButton("Save Map");
-		b5.addActionListener(e -> map.saveMap());
-		b5.setVisible(true);
-		add(b5);
 		setSize();
 		
+		// Update size whenever the parent component is resized
 		addComponentListener(new ComponentAdapter() {
 			public void componentResized(ComponentEvent e) {
 				setSize();

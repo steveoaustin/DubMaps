@@ -12,8 +12,8 @@ public class MapMakerMain {
 	private static final String MAP_IMAGE = "src/data/campus_map.jpg";
 	
 	public static void main(String[] args) {
-		Display.setFile(MAP_DATA);
-		Display.setMap(MAP_IMAGE);
+		Display.setMapFile(MAP_DATA);
+		Display.setMapImage(MAP_IMAGE);
 		startupMessage();
 		
         EventQueue.invokeLater(new Runnable()

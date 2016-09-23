@@ -21,7 +21,7 @@ public class ControlScrollPane extends JScrollPane {
 	 * Constructs a new ControlScrollPane and its child components
 	 */
 	public ControlScrollPane(MapMakerPanel map) {
-		controls = new ControlPanel(this, map);
+		controls = new ControlPanel(map);
 		setViewportView(controls);
 		setVisible(true);
 		this.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_ALWAYS);
