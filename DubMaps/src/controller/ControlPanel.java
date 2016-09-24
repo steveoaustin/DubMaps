@@ -88,7 +88,7 @@ public class ControlPanel extends JPanel {
 		}
 		
 		minSize = new Dimension(minWidth + WIDTH_PADDING, maxHeight);
-		maxSize = new Dimension(Display.getWidth(), maxHeight);
+		maxSize = new Dimension(Integer.MAX_VALUE, maxHeight); // properly handles wide displays
 		
 		setMinimumSize(minSize);
 		setMaximumSize(maxSize);

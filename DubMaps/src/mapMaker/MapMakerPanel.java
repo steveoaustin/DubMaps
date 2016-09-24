@@ -119,7 +119,7 @@ public class MapMakerPanel extends MapPanel{
 	 * @param width: Width of the window
 	 * @param height: Height of the window
 	 */
-	public void updateDisplay(int width, int height) {
+	public void updateDisplay(int width, int height, boolean center) {
 		// display the map at its native resolution 
 		if (mode != Mode.OBSERVE) {
 			map.zoomIn(width, height, 
@@ -129,7 +129,8 @@ public class MapMakerPanel extends MapPanel{
 		}
 		setPreferredSize(new Dimension(map.getWidth(), map.getHeight()));
 		repaint();
-		parent.scrollToCenter();
+		if (center)
+			parent.scrollToCenter();
 	}
 	
 	/**
@@ -138,7 +139,10 @@ public class MapMakerPanel extends MapPanel{
 	 */
 	public void setMode(Mode m) {
 		mode = m;
-		updateDisplay(parent.getWidth(), parent.getHeight());
+		if (mode == Mode.OBSERVE)
+			updateDisplay(parent.getWidth(), parent.getHeight(), true);
+		else
+			updateDisplay(parent.getWidth(), parent.getHeight(), false);
 		repaint();
 	}
 	

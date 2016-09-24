@@ -34,7 +34,7 @@ public class MapMain {
 	private static void startupMessage() {
 		JOptionPane.showMessageDialog(null, "Welcome to navigator!\n\n"
 				+ "All building entrances are marked with green,\nand are highlighted in "
-				+ "yellow when close enough\nto be selectd.\n\nLeft click on 2 different"
+				+ "yellow when close enough\nto be selected.\n\nLeft click on 2 different"
 				+ " entrances\nto draw the shortest path between them.\n\n"
 				+ "Right clicking at any time will reset the map");
 	}
