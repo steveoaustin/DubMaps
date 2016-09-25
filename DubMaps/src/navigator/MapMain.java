@@ -32,7 +32,7 @@ public class MapMain {
 	
 	// Display a startup message with directions for the user
 	private static void startupMessage() {
-		JOptionPane.showMessageDialog(null, "Welcome to navigator!\n\n"
+		JOptionPane.showMessageDialog(null, "Welcome to Navigator!\n\n"
 				+ "All building entrances are marked with green,\nand are highlighted in "
 				+ "yellow when close enough\nto be selected.\n\nLeft click on 2 different"
 				+ " entrances\nto draw the shortest path between them.\n\n"

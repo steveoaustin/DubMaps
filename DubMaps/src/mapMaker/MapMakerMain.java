@@ -36,7 +36,7 @@ public class MapMakerMain {
 	private static void startupMessage() {
 		JOptionPane.showMessageDialog(null,
 			  "Welcome to map maker!\n\n"
-			+ "All path nodes are marked with green.\n"
+			+ "All paths are drawn in blue and have thier\nends marked with green.\n"
 			+ "Building entrances are marked with purple\n\n"
 			+ "Use the option buttons at the top of the window\n"
 			+ "to change modes and save the map.\n\n"
