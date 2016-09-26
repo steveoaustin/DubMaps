@@ -85,26 +85,6 @@ public class MapMakerPanel extends MapPanel{
 		return false; // avoid re-centering display
 	}
 	
-	// allows users to add the first node or building to an empty map
-	private void handleNewMap(int x, int y) {
-		// enable adding new nodes to an empty map
-		if (model.getAllNodes().size() == 0) {
-			// ask if the user would like to start drawing the new map here
-			int result = JOptionPane.showConfirmDialog(null,
-				     new JLabel("Would you like to start the map here? all "
-				     		+ "paths will branch out from this point"), "Start Here?",
-					 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-			
-			// place the first node if the user agrees
-			if (result == JOptionPane.YES_OPTION) {
-				if (mode == Mode.ADD_BUILDINGS)
-					addBuilding(x, y);
-				else if (mode == Mode.ADD_PATHS)
-					addNode(x, y);
-			}
-		}
-	}
-	
 	/**
 	 * Handles right click events from the parent container
 	 * @param x: The click's x location
@@ -258,6 +238,26 @@ public class MapMakerPanel extends MapPanel{
 		}
 	}
 
+	// allows users to add the first node or building to an empty map
+	private void handleNewMap(int x, int y) {
+		// enable adding new nodes to an empty map
+		if (model.getAllNodes().size() == 0) {
+			// ask if the user would like to start drawing the new map here
+			int result = JOptionPane.showConfirmDialog(null,
+				     new JLabel("Would you like to start the map here? all "
+				     		+ "paths will branch out from this point"), "Start Here?",
+					 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			
+			// place the first node if the user agrees
+			if (result == JOptionPane.YES_OPTION) {
+				if (mode == Mode.ADD_BUILDINGS)
+					addBuilding(x, y);
+				else if (mode == Mode.ADD_PATHS)
+					addNode(x, y);
+			}
+		}
+	}
+		
 	// sets nodeSelected to true and saves the node's x y coordinates
 	private void selectNode(Node<Location> n) {
 		nodeSelected = true;

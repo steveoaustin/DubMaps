@@ -12,7 +12,8 @@ import view.ContentFrame;
  * and displays directions upon startup
  */
 public class MapMakerMain {
-	private static final String MAP_DATA = "testfile";
+	// use a blank filename to start from scratch
+	private static final String MAP_DATA = "";
 	private static final String MAP_IMAGE = "src/data/space.jpg";
 	
 	/*
@@ -51,6 +52,7 @@ public class MapMakerMain {
 			+ "Label Mode: In this mode, right-clicking on\n"
 			+ "the map will prompt for a building name, and\n"
 			+ "3 character abreviation\n\n"
-			+ "Save: Save any edits to a new data file");
+			+ "Save: Save any edits to a new data file\n"
+			+ "or overwrite an existing one");
 	}
 }
