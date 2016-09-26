@@ -12,8 +12,8 @@ import view.ContentFrame;
  * and displays directions upon startup
  */
 public class MapMakerMain {
-	private static final String MAP_DATA = "updatedCampus";
-	private static final String MAP_IMAGE = "src/data/campus_map.jpg";
+	private static final String MAP_DATA = "testfile";
+	private static final String MAP_IMAGE = "src/data/space.jpg";
 	
 	/*
 	 * Run MapMaker

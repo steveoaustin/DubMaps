@@ -56,6 +56,7 @@ public class MapMakerPanel extends MapPanel{
 		
 		x *= ui.scaleWidth();
 		y *= ui.scaleHeight();
+		handleNewMap(x, y);
 		Node<Location> n = model.getClosestNode(x, y, MAX_DISTANCE);
 		
 		if (nodeSelected) {
@@ -82,6 +83,26 @@ public class MapMakerPanel extends MapPanel{
 		}
 		repaint();
 		return false; // avoid re-centering display
+	}
+	
+	// allows users to add the first node or building to an empty map
+	private void handleNewMap(int x, int y) {
+		// enable adding new nodes to an empty map
+		if (model.getAllNodes().size() == 0) {
+			// ask if the user would like to start drawing the new map here
+			int result = JOptionPane.showConfirmDialog(null,
+				     new JLabel("Would you like to start the map here? all "
+				     		+ "paths will branch out from this point"), "Start Here?",
+					 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			
+			// place the first node if the user agrees
+			if (result == JOptionPane.YES_OPTION) {
+				if (mode == Mode.ADD_BUILDINGS)
+					addBuilding(x, y);
+				else if (mode == Mode.ADD_PATHS)
+					addNode(x, y);
+			}
+		}
 	}
 	
 	/**
@@ -309,8 +330,8 @@ public class MapMakerPanel extends MapPanel{
 			throw new Error("closestNode should be valid");
 		}
 		double distance = Math.sqrt(
-			Math.pow(node.getLocation().getX() - selected.getLocation().getX(), 2)) +
-			Math.pow(node.getLocation().getY() - selected.getLocation().getY(), 2);
+			Math.pow(node.getLocation().getX() - selected.getLocation().getX(), 2) +
+			Math.pow(node.getLocation().getY() - selected.getLocation().getY(), 2));
 		
 		node.addEdge(selected, distance);
 		selected.addEdge(node, distance);

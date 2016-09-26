@@ -1,6 +1,7 @@
 package model;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -19,7 +20,8 @@ public class FileParser {
 						 BUILDINGS = "_buildings.dat";
 	
 	/**
-	 * Parses input files into node and location data
+	 * Parses input files into node and location data, or an empty graph if the files are
+	 * do not exist
 	 * @requires input files are properly formatted and without duplicates
 	 * @param filename: the name of the map files to be parsed
 	 * @modifies this
@@ -31,7 +33,7 @@ public class FileParser {
 			parsePaths(PATH + filename + PATHS);
 			parseLabels(PATH + filename + LABELS);
 		} catch (Exception e) { 
-			System.out.println("Invalid filename");
+			/* ignore */
 		}
 	}
 	
@@ -71,7 +73,9 @@ public class FileParser {
 	            // add new label to the graph
 	            graph.addLabel(location);
 	        }
-		} catch (IOException e) { 
+		} catch (FileNotFoundException e) {
+        	return; 
+        } catch (IOException e) { 
 			System.err.println(e.toString());
 			e.printStackTrace(System.err);	
         } finally {
@@ -149,7 +153,9 @@ public class FileParser {
             		child.addEdge(parent, label);
 	            }
 	        }	        
-	    } catch (IOException e) {
+	    } catch (FileNotFoundException e) {
+        	return; 
+        } catch (IOException e) {
 	        System.err.println(e.toString());
 	        e.printStackTrace(System.err);
 	    } finally {
@@ -198,7 +204,9 @@ public class FileParser {
 	            // add new building to the graph
 	            graph.add(building);
 	        }
-	    } catch (IOException e) {
+	    } catch (FileNotFoundException e) {
+        	return; 
+        } catch (IOException e) {
 	        System.err.println(e.toString());
 	        e.printStackTrace(System.err);
 	    } finally {
