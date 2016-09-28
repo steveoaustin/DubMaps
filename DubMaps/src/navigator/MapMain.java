@@ -9,7 +9,7 @@ import view.ContentFrame;
 
 public class MapMain {
 	// the prefix for map paths, buildings, and labels files
-	private static final String MAP_DATA = "update1";
+	private static final String MAP_DATA = "update8";
 	// the file path of the map image
 	private static final String MAP_IMAGE = "src/data/campus_map.jpg";
 	 

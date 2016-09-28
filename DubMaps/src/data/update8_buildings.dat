@@ -1,0 +1,106 @@
+ALL	Allen Library	2087.0	1381.0
+AND	Anderson Hall	2019.0	2026.0
+AND	Anderson Hall	2063.0	2048.0
+ARC	Architecture Hall	1657.0	1540.0
+ART	Art Building	2154.0	816.0
+ART	Art Building	2174.0	932.0
+ART	Art Building	2222.0	876.0
+ATG	Atmospheric Sciences-Geophysics Building	1780.0	1659.0
+ATG	Atmospheric Sciences-Geophysics Building	1802.0	1666.0
+ATG	Atmospheric Sciences-Geophysics Building	1847.0	1646.0
+BAG (NE)	Bagley Hall (Northeast Entrance)	1878.3786	1661.4083
+BAG	Bagley Hall (East Entrance)	1914.5103	1709.8816
+BGR	By George	1671.5499	1258.4333
+BNS	Benson Hall	1765.0	1835.0
+BNS	Benson Hall	1769.0	1779.0
+CHL (NE)	Chemistry Library (Northeast Entrance)	1746.0487	1672.52
+CHL (SE)	Chemistry Library (Southeast Entrance)	1762.7162	1708.8855
+CHL	Chemistry Library (West Entrance)	1707.6629	1671.5098
+CHM	Chemistry	1957.0	1777.0
+CLK	Clark Hall	2330.0	1004.0
+CMU	Communications Building	2344.8512	1114.6251
+CSE	Paul G. Allen Center for Computer Science & Engineering	2259.7112	1715.5273
+DEN	Denny Hall	1890.0	892.57144
+EEB (S)	Electrical Engineering Building (South Entrance)	2135.2099	1741.5387
+EEB	Electrical Engineering Building (North Entrance)	2159.9587	1694.8192
+FAC	University of Washington Club	2406.0	1352.0
+FAC	University of Washington Club	2418.0	1388.0
+FSH	Fishery Sciences Building	1061.8213	1779.6903
+GNO	William H. Foege Genome Sciences	1392.0	1949.0
+GRB	Gerberding Hall	1788.0	1387.0
+GRB	Gerberding Hall	1831.0	1435.0
+GTU	Guthrie Hall	1656.0	1659.0
+GTU	Guthrie Hall	1592.0	1674.0
+GUG	Guggenheim Hall	2142.0	1606.0
+GWN	Gowen Hall	2022.3254	1210.9561
+HAG	Henry Art Gallery	1533.0	1232.0
+HAG	Henry Art Gallery	1544.0	1170.0
+HCK	Hitchcock Hall	1544.0	1976.0
+HCK	Hitchcock Hall	1581.0	2021.0
+HLL	Hall Health Center	2403.0	1261.0
+HST	Magnuson Health Sciences Center	1572.0	2082.0
+HST	Magnuson Health Sciences Center	1603.0	2057.0
+HST	Magnuson Health Sciences Center	1633.0	2105.0
+HST	Magnuson Health Sciences Center	1709.0	2150.0
+HST	Magnuson Health Sciences Center	1849.0	2164.0
+HUB (Food, S)	Student Union Building (South Food Entrance)	2309.3025	1450.4487
+HUB (Food, W)	Student Union Building (West Food Entrance)	2270.8682	1388.1961
+HUB	Student Union Building (Main Entrance)	2269.7856	1364.3777
+IMA	Intramural Activities Building	2722.3352	1710.2859
+JON	Johnson	1844.0	1493.0
+JON	Johnson	1871.0	1504.0
+JON	Johnson	1904.0	1582.0
+KNE (E)	Kane Hall (East Entrance)	1874.338	1212.4713
+KNE (S)	Kane Hall (South Entrance)	1812.7187	1230.149
+KNE (SE)	Kane Hall (Southeast Entrance)	1835.1946	1241.0081
+KNE (SW)	Kane Hall (Southwest Entrance)	1787.2124	1218.5323
+KNE	Kane Hall (North Entrance)	1876.6109	1165.2467
+LEW	Lewis Hall	2267.0	775.0
+LEW	Lewis Hall	2279.0	803.0
+LOW	Loew Hall	2375.6262	1576.1262
+MCC (S)	McCarty Hall (South Entrance)	2437.4981	610.1679
+MCC	McCarty Hall (Main Entrance)	2345.7143	528.64286
+MCM (SW)	McMahon Hall (Southwest Entrance)	2419.3153	921.79995
+MCM	McMahon Hall (Northwest Entrance)	2446.9314	898.06137
+MGH (E)	Mary Gates Hall (East Entrance)	2043.1036	1514.917
+MGH (S)	Mary Gates Hall (South Entrance)	2057.1756	1564.762
+MGH (SW)	Mary Gates Hall (Southwest Entrance)	1971.6531	1551.6673
+MGH	Mary Gates Hall (North Entrance)	1973.1382	1433.6676
+MKZ	Mackenzie Hall	2037.0	782.0
+MLR	Miller Hall	2184.7074	1045.0386
+MNY (NW)	Meany Hall (Northwest Entrance)	1658.923	1295.8089
+MNY	Meany Hall (Northeast Entrance)	1684.1768	1297.0716
+MOL	Molecular Engineering & Sciences Building	1724.0	1585.0
+MOR	Moore Hall	2317.1749	1859.502
+MUS (E)	Music Building (East Entrance)	2261.6656	1011.4323
+MUS (S)	Music Building (South Entrance)	2255.3257	1048.2583
+MUS (SW)	Music Building (Southwest Entrance)	2243.4795	1040.5275
+MUS	Music Building (Northwest Entrance)	2202.5882	957.31147
+OCN	Ocean Sciences Building	1385.0	2109.0
+OUG	Odegaard Undergraduate Library	1724.1276	1208.4754
+PAA	Physics/Astronomy Building A	1625.2679	1783.5181
+PAB	Physics/Astronomy Building	1560.6467	1698.3767
+PAR	Parrington Hall	1715.3571	1060.4286
+PDL	Padelford Hall	2380.0	1171.0
+PDL	Padelford Hall	2409.0	1103.0
+PDL	Padelford Hall	2437.0	1066.0
+RAI (E)	Raitt Hall (East Entrance)	2094.2987	956.90276
+RAI	Raitt Hall (West Entrance)	2024.5103	993.01223
+ROB	Roberts Hall	2309.4107	1979.0003
+SAV	Savery Hall	1951.8672	1094.7886
+SIG	Sieg Hall	2110.0	1502.0
+SIG	Sieg Hall	2163.0	1467.0
+SMI	Smith Hall	2042.0	1184.0
+SMI	Smith Hall	2063.0	1206.0
+SMI	Smith Hall	2111.0	1138.0
+SUZ	Suzzallo Library	1895.8038	1325.861
+SUZ	Suzzallo Library	2051.0	1313.0
+SUZ	Suzzallo Library	2081.0	1367.0
+T65	Thai 65	1370.6408	807.35188
+THO	Thomson Hall	2194.0	1194.0
+THO	Thomson Hall	2206.0	1153.0
+THO	Thomson Hall	2251.0	1229.0
+UBS (Secret)	University Bookstore (Secret Entrance)	1440.1364	520.85309
+UBS	University Bookstore	1373.6078	556.55779
+UMC	University Medical Center	1998.0	2368.0
+UMC	University Medical Center	2125.0	2448.0

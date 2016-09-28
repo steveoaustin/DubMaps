@@ -264,19 +264,23 @@ public class MapPanel extends JPanel {
 		// highlight the start building in green
 		if (pathStart != null) {
 			String[] s = ui.getBuildingLabel(model.getLabel(pathStart));
-			int x = Integer.parseInt(s[1]);
-			int y = Integer.parseInt(s[2]);
-			g2d.setColor(Color.green);
-			g2d.drawString(s[0], x, y);
+			if (s != null) { 
+				int x = Integer.parseInt(s[1]);
+				int y = Integer.parseInt(s[2]);
+				g2d.setColor(Color.green);
+				g2d.drawString(s[0], x, y);
+			}
 		}
 		
 		// highlight the destination building in red
 		if (pathDest != null) {
 			String[] s = ui.getBuildingLabel(model.getLabel(pathDest));
-			int x = Integer.parseInt(s[1]);
-			int y = Integer.parseInt(s[2]);
-			g2d.setColor(Color.red);
-			g2d.drawString(s[0], x, y);
+			if (s != null) {
+				int x = Integer.parseInt(s[1]);
+				int y = Integer.parseInt(s[2]);
+				g2d.setColor(Color.red);
+				g2d.drawString(s[0], x, y);
+			}
 		}	
 	}
 }
