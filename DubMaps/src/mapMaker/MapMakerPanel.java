@@ -280,6 +280,13 @@ public class MapMakerPanel extends MapPanel{
 	private void addLabel(int x, int y) {
 		String[] name = promptInput("New Label", "Enter a name for this location",
 									"Enter a 3-letter abreviated name");
+		
+		// show error message if the label does not exist as a building
+		if (model.getNode(name[0]) == null) {
+			JOptionPane.showMessageDialog(null, "Label must match an existing building");
+			return;
+		}
+		
 		if (name != null)
 			model.addLabel(new Location(name[0], name[1], x, y));
 	}

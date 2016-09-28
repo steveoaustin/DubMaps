@@ -131,9 +131,10 @@ public class MapGraph {
 	 * @return the building's label, or null if not found
 	 */
 	public Location getLabel(Node<Location> building) {
-		for(Location c: labels) 
+		for(Location c: labels) {
 			if (c.getName().equals(building.getLocation().getName().substring(0, 3)))
 				return c;
+		}
 		
 		return null;
 	}
