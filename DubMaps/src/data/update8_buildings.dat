@@ -13,6 +13,7 @@ BAG	Bagley Hall (East Entrance)	1914.5103	1709.8816
 BGR	By George	1671.5499	1258.4333
 BNS	Benson Hall	1765.0	1835.0
 BNS	Benson Hall	1769.0	1779.0
+CDH	Condon Hall	1047.0	1218.0
 CHL (NE)	Chemistry Library (Northeast Entrance)	1746.0487	1672.52
 CHL (SE)	Chemistry Library (Southeast Entrance)	1762.7162	1708.8855
 CHL	Chemistry Library (West Entrance)	1707.6629	1671.5098
@@ -26,11 +27,13 @@ EEB	Electrical Engineering Building (North Entrance)	2159.9587	1694.8192
 FAC	University of Washington Club	2406.0	1352.0
 FAC	University of Washington Club	2418.0	1388.0
 FSH	Fishery Sciences Building	1061.8213	1779.6903
+GLD	Gould Hall	1380.0	1451.0
+GLD	Gould Hall	1443.0	1445.0
 GNO	William H. Foege Genome Sciences	1392.0	1949.0
 GRB	Gerberding Hall	1788.0	1387.0
 GRB	Gerberding Hall	1831.0	1435.0
-GTU	Guthrie Hall	1656.0	1659.0
 GTU	Guthrie Hall	1592.0	1674.0
+GTU	Guthrie Hall	1656.0	1659.0
 GUG	Guggenheim Hall	2142.0	1606.0
 GWN	Gowen Hall	2022.3254	1210.9561
 HAG	Henry Art Gallery	1533.0	1232.0
@@ -93,6 +96,7 @@ SIG	Sieg Hall	2163.0	1467.0
 SMI	Smith Hall	2042.0	1184.0
 SMI	Smith Hall	2063.0	1206.0
 SMI	Smith Hall	2111.0	1138.0
+SMZ	Schmitz Hall	1409.0	1230.0
 SUZ	Suzzallo Library	1895.8038	1325.861
 SUZ	Suzzallo Library	2051.0	1313.0
 SUZ	Suzzallo Library	2081.0	1367.0

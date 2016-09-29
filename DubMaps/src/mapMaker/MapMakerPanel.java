@@ -282,7 +282,7 @@ public class MapMakerPanel extends MapPanel{
 									"Enter a 3-letter abreviated name");
 		
 		// show error message if the label does not exist as a building
-		if (model.getNode(name[0]) == null) {
+		if (name != null && model.getNode(name[0]) == null) {
 			JOptionPane.showMessageDialog(null, "Label must match an existing building");
 			return;
 		}
