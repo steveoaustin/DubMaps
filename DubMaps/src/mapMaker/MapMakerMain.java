@@ -30,7 +30,7 @@ public class MapMakerMain {
             {
 				new ContentFrame(false);
             }
-        });
+        });  
     }
 	
 	// Display a startup message with directions for the user
