@@ -13,7 +13,7 @@ import view.ContentFrame;
  */
 public class MapMakerMain {
 	// use a blank filename to start from scratch
-	private static final String MAP_DATA = "update8";
+	private static final String MAP_DATA = "update10";
 	private static final String MAP_IMAGE = "src/data/campus_map.jpg";
 	
 	/*

@@ -134,6 +134,10 @@ public class MapMakerPanel extends MapPanel{
 			parent.scrollToCenter();
 	}
 	
+	public void updateDisplay(int width, int height) {
+		updateDisplay(width, height, false);
+	}
+	
 	/**
 	 * Sets the mode to m
 	 * @param m: The new mode

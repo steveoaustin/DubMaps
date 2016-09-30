@@ -50,7 +50,7 @@ public class MapScrollPane extends JScrollPane {
 				MapScrollPane p = (MapScrollPane) e.getComponent();
 				p.map.repaint();
 				p.getViewport().setViewPosition(p.getCenter());
-				map.updateDisplay(e.getComponent().getWidth(), e.getComponent().getHeight());
+				p.map.updateDisplay(p.getWidth(), p.getHeight());
 			}
 		});
 		
