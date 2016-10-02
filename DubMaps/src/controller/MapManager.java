@@ -100,6 +100,14 @@ public class MapManager {
 	}
 	
 	/**
+	 * Zooms the image to its native resolution
+	 */
+	public void zoomIn() {
+		imageArgs[2] = map.getWidth();
+		imageArgs[3] = map.getHeight();
+	}
+	
+	/**
 	 * Recalculates imageArgs to "zoom out" for the current display size
 	 * @param width: The display's width
 	 * @param height: The display's height

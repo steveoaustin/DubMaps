@@ -123,8 +123,7 @@ public class MapMakerPanel extends MapPanel{
 	public void updateDisplay(int width, int height, boolean center) {
 		// display the map at its native resolution 
 		if (mode != Mode.OBSERVE) {
-			map.zoomIn(width, height, 
-					new Dimension(map.getMap().getWidth(), map.getMap().getHeight()));
+			map.zoomIn();
 		} else {
 			map.zoomOut(width, height);
 		}

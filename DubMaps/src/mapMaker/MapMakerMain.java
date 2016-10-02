@@ -13,7 +13,7 @@ import view.ContentFrame;
  */
 public class MapMakerMain {
 	// use a blank filename to start from scratch
-	private static final String MAP_DATA = "update10";
+	private static final String MAP_DATA = "update18";
 	private static final String MAP_IMAGE = "src/data/campus_map.jpg";
 	
 	/*
@@ -37,7 +37,7 @@ public class MapMakerMain {
 	private static void startupMessage() {
 		JOptionPane.showMessageDialog(null,
 			  "Welcome to map maker!\n\n"
-			+ "All paths are drawn in blue and have thier\nends marked with green.\n"
+			+ "All paths are drawn in blue and have their\nends marked with green.\n"
 			+ "Building entrances are marked with purple\n\n"
 			+ "Use the option buttons at the top of the window\n"
 			+ "to change modes and save the map.\n\n"
@@ -51,7 +51,7 @@ public class MapMakerMain {
 			+ "for a new building name\n\n"
 			+ "Label Mode: In this mode, right-clicking on\n"
 			+ "the map will prompt for a building name, and\n"
-			+ "3 character abreviation\n\n"
+			+ "3 character abbreviation\n\n"
 			+ "Save: Save any edits to a new data file\n"
 			+ "or overwrite an existing one");
 	}
