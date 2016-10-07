@@ -12,8 +12,10 @@ import view.ContentFrame;
  * and displays directions upon startup
  */
 public class MapMakerMain {
+	// the prefix for map paths, buildings, and labels files
 	// use a blank filename to start from scratch
 	private static final String MAP_DATA = "updatedCampus";
+	// the file path of the map image
 	private static final String MAP_IMAGE = "src/data/campus_map.jpg";
 	
 	/*

@@ -7,9 +7,9 @@ import javax.swing.JOptionPane;
 import controller.Display;
 import view.ContentFrame;
 
-public class MapMain {
+public class NavigatorMain {
 	// the prefix for map paths, buildings, and labels files
-	private static final String MAP_DATA = "update9";
+	private static final String MAP_DATA = "updatedCampus";
 	// the file path of the map image
 	private static final String MAP_IMAGE = "src/data/campus_map.jpg";
 	 
